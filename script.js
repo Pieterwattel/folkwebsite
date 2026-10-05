@@ -43,7 +43,7 @@ const englishCopy = {
   "form-submit": "Send signup",
   "signup-privacy": "I only use your details to organise this session.",
   "signup-error": "Sending did not work. Please email <a href=\"mailto:pieterwattel@gmail.com\">pieterwattel@gmail.com</a>.",
-  "signup-thanks": "Thank you. Your signup has been noted. If it turns out you cannot make it, please email <a href=\"mailto:pieterwattel@gmail.com\">pieterwattel@gmail.com</a>."
+  "signup-thanks": "Thank you. Your signup has been noted."
 };
 const dutchCopy = new Map();
 let language = "nl";
