@@ -72,11 +72,8 @@ body {
 }
 
 #translate-button {
-  position: fixed;
-  left: 0.7rem;
-  bottom: 0.7rem;
-  z-index: 3;
-  margin: 0;
+  align-self: flex-end;
+  margin: 1.4vh 2% 0 2.6%;
   padding: 0.4em 0.75em;
   border: 1px solid #111;
   background: #fff;
@@ -93,7 +90,7 @@ body {
 }
 
 #event-facts {
-  padding: 3.4vh 2% 0 2.6%;
+  padding: 1.6vh 2% 0 2.6%;
 }
 
 .fact a,
@@ -236,6 +233,22 @@ body {
   color: #000;
 }
 
+.signup-note {
+  margin: 0;
+  font-weight: 400;
+}
+
+.signup-error {
+  margin: 0;
+  color: #7a1f2b;
+  font-weight: 700;
+}
+
+.signup-error a {
+  color: #7a1f2b;
+  font-weight: 700;
+}
+
 .form-submit {
   align-self: flex-start;
   margin-top: 0.3rem;
@@ -274,13 +287,12 @@ body {
   }
 
   #translate-button {
-    left: 0.35rem;
-    bottom: 0.35rem;
-    font-size: 0.8rem;
+    margin: 0.55rem 0.55rem 0 0.65rem;
+    font-size: 0.95rem;
   }
 
   #event-facts {
-    padding: 0.8rem 0.55rem 0 0.65rem;
+    padding: 0.55rem 0.55rem 0 0.65rem;
   }
 
   #fact-prompt {

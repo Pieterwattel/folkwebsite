@@ -1,3 +1,5 @@
+const SIGNUP_ENDPOINT = "https://script.google.com/macros/s/AKfycbzHjwtOrjf4AA1KqaM25kMwbx4ET1vx_bOAGJqNGJwNBbP0h5flHlL7jNj0wjjJoFKV/exec";
+
 const translateButton = document.querySelector("#translate-button");
 const englishCopy = {
   "fact-what-label": "what",
@@ -39,6 +41,8 @@ const englishCopy = {
   "label-experience": "How long have you been playing *",
   "label-note": "Note",
   "form-submit": "Send signup",
+  "signup-privacy": "I only use your details to organise this session.",
+  "signup-error": "Sending did not work. Please email <a href=\"mailto:pieterwattel@gmail.com\">pieterwattel@gmail.com</a>.",
   "signup-thanks": "Thank you. Your signup has been noted. If it turns out you cannot make it, please email <a href=\"mailto:pieterwattel@gmail.com\">pieterwattel@gmail.com</a>."
 };
 const dutchCopy = new Map();
@@ -63,7 +67,7 @@ function setLanguage(nextLanguage) {
     }
     element.innerHTML = text;
   });
-  translateButton.textContent = nextLanguage === "en" ? "translate to Dutch" : "vertaal naar Engels";
+  translateButton.textContent = nextLanguage === "en" ? "vertaal naar Nederlands" : "translate to english";
 }
 
 translateButton.addEventListener("click", () => {
@@ -74,6 +78,7 @@ const detailPanel = document.querySelector("#detail-panel");
 const detailCopy = document.querySelector("#detail-copy");
 const signupForm = document.querySelector("#signup-form");
 const signupThanks = document.querySelector("#signup-thanks");
+const signupError = document.querySelector("#signup-error");
 const signupButton = document.querySelector("#signup-button");
 const openSignupLink = document.querySelector("#open-signup");
 const factPrompt = document.querySelector("#fact-prompt");
@@ -84,6 +89,7 @@ function showSignup(event) {
   detailCopy.hidden = true;
   signupThanks.hidden = true;
   signupForm.hidden = false;
+  signupError.hidden = true;
   factPrompt.hidden = true;
   backButton.hidden = false;
   detailPanel.scrollTop = 0;
@@ -105,10 +111,38 @@ if (openSignupLink) {
 }
 backButton.addEventListener("click", showText);
 
-signupForm.addEventListener("submit", (event) => {
+signupForm.addEventListener("submit", async (event) => {
   event.preventDefault();
-  signupForm.hidden = true;
-  signupThanks.hidden = false;
+  const submitButton = signupForm.querySelector("[type=submit]");
+  submitButton.disabled = true;
+  signupError.hidden = true;
+
+  const payload = {
+    naam: signupForm.naam.value.trim(),
+    email: signupForm.email.value.trim(),
+    instrument: signupForm.instrument.value.trim(),
+    ervaring: signupForm.ervaring.value.trim(),
+    opmerking: signupForm.opmerking.value.trim()
+  };
+
+  try {
+    if (!SIGNUP_ENDPOINT) {
+      throw new Error("missing signup endpoint");
+    }
+    await fetch(SIGNUP_ENDPOINT, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify(payload)
+    });
+    signupForm.reset();
+    signupForm.hidden = true;
+    signupThanks.hidden = false;
+  } catch (error) {
+    signupError.hidden = false;
+  }
+
+  submitButton.disabled = false;
   detailPanel.scrollTop = 0;
 });
 
