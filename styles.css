@@ -110,10 +110,11 @@ body {
 #back-button {
   display: flex;
   align-items: center;
-  align-self: flex-end;
+  justify-content: center;
+  height: 100%;
   gap: 0.35em;
   margin: 0 0 0 2.6%;
-  padding: 0.35em 0.75em;
+  padding: 0 0.75em;
   border: 1px solid #111;
   background: #fff;
   color: #111;
