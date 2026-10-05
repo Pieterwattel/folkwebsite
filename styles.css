@@ -72,8 +72,11 @@ body {
 }
 
 #translate-button {
-  align-self: flex-end;
-  margin: 1.4vh 2% 0 2.6%;
+  position: fixed;
+  left: 0.7rem;
+  bottom: 0.7rem;
+  z-index: 3;
+  margin: 0;
   padding: 0.4em 0.75em;
   border: 1px solid #111;
   background: #fff;
@@ -90,7 +93,15 @@ body {
 }
 
 #event-facts {
-  padding: 1.6vh 2% 0 2.6%;
+  padding: 3.4vh 2% 0 2.6%;
+}
+
+.fact a,
+.fact a:visited {
+  color: #0b57d0;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
 }
 
 #event-signup {
@@ -120,7 +131,8 @@ body {
   display: flex;
   align-items: center;
   margin-left: 2.6%;
-  line-height: 1;
+  line-height: 1.15;
+  white-space: normal;
   text-decoration: underline;
   text-underline-offset: 0.12em;
 }
@@ -262,12 +274,13 @@ body {
   }
 
   #translate-button {
-    margin: 0.55rem 0.55rem 0 0.65rem;
-    font-size: 0.95rem;
+    left: 0.35rem;
+    bottom: 0.35rem;
+    font-size: 0.8rem;
   }
 
   #event-facts {
-    padding: 0.55rem 0.55rem 0 0.65rem;
+    padding: 0.8rem 0.55rem 0 0.65rem;
   }
 
   #fact-prompt {

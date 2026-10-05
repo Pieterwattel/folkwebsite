@@ -3,44 +3,43 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Folk session Utrecht</title>
+  <title>Folksessie Utrecht</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="page" id="page">
     <section class="fabric-panel" id="fabric-panel">
       <figure class="instrument" id="bodhran">
-        <img src="bodhran.png" alt="Bodhran">
+        <img id="alt-bodhran" src="bodhran.png" alt="Bodhrán">
       </figure>
       <figure class="instrument" id="violin">
-        <img src="violin.png" alt="Violin">
+        <img id="alt-violin" src="violin.png" alt="Viool">
       </figure>
       <figure class="instrument" id="guitar">
-        <img src="guitar.png" alt="Guitar">
+        <img id="alt-guitar" src="guitar.png" alt="Gitaar">
       </figure>
       <figure class="instrument" id="whistle">
-        <img src="whistle.png" alt="Tin whistle">
+        <img id="alt-whistle" src="whistle.png" alt="Tinwhistle">
       </figure>
     </section>
 
     <section class="info-panel" id="info-panel">
       <header class="event-header" id="event-header">
-        <button class="translate-button" id="translate-button" type="button">translate to english</button>
         <div class="event-facts" id="event-facts">
           <p class="fact" id="fact-what">
-            <span class="fact-label">what</span>
+            <span class="fact-label" id="fact-what-label">wat</span>
             <span class="fact-separator"> - </span>
-            <span class="fact-value">folk session Utrecht, mainly irish</span>
+            <span class="fact-value" id="fact-what-value">folksessie Utrecht, vooral Iers</span>
           </p>
           <p class="fact" id="fact-when">
-            <span class="fact-label">when</span>
+            <span class="fact-label" id="fact-when-label">wanneer</span>
             <span class="fact-separator"> - </span>
-            <span class="fact-value">november 21st 15:00 - 16:30</span>
+            <span class="fact-value" id="fact-when-value">21 november 15:00 - 16:30</span>
           </p>
           <p class="fact" id="fact-where">
-            <span class="fact-label">where</span>
+            <span class="fact-label" id="fact-where-label">waar</span>
             <span class="fact-separator"> - </span>
-            <span class="fact-value">domplein 4, Utrecht</span>
+            <span class="fact-value"><a id="fact-where-link" href="https://maps.app.goo.gl/rNXq5TmyWvZMd63D7" target="_blank" rel="noopener noreferrer">Domplein 4, Utrecht</a></span>
           </p>
           <p class="fact" id="fact-cost">
             <span class="fact-label" id="fact-cost-label">kosten</span>
@@ -50,7 +49,7 @@
         </div>
         <div class="event-signup" id="event-signup">
           <p class="fact" id="fact-prompt">
-            <span class="fact-value">sign up please &gt;&gt;</span>
+            <span class="fact-value" id="fact-prompt-value">meld je hier aan &gt;&gt;</span>
           </p>
           <button class="back-button" id="back-button" type="button" hidden>
             <span id="back-label">terug</span> <span class="back-arrow" aria-hidden="true">↩️</span>
@@ -105,7 +104,7 @@
 
         <h2 class="detail-heading" id="heading-who">Wie zijn wij?</h2>
         <p class="detail" id="detail-who">
-          We zijn een groepje bevriende muzikanten die actief bezig zijn in de volksmuziek in Nederland. We spelen vaak samen en in verschillende bands, en doen optredens over het hele land. Pieter (gitaar) en Ide (viool) spelen samen in <a href="https://odevare.com">Odevare</a>, hebben gestudeerd aan het Utrechts Conservatorium, en Boet Hoitink speelt vooral veel in <a href="https://www.youtube.com/watch?v=BFdNJ7wBQdg">Celtic Constellation</a>. Ook maken we regelmatig samen muziek. Daarnaast hebben we ervaring in het geven van lessen. Maar we zoeken ook naar een andere, speelse manier om de muziek met anderen te delen. Dat je samen een beetje mag uitzoeken en ontdekken, en denken dat dit de perfecte setting is om dat in te doen.
+          We zijn een groepje bevriende muzikanten die actief bezig zijn in de volksmuziek in Nederland. We spelen vaak samen en in verschillende bands, en doen optredens over het hele land. Pieter (gitaar) en Ide (viool) spelen samen in <a href="https://odevare.com">Odevare</a>, hebben gestudeerd aan het Utrechts Conservatorium, en Boet Hoitink speelt in <a href="https://www.youtube.com/watch?v=BFdNJ7wBQdg">Celtic Constellation</a>. Ook maken we regelmatig samen muziek. Daarnaast hebben we ervaring in het geven van lessen. Maar we zoeken ook naar een andere, speelse manier om de muziek met anderen te delen. Dat je samen een beetje mag uitzoeken en ontdekken, en denken dat dit de perfecte setting is om dat in te doen.
         </p>
         </div>
 
@@ -139,6 +138,7 @@
       </article>
     </section>
   </div>
-  <script src="script.js?v=17"></script>
+  <button class="translate-button" id="translate-button" type="button">vertaal naar Engels</button>
+  <script src="script.js?v=18"></script>
 </body>
 </html>

@@ -1,9 +1,20 @@
 const translateButton = document.querySelector("#translate-button");
 const englishCopy = {
+  "fact-what-label": "what",
+  "fact-what-value": "folk session Utrecht, mainly Irish",
+  "fact-when-label": "when",
+  "fact-when-value": "21 November 15:00 - 16:30",
+  "fact-where-label": "where",
+  "fact-where-link": "Domplein 4, Utrecht",
   "fact-cost-label": "cost",
   "fact-cost-value": "free",
+  "fact-prompt-value": "sign up please &gt;&gt;",
   "back-label": "back",
   "signup-button": "SIGN UP",
+  "alt-bodhran": "Bodhrán",
+  "alt-violin": "Violin",
+  "alt-guitar": "Guitar",
+  "alt-whistle": "Tin whistle",
   "detail-invite": "Do you feel like playing together with new musicians in a freer way, something other than an orchestra or a band? Come and discover fresh folk music in Utrecht!",
   "detail-organisers": "<strong>21 November</strong> we (<strong>Pieter Wattel</strong>, <strong>Boet Hoitink</strong>) are organising an open folk session in Utrecht. <strong>Ide Cornelissen</strong> will be there as well. We can also help you if you get stuck for a moment. We are very enthusiastic about this music, and we would like to share it with you. In short, you are very welcome!",
   "detail-levels": "<strong>All levels welcome.</strong> But it is advisable to have been playing for at least <strong>1 year</strong>.",
@@ -20,7 +31,7 @@ const englishCopy = {
   "heading-amplification": "Should I bring my electric guitar",
   "detail-amplification": "This folk session is meant for acoustic instruments. There will be no amplifiers or microphones.",
   "heading-who": "Who are we?",
-  "detail-who": "We are a group of musician friends who are active in folk music in the Netherlands. We often play together and in different bands, and we perform all over the country. Pieter (guitar) and Ide (violin) play together in <a href=\"https://odevare.com\">Odevare</a>, studied at the Utrecht Conservatory, and Boet Hoitink plays a lot in <a href=\"https://www.youtube.com/watch?v=BFdNJ7wBQdg\">Celtic Constellation</a>. We also make music together regularly. On top of that, we have experience teaching. But we are also looking for another, more playful way to share the music with other people. A setting where you can figure things out and discover them together, and we think this is the perfect place for that.",
+  "detail-who": "We are a group of musician friends who are active in folk music in the Netherlands. We often play together and in different bands, and we perform all over the country. Pieter (guitar) and Ide (violin) play together in <a href=\"https://odevare.com\">Odevare</a>, studied at the Utrecht Conservatory, and Boet Hoitink plays in <a href=\"https://www.youtube.com/watch?v=BFdNJ7wBQdg\">Celtic Constellation</a>. We also make music together regularly. We also have experience teaching. But we are also looking for another, playful way to share the music with others. Where you can figure things out and discover them together a bit, and we think this is the perfect setting for that.",
   "heading-signup": "Sign up",
   "label-name": "Name *",
   "label-email": "Email *",
@@ -36,17 +47,23 @@ let language = "nl";
 function setLanguage(nextLanguage) {
   language = nextLanguage;
   document.documentElement.lang = nextLanguage;
+  document.title = nextLanguage === "en" ? "Folk session Utrecht" : "Folksessie Utrecht";
   Object.entries(englishCopy).forEach(([id, english]) => {
     const element = document.getElementById(id);
     if (!element) {
       return;
     }
     if (!dutchCopy.has(id)) {
-      dutchCopy.set(id, element.innerHTML);
+      dutchCopy.set(id, element.tagName === "IMG" ? element.alt : element.innerHTML);
     }
-    element.innerHTML = nextLanguage === "en" ? english : dutchCopy.get(id);
+    const text = nextLanguage === "en" ? english : dutchCopy.get(id);
+    if (element.tagName === "IMG") {
+      element.alt = text;
+      return;
+    }
+    element.innerHTML = text;
   });
-  translateButton.textContent = nextLanguage === "en" ? "vertaal naar nederlands" : "translate to english";
+  translateButton.textContent = nextLanguage === "en" ? "translate to Dutch" : "vertaal naar Engels";
 }
 
 translateButton.addEventListener("click", () => {
