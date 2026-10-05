@@ -41,7 +41,6 @@ const englishCopy = {
   "label-experience": "How long have you been playing *",
   "label-note": "Note",
   "form-submit": "Send signup",
-  "signup-privacy": "I only use your details to organise this session.",
   "signup-error": "Sending did not work. Please email <a href=\"mailto:pieterwattel@gmail.com\">pieterwattel@gmail.com</a>.",
   "signup-thanks": "Thank you. Your signup has been noted."
 };
