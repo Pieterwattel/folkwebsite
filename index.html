@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,6 +25,7 @@
 
     <section class="info-panel" id="info-panel">
       <header class="event-header" id="event-header">
+        <button class="translate-button" id="translate-button" type="button">translate to english</button>
         <div class="event-facts" id="event-facts">
           <p class="fact" id="fact-what">
             <span class="fact-label">what</span>
@@ -42,9 +43,9 @@
             <span class="fact-value">domplein 4, Utrecht</span>
           </p>
           <p class="fact" id="fact-cost">
-            <span class="fact-label">kosten</span>
+            <span class="fact-label" id="fact-cost-label">kosten</span>
             <span class="fact-separator"> - </span>
-            <span class="fact-value">gratis</span>
+            <span class="fact-value" id="fact-cost-value">gratis</span>
           </p>
         </div>
         <div class="event-signup" id="event-signup">
@@ -52,7 +53,7 @@
             <span class="fact-value">sign up please &gt;&gt;</span>
           </p>
           <button class="back-button" id="back-button" type="button" hidden>
-            terug <span class="back-arrow" aria-hidden="true">↩️</span>
+            <span id="back-label">terug</span> <span class="back-arrow" aria-hidden="true">↩️</span>
           </button>
           <button class="signup-button" id="signup-button" type="button">INSCHRIJVEN</button>
         </div>
@@ -70,10 +71,10 @@
           <strong>Alle niveaus welkom.</strong> Maar het is aan te raden om in ieder geval <strong>1 jaar</strong> al te spelen.
         </p>
         <p class="detail" id="detail-signup">
-          Wanneer je wilt komen, meld je dan aan. Wanneer we een aanmelding hebben, gaan we ervan uit dat je komt. Wanneer het toch niet lukt, laat het dan even weten via <a href="mailto:pieterwattel@gmail.com">pieterwattel@gmail.com</a>.
+          Wanneer je wilt komen, meld je dan aan. Wanneer we een aanmelding hebben, gaan we ervan uit dat je komt. Wanneer het toch niet lukt, laat het dan even weten via <a href="mailto:pieterwattel@gmail.com">pieterwattel@gmail.com</a>
         </p>
         <p class="detail" id="detail-styles">
-          We zullen vooral <strong>Ierse tunes</strong> spelen, maar er is ook zeker ruimte voor andere stijlen. We staan open voor vanalles.
+          We zullen vooral <strong>Ierse tunes</strong> spelen, maar er is ook zeker ruimte voor andere stijlen volksmuziek. We staan open voor vanalles.
         </p>
 
         <h2 class="detail-heading" id="heading-how">Hoe werkt het?</h2>
@@ -97,35 +98,40 @@
           Wanneer je meer ervaren bent, ben je ook zeker welkom. We denken dat het juist interessant is om <strong>een mix te hebben van niveaus</strong>, zo leren we ook van elkaar. En sommige tunes zullen rustig gespeeld worden, zodat iedereen mee kan doen, en af en toe zullen er vooral ervaren spelers spelen, bij onbekendere of snellere tunes. En dat beide kunnen gebeuren, vinden wij juist leuk!
         </p>
 
+        <h2 class="detail-heading" id="heading-amplification">Zal ik mijn elektrische gitaar meenemen</h2>
+        <p class="detail" id="detail-amplification">
+          Deze folksessie is bedoeld voor akoestische instrumenten, Er zullen geen versterkers of microfoons aanwezig zijn.  
+        </p>
+
         <h2 class="detail-heading" id="heading-who">Wie zijn wij?</h2>
         <p class="detail" id="detail-who">
-          We zijn een groepje bevriende muzikanten die actief bezig zijn in de volksmuziek in Nederland. We spelen vaak samen en in verschillende bands, en doen optredens over het hele land. Pieter (gitaar) en Ide (viool) spelen samen in <a href="https://odevare.com">Odevare</a>, hebben gestudeerd aan het Utrechts Conservatorium, en Boet Hoitink speelt vooral veel in <a href="celtic-constellation.html">Celtic Constellation</a>. Maar we maken allemaal regelmatig samen muziek. Daarnaast hebben we ervaring in het geven van lessen. Maar we zoeken ook naar een andere, speelse manier om de muziek met anderen te delen. Dat je samen een beetje mag uitzoeken en ontdekken, en denken dat dit de perfecte setting is om dat in te doen.
+          We zijn een groepje bevriende muzikanten die actief bezig zijn in de volksmuziek in Nederland. We spelen vaak samen en in verschillende bands, en doen optredens over het hele land. Pieter (gitaar) en Ide (viool) spelen samen in <a href="https://odevare.com">Odevare</a>, hebben gestudeerd aan het Utrechts Conservatorium, en Boet Hoitink speelt vooral veel in <a href="https://www.youtube.com/watch?v=BFdNJ7wBQdg">Celtic Constellation</a>. Ook maken we regelmatig samen muziek. Daarnaast hebben we ervaring in het geven van lessen. Maar we zoeken ook naar een andere, speelse manier om de muziek met anderen te delen. Dat je samen een beetje mag uitzoeken en ontdekken, en denken dat dit de perfecte setting is om dat in te doen.
         </p>
         </div>
 
         <form class="signup-form" id="signup-form" hidden>
-          <h2 class="detail-heading">Inschrijven</h2>
+          <h2 class="detail-heading" id="heading-signup">Inschrijven</h2>
           <label class="field" for="signup-name">
-            Naam *
+            <span id="label-name">Naam *</span>
             <input id="signup-name" name="naam" type="text" autocomplete="name" required>
           </label>
           <label class="field" for="signup-email">
-            E-mail *
+            <span id="label-email">E-mail *</span>
             <input id="signup-email" name="email" type="email" autocomplete="email" required>
           </label>
           <label class="field" for="signup-instrument">
-            Instrument *
+            <span id="label-instrument">Instrument *</span>
             <input id="signup-instrument" name="instrument" type="text" required>
           </label>
           <label class="field" for="signup-experience">
-            Hoelang speel je al *
+            <span id="label-experience">Hoelang speel je al *</span>
             <input id="signup-experience" name="ervaring" type="text" required>
           </label>
           <label class="field" for="signup-note">
-            Opmerking
+            <span id="label-note">Opmerking</span>
             <textarea id="signup-note" name="opmerking" rows="4"></textarea>
           </label>
-          <button class="form-submit" type="submit">Verstuur aanmelding</button>
+          <button class="form-submit" id="form-submit" type="submit">Verstuur aanmelding</button>
         </form>
         <p class="signup-thanks" id="signup-thanks" hidden>
           Bedankt. Je aanmelding staat genoteerd. Als het toch niet lukt, mail dan even naar <a href="mailto:pieterwattel@gmail.com">pieterwattel@gmail.com</a>.
@@ -133,6 +139,6 @@
       </article>
     </section>
   </div>
-  <script src="script.js?v=16"></script>
+  <script src="script.js?v=17"></script>
 </body>
 </html>

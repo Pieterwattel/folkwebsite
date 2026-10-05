@@ -71,8 +71,26 @@ body {
   overflow: hidden;
 }
 
+#translate-button {
+  align-self: flex-end;
+  margin: 1.4vh 2% 0 2.6%;
+  padding: 0.4em 0.75em;
+  border: 1px solid #111;
+  background: #fff;
+  color: #111;
+  font-family: inherit;
+  font-size: clamp(14px, 1vw, 18px);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+#translate-button:hover,
+#translate-button:focus-visible {
+  background: #f7f7f5;
+}
+
 #event-facts {
-  padding: 3.4vh 2% 0 2.6%;
+  padding: 1.6vh 2% 0 2.6%;
 }
 
 #event-signup {
@@ -243,8 +261,13 @@ body {
     max-height: 90%;
   }
 
+  #translate-button {
+    margin: 0.55rem 0.55rem 0 0.65rem;
+    font-size: 0.95rem;
+  }
+
   #event-facts {
-    padding: 0.8rem 0.55rem 0 0.65rem;
+    padding: 0.55rem 0.55rem 0 0.65rem;
   }
 
   #fact-prompt {
