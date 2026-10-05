@@ -61,12 +61,12 @@ body {
 
 #event-header {
   position: relative;
-  flex: 0 0 40.8%;
-  height: 40.8%;
+  flex: 0 0 auto;
+  height: auto;
   background: #ebece8;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 0;
   overflow: hidden;
 }
@@ -256,23 +256,27 @@ body {
 
   .fact {
     white-space: normal;
-    font-size: 1rem;
-    line-height: 1.2;
+    font-size: 1.2rem;
+    line-height: 1.25;
+  }
+
+  #back-button {
+    font-size: 1.05rem;
   }
 
   #event-signup {
-    height: 3rem;
+    height: 3.2rem;
   }
 
   #signup-button {
     flex-basis: 42%;
     width: 42%;
     height: 100%;
-    font-size: 0.8rem;
+    font-size: 0.95rem;
   }
 
   #detail-panel {
     padding: 0.75rem 0.65rem 2rem;
-    font-size: 0.95rem;
+    font-size: 1.1rem;
   }
 }
