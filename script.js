@@ -28,7 +28,9 @@ function showText() {
 }
 
 signupButton.addEventListener("click", showSignup);
-openSignupLink.addEventListener("click", showSignup);
+if (openSignupLink) {
+  openSignupLink.addEventListener("click", showSignup);
+}
 backButton.addEventListener("click", showText);
 
 signupForm.addEventListener("submit", (event) => {

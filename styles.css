@@ -119,7 +119,7 @@ body {
   background: #fff;
   color: #111;
   font: inherit;
-  font-size: clamp(18px, 1.5vw, 28px);
+  font-size: clamp(18px, 1.65vw, 32px);
   font-weight: 800;
   cursor: pointer;
 }
@@ -262,7 +262,7 @@ body {
   }
 
   #back-button {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
   }
 
   #event-signup {
