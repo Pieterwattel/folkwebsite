@@ -72,7 +72,7 @@ body {
 }
 
 #translate-button {
-  align-self: flex-end;
+  align-self: flex-start;
   margin: 1.4vh 2% 0 2.6%;
   padding: 0.4em 0.75em;
   border: 1px solid #111;
