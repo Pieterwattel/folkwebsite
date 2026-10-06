@@ -10,21 +10,21 @@ const englishCopy = {
   "fact-where-link": "Domplein 4, Utrecht",
   "fact-cost-label": "cost",
   "fact-cost-value": "free",
-  "fact-prompt-value": "sign up please &gt;&gt;",
+  "fact-prompt-value": "sign up here &gt;&gt;",
   "back-label": "back",
   "signup-button": "SIGN UP",
   "alt-bodhran": "Bodhrán",
   "alt-violin": "Violin",
   "alt-guitar": "Guitar",
   "alt-whistle": "Tin whistle",
-  "detail-invite": "Do you feel like playing together with new musicians in a freer way, something other than an orchestra or a band? Come and discover fresh folk music in Utrecht!",
+  "detail-invite": "Do you feel like playing music together with others in a freer way, something other than an orchestra or a band? Come and discover fresh folk music in Utrecht!",
   "detail-organisers": "<strong>21 November</strong> we (<strong>Pieter Wattel</strong>, <strong>Boet Hoitink</strong>) are organising an open folk session in Utrecht. <strong>Ide Cornelissen</strong> will be there as well. We can also help you if you get stuck for a moment. We are very enthusiastic about this music, and we would like to share it with you. In short, you are very welcome!",
   "detail-levels": "<strong>All levels welcome.</strong> But it is advisable to have been playing for at least <strong>1 year</strong>.",
   "detail-signup": "If you would like to come, please sign up. Once we have a signup, we will assume that you are coming. If it turns out you cannot make it, please let us know at <a href=\"mailto:pieterwattel@gmail.com\">pieterwattel@gmail.com</a>",
   "detail-styles": "We will mainly play <strong>Irish tunes</strong>, but there is certainly room for other styles of folk music. We are open to all sorts of things.",
   "heading-how": "How does it work?",
   "detail-tunes": "Folk music is basically made up of <strong>“tunes”</strong>, melodies that several people know and then play together. To make sure you have something to play, we have <a href=\"tunes.html\" target=\"_blank\" rel=\"noopener noreferrer\">collected some tunes for you</a>. But if you are already playing folk music and you bring some tunes yourself, that is very welcome! There is bound to be someone who can play along with you.",
-  "detail-chords": "There are instruments that play melodies (<strong>tunes</strong>), and instruments that play <strong>chords</strong> (guitar, bouzouki, the left hand of the accordion). Because the chords are often made up on the spot, you can end up playing something different from the others, so it is often better to have <strong>1 person</strong> playing chords. If the chords are written down somewhere, everyone plays the same thing, and then it does work.",
+  "detail-chords": "There are instruments that play <strong>melodies</strong> (tunes), and instruments that play <strong>chords</strong> (guitar, bouzouki, the left hand of the accordion). Because the chords are often made up on the spot, you can end up playing something different from the others, so it is often better to have <strong>1 person</strong> playing chords. If the chords are written down somewhere, everyone plays the same thing, and then it does work to have several people playing chords.",
   "heading-prepare": "Should I prepare anything?",
   "detail-prepare": "It is certainly a good idea to <strong>practise some tunes</strong> before you come to the session. There will not be much time to teach you the tunes. Someone might be able to help you briefly, but the focus is on <strong>playing together</strong>.",
   "detail-tune-link": "<a href=\"tunes.html\" target=\"_blank\" rel=\"noopener noreferrer\">We have put a collection of tunes here!</a>",
@@ -33,7 +33,7 @@ const englishCopy = {
   "heading-amplification": "Should I bring my electric guitar",
   "detail-amplification": "This folk session is meant for acoustic instruments. There will be no amplifiers or microphones.",
   "heading-who": "Who are we?",
-  "detail-who": "We are a group of musician friends who are active in folk music in the Netherlands. We often play together and in different bands, and we perform all over the country. Pieter (guitar) and Ide (violin) play together in <a href=\"https://odevare.com\">Odevare</a>, studied at the Utrecht Conservatory, and Boet Hoitink plays in <a href=\"https://www.youtube.com/watch?v=BFdNJ7wBQdg\">Celtic Constellation</a>. We also make music together regularly. We also have experience teaching. But we are also looking for another, playful way to share the music with others. Where you can figure things out and discover them together a bit, and we think this is the perfect setting for that.",
+  "detail-who": "We are a group of musician friends who are active in folk music in the Netherlands. We often play together and in different bands, and we perform all over the country. Pieter (guitar) and Ide (violin) play together in <a href=\"https://odevare.com\">Odevare</a> and studied at the Utrecht Conservatory. Boet Hoitink plays in <a href=\"https://www.youtube.com/watch?v=BFdNJ7wBQdg\">Celtic Constellation</a>. We also have experience teaching. But we are also looking for another, playful way to share the music with others. So that you can figure things out and discover them together a bit, and we think this is the perfect setting for that.",
   "heading-signup": "Sign up",
   "label-name": "Name *",
   "label-email": "Email *",
@@ -42,7 +42,7 @@ const englishCopy = {
   "label-note": "Note",
   "form-submit": "Send signup",
   "signup-error": "Sending did not work. Please email <a href=\"mailto:pieterwattel@gmail.com\">pieterwattel@gmail.com</a>.",
-  "signup-thanks": "Thank you. Your signup has been noted."
+  "signup-thanks": "Thank you. Your signup has been noted. Cancellations can be sent to <a href=\"mailto:pieterwattel@gmail.com\">pieterwattel@gmail.com</a>."
 };
 const dutchCopy = new Map();
 let language = "nl";
@@ -66,7 +66,7 @@ function setLanguage(nextLanguage) {
     }
     element.innerHTML = text;
   });
-  translateButton.textContent = nextLanguage === "en" ? "vertaal naar Nederlands" : "translate to english";
+  translateButton.textContent = nextLanguage === "en" ? "vertaal naar Nederlands" : "translate to English";
 }
 
 translateButton.addEventListener("click", () => {
