@@ -2,15 +2,15 @@ const SIGNUP_ENDPOINT = "https://script.google.com/macros/s/AKfycbzHjwtOrjf4AA1K
 
 const translateButton = document.querySelector("#translate-button");
 const englishCopy = {
-  "fact-what-label": "what",
+  "fact-what-label": "What",
   "fact-what-value": "folk session Utrecht, mainly Irish",
-  "fact-when-label": "when",
+  "fact-when-label": "When",
   "fact-when-value": "21 November 15:00 - 16:30",
-  "fact-where-label": "where",
+  "fact-where-label": "Where",
   "fact-where-link": "Domplein 4, Utrecht",
-  "fact-cost-label": "cost",
+  "fact-cost-label": "Cost",
   "fact-cost-value": "free",
-  "fact-prompt-value": "sign up here &gt;&gt;",
+  "fact-prompt-value": "Sign up here &gt;&gt;",
   "back-label": "back",
   "signup-button": "SIGN UP",
   "alt-bodhran": "Bodhrán",
