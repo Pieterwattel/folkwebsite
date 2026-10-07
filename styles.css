@@ -178,6 +178,11 @@ body {
   background: #641825;
 }
 
+h2{
+  width: fit-content;
+  background-color: #FDC81E;
+}
+
 #detail-panel {
   flex: 1 1 auto;
   min-height: 0;
