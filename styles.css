@@ -71,9 +71,16 @@ body {
   overflow: hidden;
 }
 
-#translate-button {
-  align-self: flex-start;
-  margin: 1.4vh 2% 0 2.6%;
+.header-tools {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 1.4vh 2.6% 0 2.6%;
+}
+
+.translate-button {
+  margin: 0;
   padding: 0.4em 0.75em;
   border: 1px solid #111;
   background: #fff;
@@ -81,11 +88,13 @@ body {
   font-family: inherit;
   font-size: clamp(14px, 1vw, 18px);
   font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none;
   cursor: pointer;
 }
 
-#translate-button:hover,
-#translate-button:focus-visible {
+.translate-button:hover,
+.translate-button:focus-visible {
   background: #f7f7f5;
 }
 
@@ -291,8 +300,11 @@ h2{
     max-height: 90%;
   }
 
-  #translate-button {
-    margin: 0.55rem 0.55rem 0 0.65rem;
+  .header-tools {
+    margin: 0.55rem 0.65rem 0;
+  }
+
+  .translate-button {
     font-size: 0.95rem;
   }
 
