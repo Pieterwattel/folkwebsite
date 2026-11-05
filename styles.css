@@ -334,3 +334,137 @@ h2{
     font-size: 1.1rem;
   }
 }
+
+html:has(body.tunes-page),
+body.tunes-page {
+  height: auto;
+  min-height: 100%;
+  overflow: visible;
+}
+
+body.tunes-page {
+  --tune-column: 860px;
+  background: #ebece8;
+}
+
+.tunes-stripe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: max(0px, calc(50% - var(--tune-column) / 2 - 1em));
+  height: 100vh;
+  pointer-events: none;
+  background-image: url("textile.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.tunes-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #fff;
+  padding: 1rem 1.25rem 1.15rem;
+}
+
+.tunes-back {
+  margin: 0 0 0.65rem;
+}
+
+.tunes-back a,
+.tune-card a {
+  color: #7a1f2b;
+  font-weight: 700;
+}
+
+.tunes-heading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+body.tunes-page h1 {
+  width: fit-content;
+  margin: 0;
+  padding: 0.08em 0.22em;
+  background-color: #FDC81E;
+  color: #000;
+  font-size: 1.7rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.tunes-level {
+  margin: 0;
+  background: none;
+  color: #000;
+  font-size: 1.7rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+body.tunes-page h2 {
+  margin: 0 0 0.75rem;
+  padding: 0.06em 0.2em;
+  color: #000;
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.tunes-main {
+  position: relative;
+  z-index: 1;
+  padding: 1.25rem 1.1rem 2.5rem;
+}
+
+.tune-level {
+  width: min(var(--tune-column), 100%);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.tune-level + .tune-level {
+  margin-top: 1.6rem;
+}
+
+.tune-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.tune-card {
+  width: 100%;
+  min-width: 0;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+  padding: 0.75rem 0.75rem 0.9rem;
+}
+
+.tune-card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.tune-card img + .tune-link {
+  margin-top: 0.65rem;
+}
+
+.tune-link {
+  display: inline-block;
+}
+
+@media (max-width: 560px) {
+  .tunes-bar,
+  .tunes-main {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+}

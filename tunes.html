@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tunes</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="tunes-page">
+  <div class="tunes-stripe" aria-hidden="true"></div>
+  <header class="tunes-bar">
+    <p class="tunes-back"><a href="index.html">terug naar de folksessie</a></p>
+    <div class="tunes-heading">
+      <h1>Tunes</h1>
+      <p class="tunes-level" id="tunes-level">Level I</p>
+    </div>
+  </header>
+
+  <main class="tunes-main">
+    <section class="tune-level" data-level="Level I">
+      <h2>Level I</h2>
+      <div class="tune-row">
+        <article class="tune-card">
+          <img src="tunebook/Inisheer.png" alt="Inisheer">
+          <a class="tune-link" href="https://thesession.org/tunes/211" target="_blank" rel="noopener noreferrer">Inisheer op thesession.org (audio)</a>
+        </article>
+        <article class="tune-card">
+          <img src="tunebook/The%20Kesh.png" alt="The Kesh">
+          <a class="tune-link" href="https://thesession.org/tunes/55" target="_blank" rel="noopener noreferrer">The Kesh op thesession.org (audio)</a>
+        </article>
+        <article class="tune-card">
+          <img src="tunebook/Egan%27s%20Polka.png" alt="Egan's Polka">
+          <a class="tune-link" href="https://thesession.org/tunes/39" target="_blank" rel="noopener noreferrer">Egan's Polka op thesession.org (audio)</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="tune-level" data-level="Level II">
+      <h2>Level II</h2>
+      <div class="tune-row">
+        <article class="tune-card">
+          <img src="tunebook/John%20Ryan%27s.png" alt="John Ryan's">
+          <a class="tune-link" href="https://thesession.org/tunes/441" target="_blank" rel="noopener noreferrer">John Ryan's op thesession.org (audio)</a>
+        </article>
+        <article class="tune-card">
+          <img src="tunebook/The%20Butterfly.png" alt="The Butterfly">
+          <a class="tune-link" href="https://thesession.org/tunes/10" target="_blank" rel="noopener noreferrer">The Butterfly op thesession.org (audio)</a>
+        </article>
+        <article class="tune-card">
+          <img src="tunebook/Out%20on%20the%20Ocean.png" alt="Out on the Ocean">
+          <a class="tune-link" href="https://thesession.org/tunes/108" target="_blank" rel="noopener noreferrer">Out on the Ocean op thesession.org (audio)</a>
+        </article>
+        <article class="tune-card">
+          <img src="tunebook/Morrison%27s.png" alt="Morrison's">
+          <a class="tune-link" href="https://thesession.org/tunes/71" target="_blank" rel="noopener noreferrer">Morrison's op thesession.org (audio)</a>
+        </article>
+        <article class="tune-card">
+          <img src="tunebook/The%20Silver%20Spear.png" alt="The Silver Spear">
+          <a class="tune-link" href="https://thesession.org/tunes/182" target="_blank" rel="noopener noreferrer">The Silver Spear op thesession.org (audio)</a>
+        </article>
+      </div>
+    </section>
+
+    <section class="tune-level" data-level="Level III">
+      <h2>Level III</h2>
+      <div class="tune-row">
+        <article class="tune-card">
+          <img src="tunebook/Cooley%27s.png" alt="Cooley's">
+          <a class="tune-link" href="https://thesession.org/tunes/1" target="_blank" rel="noopener noreferrer">Cooley's op thesession.org (audio)</a>
+        </article>
+        <article class="tune-card">
+          <img src="tunebook/Vankarin.png" alt="Vankarin">
+          <a class="tune-link" href="https://thesession.org/tunes/7962" target="_blank" rel="noopener noreferrer">Vankarin op thesession.org (audio)</a>
+        </article>
+        <article class="tune-card">
+          <img src="tunebook/Banish%20Misfortune.png" alt="Banish Misfortune">
+          <a class="tune-link" href="https://thesession.org/tunes/9" target="_blank" rel="noopener noreferrer">Banish Misfortune op thesession.org (audio)</a>
+        </article>
+        <article class="tune-card">
+          <img src="tunebook/Return%20from%20Helsinki.png" alt="Return to Helsinki">
+          <a class="tune-link" href="https://thesession.org/tunes/11091" target="_blank" rel="noopener noreferrer">Return to Helsinki op thesession.org (audio)</a>
+        </article>
+        <article class="tune-card">
+          <img src="tunebook/Drowsy%20Maggie.png" alt="Drowsy Maggie">
+          <a class="tune-link" href="https://thesession.org/tunes/27" target="_blank" rel="noopener noreferrer">Drowsy Maggie op thesession.org (audio)</a>
+        </article>
+        <article class="tune-card">
+          <img src="tunebook/Superfly.png" alt="Superfly">
+          <a class="tune-link" href="https://thesession.org/tunes/9942" target="_blank" rel="noopener noreferrer">Superfly op thesession.org (audio)</a>
+        </article>
+        <article class="tune-card">
+          <img src="tunebook/Mouse%20in%20the%20Kitchen.png" alt="The Mouse in the Kitchen">
+          <a class="tune-link" href="https://thesession.org/tunes/6655" target="_blank" rel="noopener noreferrer">The Mouse in the Kitchen op thesession.org (audio)</a>
+        </article>
+      </div>
+    </section>
+  </main>
+  <script>
+    (function () {
+      var label = document.getElementById("tunes-level");
+      var levels = document.querySelectorAll(".tune-level");
+      var bar = document.querySelector(".tunes-bar");
+
+      function updateLevel() {
+        var edge = bar.getBoundingClientRect().bottom;
+        var name = levels[0].getAttribute("data-level");
+        for (var i = 0; i < levels.length; i++) {
+          if (levels[i].getBoundingClientRect().top <= edge + 1) {
+            name = levels[i].getAttribute("data-level");
+          }
+        }
+        label.textContent = name;
+      }
+
+      updateLevel();
+      window.addEventListener("scroll", updateLevel, { passive: true });
+      window.addEventListener("resize", updateLevel);
+    })();
+  </script>
+</body>
+</html>
