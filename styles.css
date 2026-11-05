@@ -366,11 +366,26 @@ body.tunes-page {
   z-index: 0;
   width: max(0px, calc(50% - var(--tune-column) / 2 - 1em));
   height: 100vh;
+  overflow: hidden;
   pointer-events: none;
+}
+
+.tunes-stripe-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   background-image: url("textile.jpg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tunes-stripe-image {
+    transform: none;
+  }
 }
 
 .tunes-bar {

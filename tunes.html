@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="tunes-page">
-  <div class="tunes-stripe" aria-hidden="true"></div>
+  <div class="tunes-stripe" aria-hidden="true"><div class="tunes-stripe-image"></div></div>
   <header class="tunes-bar">
     <p class="tunes-back"><a href="index.html">terug naar de folksessie</a></p>
     <div class="tunes-heading">
@@ -100,6 +100,26 @@
       var label = document.getElementById("tunes-level");
       var levels = document.querySelectorAll(".tune-level");
       var bar = document.querySelector(".tunes-bar");
+      var stripeImage = document.querySelector(".tunes-stripe-image");
+      var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+      function updateStripe() {
+        if (!stripeImage) {
+          return;
+        }
+        if (reduceMotion.matches) {
+          stripeImage.style.height = "100%";
+          stripeImage.style.transform = "none";
+          return;
+        }
+        var headerHeight = bar.getBoundingClientRect().height;
+        var maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        var progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+        var travel = headerHeight / 3;
+        var offset = Math.max(0, Math.min(travel, progress * travel));
+        stripeImage.style.height = "calc(100% + " + travel + "px)";
+        stripeImage.style.transform = "translateY(" + (-offset) + "px)";
+      }
 
       function updateLevel() {
         var edge = bar.getBoundingClientRect().bottom;
@@ -112,9 +132,18 @@
         label.textContent = name;
       }
 
+      function onScroll() {
+        updateLevel();
+        updateStripe();
+      }
+
       updateLevel();
-      window.addEventListener("scroll", updateLevel, { passive: true });
-      window.addEventListener("resize", updateLevel);
+      updateStripe();
+      window.addEventListener("scroll", onScroll, { passive: true });
+      window.addEventListener("resize", onScroll);
+      if (reduceMotion.addEventListener) {
+        reduceMotion.addEventListener("change", updateStripe);
+      }
     })();
   </script>
 </body>
