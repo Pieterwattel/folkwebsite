@@ -487,6 +487,16 @@ body.tunes-page h2 {
   display: inline-block;
 }
 
+.more-tunes {
+  width: min(var(--tune-column), 100%);
+  margin: 1.6rem auto 0;
+}
+
+.more-tunes a {
+  color: #7a1f2b;
+  font-weight: 700;
+}
+
 @media (max-width: 560px) {
   .tunes-bar,
   .tunes-main {
