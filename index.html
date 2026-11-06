@@ -7,6 +7,15 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <script>if (location.hash === "#tunes") document.body.classList.add("tunes-page");</script>
+  <button class="audio-toggle" id="audio-toggle" type="button" aria-pressed="false" aria-label="muziek afspelen">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+      <path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"></path>
+      <path class="audio-waves" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9.5a3.5 3.5 0 010 5"></path>
+      <path class="audio-slash" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5 19L19 5"></path>
+    </svg>
+  </button>
+  <audio id="bg-audio" src="The%20Kesh%20JigGive%20Us%20a%20Drink%20of%20WaterThe%20Flower%20of%20the%20FlockFamous%20Ballymote.webm.webm" loop preload="auto"></audio>
   <div class="page" id="page">
     <section class="fabric-panel" id="fabric-panel">
       <figure class="instrument" id="bodhran">
@@ -27,7 +36,7 @@
       <header class="event-header" id="event-header">
         <div class="header-tools">
           <button class="translate-button" id="translate-button" type="button">translate to English</button>
-          <a class="translate-button" id="learn-music" href="tunes.html">leer de muziek hier</a>
+          <a class="translate-button" id="learn-music" href="#tunes">leer de muziek hier</a>
         </div>
         <div class="event-facts" id="event-facts">
           <p class="fact" id="fact-what">
@@ -82,7 +91,7 @@
 
         <h2 class="detail-heading" id="heading-how">Hoe werkt het?</h2>
         <p class="detail" id="detail-tunes">
-          Folkmuziek bestaat in basis uit <strong>“tunes”</strong> melodieën die meerdere mensen kennen, en dan samen spelen. Om ervoor te zorgen dat je sowieso iets hebt om te spelen hebben we <a href="tunes.html" target="_blank" rel="noopener noreferrer">wat tunes voor je verzameld</a>. Maar als je al bezig bent met volksmuziek en je neemt zelf wat tunes mee, heel erg leuk! Er is vast iemand die met je mee kan spelen.
+          Folkmuziek bestaat in basis uit <strong>“tunes”</strong> melodieën die meerdere mensen kennen, en dan samen spelen. Om ervoor te zorgen dat je sowieso iets hebt om te spelen hebben we <a href="#tunes">wat tunes voor je verzameld</a>. Maar als je al bezig bent met volksmuziek en je neemt zelf wat tunes mee, heel erg leuk! Er is vast iemand die met je mee kan spelen.
         </p>
         <p class="detail" id="detail-chords">
           Er zijn instrumenten die <strong>melodieën</strong> spelen (tunes), en er zijn instrumenten die <strong>akkoorden</strong> spelen (gitaar, bouzouki, linkerhand van de accordeon). Omdat de akkoorden vaak ter plekke bedacht worden, kun je iets anders spelen dan de anderen, daarom is het vaak beter om <strong>1 persoon</strong> te hebben die akkoorden speelt. Als de akkoorden ergens staan opgeschreven speelt iedereen hetzelfde, en dan werkt het dus wel om met meerdere mensen akkoorden te spelen.
@@ -96,7 +105,7 @@
           Het is zeker een goed idee om alvast <strong>wat tunes te oefenen</strong> voordat je naar de sessie komt. Er zal niet veel tijd zijn om je de tunes aan te leren. Iemand kan je misschien wel even helpen, maar de focus ligt op <strong>samen spelen</strong>.
         </p>
         <p class="detail" id="detail-tune-link">
-          <a href="tunes.html" target="_blank" rel="noopener noreferrer">Hier hebben we een verzameling tunes neergezet!</a>
+          <a href="#tunes">Hier hebben we een verzameling tunes neergezet!</a>
         </p>
 
         <h2 class="detail-heading" id="heading-experience">Wat als ik al meer ervaring heb</h2>
@@ -147,6 +156,95 @@
       </article>
     </section>
   </div>
-  <script src="script.js?v=30"></script>
+
+  <div id="tunebook">
+    <div class="tunes-stripe" aria-hidden="true"><div class="tunes-stripe-image"></div></div>
+    <header class="tunes-bar">
+      <p class="tunes-back"><a href="#session">terug naar de folksessie</a></p>
+      <div class="tunes-heading">
+        <h1>Tunes</h1>
+        <p class="tunes-level" id="tunes-level">Level I</p>
+      </div>
+    </header>
+    <main class="tunes-main">
+      <section class="tune-level" data-level="Level I">
+        <h2>Level I</h2>
+        <div class="tune-row">
+          <article class="tune-card">
+            <img src="tunebook/Inisheer.png" alt="Inisheer">
+            <a class="tune-link" href="https://thesession.org/tunes/211" target="_blank" rel="noopener noreferrer">Inisheer op thesession.org (audio)</a>
+          </article>
+          <article class="tune-card">
+            <img src="tunebook/The%20Kesh.png" alt="The Kesh">
+            <a class="tune-link" href="https://thesession.org/tunes/55" target="_blank" rel="noopener noreferrer">The Kesh op thesession.org (audio)</a>
+          </article>
+          <article class="tune-card">
+            <img src="tunebook/Egan%27s%20Polka.png" alt="Egan's Polka">
+            <a class="tune-link" href="https://thesession.org/tunes/39" target="_blank" rel="noopener noreferrer">Egan's Polka op thesession.org (audio)</a>
+          </article>
+        </div>
+      </section>
+      <section class="tune-level" data-level="Level II">
+        <h2>Level II</h2>
+        <div class="tune-row">
+          <article class="tune-card">
+            <img src="tunebook/John%20Ryan%27s.png" alt="John Ryan's">
+            <a class="tune-link" href="https://thesession.org/tunes/441" target="_blank" rel="noopener noreferrer">John Ryan's op thesession.org (audio)</a>
+          </article>
+          <article class="tune-card">
+            <img src="tunebook/The%20Butterfly.png" alt="The Butterfly">
+            <a class="tune-link" href="https://thesession.org/tunes/10" target="_blank" rel="noopener noreferrer">The Butterfly op thesession.org (audio)</a>
+          </article>
+          <article class="tune-card">
+            <img src="tunebook/Out%20on%20the%20Ocean.png" alt="Out on the Ocean">
+            <a class="tune-link" href="https://thesession.org/tunes/108" target="_blank" rel="noopener noreferrer">Out on the Ocean op thesession.org (audio)</a>
+          </article>
+          <article class="tune-card">
+            <img src="tunebook/Morrison%27s.png" alt="Morrison's">
+            <a class="tune-link" href="https://thesession.org/tunes/71" target="_blank" rel="noopener noreferrer">Morrison's op thesession.org (audio)</a>
+          </article>
+          <article class="tune-card">
+            <img src="tunebook/The%20Silver%20Spear.png" alt="The Silver Spear">
+            <a class="tune-link" href="https://thesession.org/tunes/182" target="_blank" rel="noopener noreferrer">The Silver Spear op thesession.org (audio)</a>
+          </article>
+        </div>
+      </section>
+      <section class="tune-level" data-level="Level III">
+        <h2>Level III</h2>
+        <div class="tune-row">
+          <article class="tune-card">
+            <img src="tunebook/Cooley%27s.png" alt="Cooley's">
+            <a class="tune-link" href="https://thesession.org/tunes/1" target="_blank" rel="noopener noreferrer">Cooley's op thesession.org (audio)</a>
+          </article>
+          <article class="tune-card">
+            <img src="tunebook/Vankarin.png" alt="Vankarin">
+            <a class="tune-link" href="https://thesession.org/tunes/7962" target="_blank" rel="noopener noreferrer">Vankarin op thesession.org (audio)</a>
+          </article>
+          <article class="tune-card">
+            <img src="tunebook/Banish%20Misfortune.png" alt="Banish Misfortune">
+            <a class="tune-link" href="https://thesession.org/tunes/9" target="_blank" rel="noopener noreferrer">Banish Misfortune op thesession.org (audio)</a>
+          </article>
+          <article class="tune-card">
+            <img src="tunebook/Return%20from%20Helsinki.png" alt="Return to Helsinki">
+            <a class="tune-link" href="https://thesession.org/tunes/11091" target="_blank" rel="noopener noreferrer">Return to Helsinki op thesession.org (audio)</a>
+          </article>
+          <article class="tune-card">
+            <img src="tunebook/Drowsy%20Maggie.png" alt="Drowsy Maggie">
+            <a class="tune-link" href="https://thesession.org/tunes/27" target="_blank" rel="noopener noreferrer">Drowsy Maggie op thesession.org (audio)</a>
+          </article>
+          <article class="tune-card">
+            <img src="tunebook/Superfly.png" alt="Superfly">
+            <a class="tune-link" href="https://thesession.org/tunes/9942" target="_blank" rel="noopener noreferrer">Superfly op thesession.org (audio)</a>
+          </article>
+          <article class="tune-card">
+            <img src="tunebook/Mouse%20in%20the%20Kitchen.png" alt="The Mouse in the Kitchen">
+            <a class="tune-link" href="https://thesession.org/tunes/6655" target="_blank" rel="noopener noreferrer">The Mouse in the Kitchen op thesession.org (audio)</a>
+          </article>
+        </div>
+      </section>
+      <p class="more-tunes"><a href="https://thesession.org/tunes/popular" target="_blank" rel="noopener noreferrer">meer tunes (geordend van meest bekend naar minder bekend)</a></p>
+    </main>
+  </div>
+  <script src="script.js?v=31"></script>
 </body>
 </html>

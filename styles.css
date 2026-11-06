@@ -354,6 +354,43 @@ body.tunes-page {
   overflow: visible;
 }
 
+#tunebook {
+  display: none;
+}
+
+body.tunes-page #page {
+  display: none;
+}
+
+body.tunes-page #tunebook {
+  display: block;
+}
+
+.audio-toggle {
+  position: fixed;
+  top: 0.55rem;
+  left: 0.55rem;
+  z-index: 40;
+  width: 2.4rem;
+  height: 2.4rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #111;
+  background: #fff;
+  color: #111;
+  cursor: pointer;
+}
+
+.audio-toggle .audio-slash {
+  display: block;
+}
+
+.audio-toggle.is-playing .audio-slash {
+  display: none;
+}
+
 body.tunes-page {
   --tune-column: 860px;
   background: #ebece8;
@@ -393,7 +430,7 @@ body.tunes-page {
   top: 0;
   z-index: 5;
   background: #fff;
-  padding: 1rem 1.25rem 1.15rem;
+  padding: 1rem 1.25rem 1.15rem 3.4rem;
 }
 
 .tunes-back {

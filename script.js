@@ -23,12 +23,12 @@ const englishCopy = {
   "detail-signup": "If you would like to come, please sign up. Once we have a signup, we will assume that you are coming. If it turns out you cannot make it, please let us know at <a href=\"mailto:pieterwattel@gmail.com\">pieterwattel@gmail.com</a>",
   "detail-styles": "We will mainly play <strong>Irish tunes</strong>, but there is certainly room for other styles of folk music. We are open to all sorts of things.",
   "heading-how": "How does it work?",
-  "detail-tunes": "Folk music is basically made up of <strong>“tunes”</strong>, melodies that several people know and then play together. To make sure you have something to play, we have <a href=\"tunes.html\" target=\"_blank\" rel=\"noopener noreferrer\">collected some tunes for you</a>. But if you are already playing folk music and you bring some tunes yourself, that is very welcome! There is bound to be someone who can play along with you.",
+  "detail-tunes": "Folk music is basically made up of <strong>“tunes”</strong>, melodies that several people know and then play together. To make sure you have something to play, we have <a href=\"#tunes\">collected some tunes for you</a>. But if you are already playing folk music and you bring some tunes yourself, that is very welcome! There is bound to be someone who can play along with you.",
   "detail-chords": "There are instruments that play <strong>melodies</strong> (tunes), and instruments that play <strong>chords</strong> (guitar, bouzouki, the left hand of the accordion). Because the chords are often made up on the spot, you can end up playing something different from the others, so it is often better to have <strong>1 person</strong> playing chords. If the chords are written down somewhere, everyone plays the same thing, and then it does work to have several people playing chords.",
   "detail-sets": "When someone starts playing a tune, they start a <strong>set</strong>, 1 or more tunes in a row. You usually play a tune 3 times through, and then the leader of the set starts the next tune. If you don't know the tune, don't play along, or play very quietly in the background, so the others can still hear the music well.",
   "heading-prepare": "Should I prepare anything?",
   "detail-prepare": "It is certainly a good idea to <strong>practise some tunes</strong> before you come to the session. There will not be much time to teach you the tunes. Someone might be able to help you briefly, but the focus is on <strong>playing together</strong>.",
-  "detail-tune-link": "<a href=\"tunes.html\" target=\"_blank\" rel=\"noopener noreferrer\">We have put a collection of tunes here!</a>",
+  "detail-tune-link": "<a href=\"#tunes\">We have put a collection of tunes here!</a>",
   "heading-experience": "What if I already have more experience",
   "detail-experience": "If you are more experienced, you are very welcome too. We think it is especially interesting to have <strong>a mix of levels</strong>, so we also learn from each other. Some tunes will be played calmly, so everyone can join in, and now and then mainly experienced players will play, on less familiar or faster tunes. We like that both of those things can happen!",
   "heading-amplification": "Should I bring my electric guitar",
@@ -70,6 +70,9 @@ function setLanguage(nextLanguage) {
     element.innerHTML = text;
   });
   translateButton.textContent = nextLanguage === "en" ? "vertaal naar Nederlands" : "translate to English";
+  if (typeof showAudioState === "function") {
+    showAudioState();
+  }
 }
 
 translateButton.addEventListener("click", () => {
@@ -156,6 +159,9 @@ const instruments = [
 ];
 
 document.addEventListener("wheel", (event) => {
+  if (document.body.classList.contains("tunes-page")) {
+    return;
+  }
   if (detailPanel.contains(event.target)) {
     return;
   }
@@ -211,3 +217,97 @@ function placeInstruments() {
 
 detailPanel.addEventListener("scroll", placeInstruments, { passive: true });
 window.addEventListener("scroll", placeInstruments, { passive: true });
+
+const audio = document.querySelector("#bg-audio");
+const audioToggle = document.querySelector("#audio-toggle");
+
+function audioLabel() {
+  const playing = audio && !audio.paused;
+  if (language === "en") {
+    return playing ? "pause music" : "play music";
+  }
+  return playing ? "muziek pauzeren" : "muziek afspelen";
+}
+
+function showAudioState() {
+  const playing = audio && !audio.paused;
+  audioToggle.classList.toggle("is-playing", playing);
+  audioToggle.setAttribute("aria-pressed", playing ? "true" : "false");
+  audioToggle.setAttribute("aria-label", audioLabel());
+}
+
+audioToggle.addEventListener("click", () => {
+  if (audio.paused) {
+    audio.play().then(showAudioState).catch(showAudioState);
+    return;
+  }
+  audio.pause();
+  showAudioState();
+});
+
+audio.addEventListener("play", showAudioState);
+audio.addEventListener("pause", showAudioState);
+
+audio.play().then(showAudioState).catch(showAudioState);
+
+const label = document.querySelector("#tunes-level");
+const levels = document.querySelectorAll(".tune-level");
+const bar = document.querySelector(".tunes-bar");
+const stripeImage = document.querySelector(".tunes-stripe-image");
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+function updateStripe() {
+  if (!stripeImage || !document.body.classList.contains("tunes-page")) {
+    return;
+  }
+  if (reduceMotion.matches) {
+    stripeImage.style.height = "100%";
+    stripeImage.style.transform = "none";
+    return;
+  }
+  const headerHeight = bar.getBoundingClientRect().height;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+  const travel = headerHeight / 3;
+  const offset = Math.max(0, Math.min(travel, progress * travel));
+  stripeImage.style.height = "calc(100% + " + travel + "px)";
+  stripeImage.style.transform = "translateY(" + (-offset) + "px)";
+}
+
+function updateLevel() {
+  if (!label || !levels.length || !document.body.classList.contains("tunes-page")) {
+    return;
+  }
+  const edge = bar.getBoundingClientRect().bottom;
+  let name = levels[0].getAttribute("data-level");
+  levels.forEach((level) => {
+    if (level.getBoundingClientRect().top <= edge + 1) {
+      name = level.getAttribute("data-level");
+    }
+  });
+  label.textContent = name;
+}
+
+function applyView() {
+  const tunes = location.hash === "#tunes";
+  document.body.classList.toggle("tunes-page", tunes);
+  if (tunes) {
+    window.scrollTo(0, 0);
+  }
+  updateLevel();
+  updateStripe();
+}
+
+window.addEventListener("hashchange", applyView);
+window.addEventListener("scroll", () => {
+  updateLevel();
+  updateStripe();
+}, { passive: true });
+window.addEventListener("resize", () => {
+  updateLevel();
+  updateStripe();
+});
+if (reduceMotion.addEventListener) {
+  reduceMotion.addEventListener("change", updateStripe);
+}
+applyView();
