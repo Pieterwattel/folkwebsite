@@ -247,8 +247,7 @@ audioToggle.addEventListener("click", () => {
 
 audio.addEventListener("play", showAudioState);
 audio.addEventListener("pause", showAudioState);
-
-audio.play().then(showAudioState).catch(showAudioState);
+showAudioState();
 
 const label = document.querySelector("#tunes-level");
 const levels = document.querySelectorAll(".tune-level");
