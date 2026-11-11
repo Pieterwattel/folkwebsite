@@ -41,7 +41,7 @@ const englishCopy = {
   "detail-amplification": "This folk session is meant for acoustic instruments. There will be no amplifiers or microphones.",
   "heading-who": "Who are we?",
   "detail-who": "We are a group of musician friends who are active in folk music in the Netherlands. We often play together and in different bands, and we perform all over the country. <a href=\"https://pieterwattel.nl\">Pieter</a> (guitar) and Ide (violin) play together in <a href=\"https://odevare.com\">Odevare</a> and studied at the Utrecht Conservatory. Boet Hoitink plays in <a href=\"https://www.youtube.com/watch?v=BFdNJ7wBQdg\">Celtic Constellation</a>. We also have experience teaching. But we are also looking for another, playful way to share the music with others. So that you can figure things out and discover them together a bit, and we think this is the perfect setting for that.",
-  "heading-signup": "Sign up",
+  "heading-signup": "Sign up --SESSION IS FULL-- Please do sign up however! We would like to keep you updated about future sessions",
   "signup-stay": "You can also sign up if you are not coming this time, but would like to stay informed about a next session. Please mention that in the note.",
   "label-name": "Name *",
   "label-email": "Email *",
