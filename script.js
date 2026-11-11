@@ -1,6 +1,6 @@
 const SIGNUP_ENDPOINT = "https://script.google.com/macros/s/AKfycbzHjwtOrjf4AA1KqaM25kMwbx4ET1vx_bOAGJqNGJwNBbP0h5flHlL7jNj0wjjJoFKV/exec";
 
-const translateButton = document.querySelector("#translate-button");
+const translateButtons = document.querySelectorAll("[data-translate]");
 const englishCopy = {
   "fact-what-label": "What",
   "fact-what-value": "folk session Utrecht, mainly Irish",
@@ -35,23 +35,25 @@ const englishCopy = {
   "detail-too-hard-mail": "If you still cannot quite work it out, you can email me at <a href=\"mailto:pieterwattel@gmail.com\">pieterwattel@gmail.com</a>",
   "detail-too-hard-first": "Also, the first tune is definitely the hardest. It is definitely not easy to learn your first tune. Learning it is a real achievement that deserves some recognition. Once you have Inisheer though, I am convinced you could learn Egan's Polka. Once you have that one you already know 2 tunes! Now you are basically in.",
   "tunebook-credit": "Many of the tunes, as they are written here, come from this tunebook. It also has extra information about the tunes, and the explanation of how sessions work is well worth reading. Credits to Tijn Berends. <a href=\"The-Dutch-Session-Tunebook-2nd-ed.pdf\" download>Download The Dutch Session Tunebook (2nd edition)</a>",
-  "heading-experience": "What if I already have more experience",
+  "heading-experience": "What if I already have more experience?",
   "detail-experience": "If you are more experienced, you are very welcome too. We think it is especially interesting to have <strong>a mix of levels</strong>, so we also learn from each other. Some tunes will be played calmly, so everyone can join in, and now and then mainly experienced players will play, on less familiar or faster tunes. We like that both of those things can happen!",
-  "heading-amplification": "Should I bring my electric guitar",
+  "heading-amplification": "Should I bring my electric guitar?",
   "detail-amplification": "This folk session is meant for acoustic instruments. There will be no amplifiers or microphones.",
   "heading-who": "Who are we?",
   "detail-who": "We are a group of musician friends who are active in folk music in the Netherlands. We often play together and in different bands, and we perform all over the country. <a href=\"https://pieterwattel.nl\">Pieter</a> (guitar) and Ide (violin) play together in <a href=\"https://odevare.com\">Odevare</a> and studied at the Utrecht Conservatory. Boet Hoitink plays in <a href=\"https://www.youtube.com/watch?v=BFdNJ7wBQdg\">Celtic Constellation</a>. We also have experience teaching. But we are also looking for another, playful way to share the music with others. So that you can figure things out and discover them together a bit, and we think this is the perfect setting for that.",
-  "heading-signup": "Sign up --SESSION IS FULL-- Please do sign up however! We would like to keep you updated about future sessions",
-  "signup-stay": "You can also sign up if you are not coming this time, but would like to stay informed about a next session. Please mention that in the note.",
+  "heading-signup": "Sign up --SESSION IS FULL-- Do sign up anyway! We would love to keep you posted about the next session",
+  "signup-stay": "You can also sign up if you are not coming this time, but would like to stay informed about a next session. Please mention that in the comment.",
   "label-name": "Name *",
   "label-email": "Email *",
   "label-instrument": "Instrument *",
   "label-experience": "How long have you been playing *",
-  "label-note": "Note",
+  "label-note": "Comment",
   "form-submit": "Send signup",
   "signup-error": "Sending did not work. Please email <a href=\"mailto:pieterwattel@gmail.com\">pieterwattel@gmail.com</a>.",
   "signup-thanks": "Thank you. Your signup has been noted. Cancellations can be sent to <a href=\"mailto:pieterwattel@gmail.com\">pieterwattel@gmail.com</a>.",
-  "learn-music": "learn the music here"
+  "learn-music": "learn the music here",
+  "tunes-back-link": "back to the folk session",
+  "more-tunes-link": "more tunes (sorted from most to least popular)"
 };
 const dutchCopy = new Map();
 let language = "nl";
@@ -75,14 +77,23 @@ function setLanguage(nextLanguage) {
     }
     element.innerHTML = text;
   });
-  translateButton.textContent = nextLanguage === "en" ? "vertaal naar Nederlands" : "translate to English";
+  document.querySelectorAll(".tune-link").forEach((link) => {
+    link.textContent = nextLanguage === "en"
+      ? link.textContent.replace(" op thesession.org", " on thesession.org")
+      : link.textContent.replace(" on thesession.org", " op thesession.org");
+  });
+  translateButtons.forEach((button) => {
+    button.textContent = nextLanguage === "en" ? "vertaal naar Nederlands" : "translate to English";
+  });
   if (typeof showAudioState === "function") {
     showAudioState();
   }
 }
 
-translateButton.addEventListener("click", () => {
-  setLanguage(language === "nl" ? "en" : "nl");
+translateButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    setLanguage(language === "nl" ? "en" : "nl");
+  });
 });
 
 const detailPanel = document.querySelector("#detail-panel");
@@ -91,7 +102,6 @@ const signupForm = document.querySelector("#signup-form");
 const signupThanks = document.querySelector("#signup-thanks");
 const signupError = document.querySelector("#signup-error");
 const signupButton = document.querySelector("#signup-button");
-const openSignupLink = document.querySelector("#open-signup");
 const factPrompt = document.querySelector("#fact-prompt");
 const backButton = document.querySelector("#back-button");
 
@@ -117,9 +127,6 @@ function showText() {
 }
 
 signupButton.addEventListener("click", showSignup);
-if (openSignupLink) {
-  openSignupLink.addEventListener("click", showSignup);
-}
 backButton.addEventListener("click", showText);
 
 signupForm.addEventListener("submit", async (event) => {
