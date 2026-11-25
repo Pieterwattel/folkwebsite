@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <title>Video's folksessie</title>
+  <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+  <header class="banner">
+    <h1>Video's van de folksessie</h1>
+  </header>
+  <p class="locked" id="locked" hidden>Deze pagina bestaat niet.</p>
+  <main class="content" id="content" hidden>
+    <section class="card intro">
+      <p>Dit zijn de video's van de folksessie. We willen ze graag ook voor andere dingen gebruiken. Sta je erop en vind je dat niet goed? Laat het dan onderaan deze pagina weten.</p>
+    </section>
+
+    <div id="video-list"></div>
+
+    <section class="card refuse">
+      <label class="check">
+        <input type="checkbox" id="refuse-check">
+        Ik geef geen toestemming
+      </label>
+
+      <form id="refuse-form" class="refuse-form" hidden>
+        <label class="field">Naam
+          <input name="naam" type="text" autocomplete="name" required>
+        </label>
+        <label class="field">Voor welke video('s), en wat wil je kwijt?
+          <textarea name="bericht" rows="4" required></textarea>
+        </label>
+        <p class="form-error" id="form-error" hidden></p>
+        <button class="form-submit" type="submit">VERSTUREN</button>
+      </form>
+
+      <p class="thanks" id="thanks" hidden>Dankjewel, je bericht is verstuurd. We gebruiken deze video's niet zonder jouw toestemming.</p>
+    </section>
+  </main>
+  <script src="script.js?v=4"></script>
+</body>
+</html>

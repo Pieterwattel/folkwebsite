@@ -9,6 +9,13 @@ function doPost(e) {
     body = e.parameter || {};
   }
 
+  if (body.type === "geen-toestemming") {
+    sendRefusal(body);
+    return ContentService
+      .createTextOutput(JSON.stringify({ ok: true }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+
   var sheet = findSheet(SpreadsheetApp.getActive());
 
   sheet.appendRow([
@@ -23,6 +30,19 @@ function doPost(e) {
   return ContentService
     .createTextOutput(JSON.stringify({ ok: true }))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+var REFUSAL_EMAIL = "pieterwattel@gmail.com";
+
+// From the hidden video page: someone does not give permission for a video.
+function sendRefusal(body) {
+  var naam = String(body.naam || "").slice(0, 200);
+  var bericht = String(body.bericht || "").slice(0, 3000);
+  MailApp.sendEmail({
+    to: REFUSAL_EMAIL,
+    subject: "Geen toestemming video folksessie: " + naam,
+    body: "Naam: " + naam + "\n\n" + bericht
+  });
 }
 
 function findSheet(spreadsheet) {
