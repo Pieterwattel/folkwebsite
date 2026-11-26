@@ -96,11 +96,12 @@ const refuseForm = document.getElementById("refuse-form");
 const formError = document.getElementById("form-error");
 const thanks = document.getElementById("thanks");
 
+const berichtLabel = document.getElementById("bericht-label");
+
 refuseCheck.addEventListener("change", () => {
-  refuseForm.hidden = !refuseCheck.checked;
-  if (refuseCheck.checked) {
-    refuseForm.naam.focus();
-  }
+  berichtLabel.textContent = refuseCheck.checked
+    ? "Voor welke video('s), en wat wil je kwijt?"
+    : "Je bericht";
 });
 
 refuseForm.addEventListener("submit", async (event) => {
@@ -118,15 +119,29 @@ refuseForm.addEventListener("submit", async (event) => {
   const submitButton = refuseForm.querySelector("[type=submit]");
   submitButton.disabled = true;
 
+  const geenToestemming = refuseCheck.checked;
+  // The first line makes clear in the email whether this is a refusal or just a message.
+  const regel = geenToestemming
+    ? "GEEFT GEEN TOESTEMMING voor (een deel van) de video's."
+    : "Alleen een bericht (geen bezwaar aangegeven).";
+
   try {
+    // Same type as before, so the deployed Apps Script still emails it.
     await fetch(ENDPOINT, {
       method: "POST",
       mode: "no-cors",
       headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ type: "geen-toestemming", naam: naam, bericht: bericht })
+      body: JSON.stringify({
+        type: "geen-toestemming",
+        toestemming: geenToestemming ? "nee" : "bericht",
+        naam: naam,
+        bericht: regel + "\n\n" + bericht
+      })
     });
     refuseForm.hidden = true;
-    refuseCheck.closest("label").hidden = true;
+    thanks.textContent = geenToestemming
+      ? "Dankjewel, je bericht is verstuurd. We gebruiken deze video's niet zonder jouw toestemming."
+      : "Dankjewel, je bericht is verstuurd.";
     thanks.hidden = false;
   } catch (error) {
     formError.textContent = "Versturen is niet gelukt. Probeer het later nog eens.";

@@ -86,11 +86,24 @@ h2 {
   accent-color: #7a1f2b;
 }
 
+.form-title {
+  width: fit-content;
+  margin: 0;
+  padding: 0.06em 0.2em;
+  background: #FDC81E;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
 .refuse-form {
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
   margin-top: 1rem;
+}
+
+.refuse-form .check {
+  align-self: flex-start;
 }
 
 .field {

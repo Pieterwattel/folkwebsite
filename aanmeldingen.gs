@@ -40,7 +40,7 @@ function sendRefusal(body) {
   var bericht = String(body.bericht || "").slice(0, 3000);
   MailApp.sendEmail({
     to: REFUSAL_EMAIL,
-    subject: "Geen toestemming video folksessie: " + naam,
+    subject: (body.toestemming === "bericht" ? "Bericht video folksessie: " : "Geen toestemming video folksessie: ") + naam,
     body: "Naam: " + naam + "\n\n" + bericht
   });
 }

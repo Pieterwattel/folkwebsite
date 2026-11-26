@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow, noarchive">
   <title>Video's folksessie</title>
-  <link rel="stylesheet" href="style.css?v=4">
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
   <header class="banner">
@@ -20,25 +20,25 @@
     <div id="video-list"></div>
 
     <section class="card refuse">
-      <label class="check">
-        <input type="checkbox" id="refuse-check">
-        Ik geef geen toestemming
-      </label>
-
-      <form id="refuse-form" class="refuse-form" hidden>
+      <h2 class="form-title">Stuur ons een bericht</h2>
+      <form id="refuse-form" class="refuse-form">
         <label class="field">Naam
           <input name="naam" type="text" autocomplete="name" required>
         </label>
-        <label class="field">Voor welke video('s), en wat wil je kwijt?
+        <label class="check">
+          <input type="checkbox" id="refuse-check" name="geenToestemming">
+          Ik geef geen toestemming
+        </label>
+        <label class="field"><span id="bericht-label">Je bericht</span>
           <textarea name="bericht" rows="4" required></textarea>
         </label>
         <p class="form-error" id="form-error" hidden></p>
         <button class="form-submit" type="submit">VERSTUREN</button>
       </form>
 
-      <p class="thanks" id="thanks" hidden>Dankjewel, je bericht is verstuurd. We gebruiken deze video's niet zonder jouw toestemming.</p>
+      <p class="thanks" id="thanks" hidden>Dankjewel, je bericht is verstuurd.</p>
     </section>
   </main>
-  <script src="script.js?v=4"></script>
+  <script src="script.js?v=5"></script>
 </body>
 </html>
