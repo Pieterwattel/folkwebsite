@@ -1,0 +1,298 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #ebece8;
+  --ink: #111;
+  --wine: #7a1f2b;
+  --wine-dark: #641825;
+  --yellow: #FDC81E;
+  --radius: 14px;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: #000;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a,
+a:visited {
+  color: var(--wine);
+  font-weight: 700;
+}
+
+/* Layout following the sketch:
+   ABOUT top-left, SESSIES top-right (taller),
+   WORKSHOPS tab under ABOUT, its body spanning the full width. */
+.board {
+  flex: 1 0 auto;
+  width: min(1200px, 100%);
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto auto;
+  grid-template-areas:
+    "about   sessies"
+    "wtab    sessies"
+    "wbody   wbody";
+  column-gap: 2.5rem;
+  row-gap: 0;
+  font-size: clamp(16px, 1.15vw, 19px);
+  line-height: 1.45;
+}
+
+.box {
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+}
+
+.box-title {
+  width: fit-content;
+  margin: 0;
+  padding: 0.08em 0.3em;
+  background: var(--yellow);
+  font-size: clamp(1.5rem, 2.35vw, 2.4rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+}
+
+.box-body {
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+.box-body p {
+  margin: 0 0 0.9em;
+}
+
+/* ABOUT */
+.about {
+  grid-area: about;
+  align-self: start;
+  margin-bottom: 2rem;
+}
+
+.about > .box-title {
+  display: block;
+  width: 100%;
+  padding: 0.4rem 1.25rem;
+  border-bottom: 3px solid var(--ink);
+  border-radius: 11px 11px 0 0;
+}
+
+.instruments {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 0.5rem;
+  border-radius: 10px;
+  background: #c6a83a url("textile.jpg") center / cover no-repeat;
+}
+
+.instruments img {
+  height: 4.2rem;
+  width: auto;
+  object-fit: contain;
+}
+
+/* SESSIES */
+.sessies {
+  grid-area: sessies;
+  align-self: stretch;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.sessies-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0.6rem 0.6rem 0 0.75rem;
+}
+
+.sessies .box-title {
+  border: 3px solid var(--ink);
+  border-radius: 6px;
+  padding: 0.2em 0.5em;
+}
+
+.arrow-button {
+  width: 3rem;
+  height: 3rem;
+  padding: 0.2rem;
+  border: 0;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.arrow-button svg {
+  width: 100%;
+  height: 100%;
+}
+
+.arrow-button[aria-expanded="true"] {
+  transform: rotate(180deg);
+}
+
+.arrow-button:hover,
+.arrow-button:focus-visible {
+  color: var(--wine);
+}
+
+.sessies .box-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.session-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.session {
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--ink);
+  background: #fff;
+}
+
+.session-next {
+  border: 0;
+  background: var(--wine);
+  color: #fff;
+}
+
+.session p {
+  margin: 0;
+}
+
+.session-when {
+  font-weight: 800;
+  font-size: 1.15em;
+}
+
+.session-what {
+  font-weight: 700;
+}
+
+.session-meta {
+  font-size: 0.92em;
+}
+
+.list-label {
+  font-weight: 800;
+  margin: 0.25rem 0 0.5rem !important;
+}
+
+.box-link {
+  margin-top: auto !important;
+  font-weight: 800;
+  font-size: 1.1em;
+}
+
+/* WORKSHOPS: an L-shape — a tab under ABOUT that opens into a full-width body */
+.workshops {
+  display: contents;
+}
+
+.workshops-tab {
+  grid-area: wtab;
+  position: relative;
+  z-index: 1;
+  align-self: end;
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-bottom: 0;
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 0.75rem 1.25rem 0;
+  margin-bottom: -3px;
+}
+
+.dotted {
+  margin: 0.75rem 0 0;
+  border: 0;
+  border-top: 4px dotted var(--ink);
+}
+
+.workshops-body {
+  grid-area: wbody;
+  background: #fff;
+  border: 3px solid var(--ink);
+  border-radius: 0 var(--radius) var(--radius) var(--radius);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem 1.5rem;
+}
+
+.workshop h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1.15em;
+  font-weight: 800;
+}
+
+.workshop p {
+  margin: 0;
+}
+
+.workshops-note {
+  grid-column: 1 / -1;
+  margin: 0.25rem 0 0 !important;
+  font-weight: 700;
+}
+
+/* Footer band in the fabric of the session site */
+.textile-band {
+  flex: 0 0 auto;
+  height: 5.5rem;
+  border-top: 3px solid var(--ink);
+  background: #c6a83a url("textile.jpg") center / cover repeat-x;
+}
+
+@media (max-width: 760px) {
+  .board {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "about"
+      "sessies"
+      "wtab"
+      "wbody";
+    padding: 1.25rem 1rem 2rem;
+  }
+
+  .workshops-tab {
+    justify-self: start;
+    width: 75%;
+  }
+
+  .workshops-body {
+    grid-template-columns: 1fr;
+  }
+
+  .instruments img {
+    height: 3.2rem;
+  }
+}
