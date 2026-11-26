@@ -32,7 +32,7 @@ function doPost(e) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
-var REFUSAL_EMAIL = "pieterwattel@gmail.com";
+var REFUSAL_EMAIL = "folkmuziekutrecht@gmail.com";
 
 // From the hidden video page: someone does not give permission for a video.
 function sendRefusal(body) {
