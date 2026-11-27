@@ -164,7 +164,7 @@
   /* Fields side by side, so the box isn't so tall */
   .row { display: grid; gap: 14px 24px; }
   .row-first { grid-template-columns: 1.3fr 1fr; align-items: end; }
-  .row-new   { grid-template-columns: repeat(3, 1fr); margin-top: 14px; }
+  .row-new   { grid-template-columns: repeat(3, 1fr); margin-top: 14px; align-items: end; }
   .row-new .field-wide { grid-column: 1 / -1; }
   .row-end {
     display: flex;
@@ -324,8 +324,8 @@
           <input id="instrument" name="instrument" maxlength="200">
         </div>
         <div class="field">
-          <label for="experience">How long have you been playing?</label>
-          <input id="experience" name="experience" maxlength="200">
+          <label for="experience">Playing for</label>
+          <input id="experience" name="experience" maxlength="200" placeholder="e.g. 2 years">
         </div>
         <div class="field field-wide">
           <label for="note">Remark</label>
