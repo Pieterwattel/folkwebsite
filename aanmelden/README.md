@@ -11,7 +11,7 @@ Two files in this folder:
 ## 1. Prepare the sheet
 
 The **session dates** sheet works as it is: the first tab, with the columns
-`Event | date | time | location | cost` in row 1.
+`Event | date | time | location | cost | id | max participants` in row 1.
 
 - Only `Event` is required. A row with just a name already shows up on the page.
 - `date` can be a real date or text like `19 dec 26`. Events with a date in the past are hidden;
@@ -20,6 +20,9 @@ The **session dates** sheet works as it is: the first tab, with the columns
 - `id` links each session to its column in sessie deelnemers. You can leave it empty for new
   sessions: the script fills one in the first time someone opens the page. After that, don't
   change the id. You can rename the event or move its date and its sign-ups stay with it.
+- `max participants`: a number. When that many names are under the session in sessie deelnemers,
+  the page shows the session as **FULL** and nobody else can sign up for it. Empty means no limit.
+  To make room again, remove a name in sessie deelnemers or raise the number.
 - Optional: an `active` column. Set it to `FALSE` to hide an event without deleting it.
 
 Sharing: once people sign up, the sheets hold names and email addresses. Set all three sheets to
@@ -85,5 +88,6 @@ The big dots between sessions are filled with the site's own `textile.jpg` (`../
 
 ## Counting sign-ups
 
-In sessie deelnemers, add a count under the names, or put this in a free row (e.g. row 100) of
-column A and drag it to the right: `=COUNTA(A2:A99)`.
+Don't put counts or other text under the names in sessie deelnemers: the script counts every
+filled cell there as a person. Count on a separate tab instead, e.g. a tab "Totaal" with
+`=COUNTA(Blad1!A2:A)` in A1, dragged to the right.
