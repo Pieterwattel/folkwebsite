@@ -183,6 +183,7 @@
   }
   button:hover, button:focus-visible { background: var(--maroon-dark); }
   button:disabled { opacity: .65; cursor: progress; }
+  button[data-closed] { cursor: default; }
 
   .msg { margin: 16px 0 0; font-weight: 700; }
   .msg.ok  { width: fit-content; padding: .1em .3em; background: var(--yellow); }
@@ -262,10 +263,16 @@
      ============================================================ */
   const SCRIPT_URL = '';
 
+  // Without SCRIPT_URL nothing can be saved. On your own computer the page then
+  // runs as a preview with demo sessions; on the live site sign-ups are closed.
+  const LOCAL = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
+  const CLOSED = !SCRIPT_URL && !LOCAL;
+
   const DEMO_EVENTS = [
     { id: 'irish-2026-12-19', event: 'folk session, mainly Irish', date: '2026-12-19', start: '13:00', end: '14:30', location: 'Domplein 4, Utrecht', cost: 'free/donation' },
     { id: 'irish-2027-01-16', event: 'folk session, mainly Irish', date: '2027-01-16', start: '13:00', end: '14:30', location: 'Domplein 4, Utrecht', cost: 'free/donation' },
-    { id: 'irish-2027-02-06', event: 'folk session, mainly Irish', date: '2027-02-06', start: '13:00', end: '14:30', location: 'Domplein 4, Utrecht', cost: 'free/donation' }
+    { id: 'irish-2027-02-06', event: 'folk session, mainly Irish', date: '2027-02-06', start: '13:00', end: '14:30', location: 'Domplein 4, Utrecht', cost: 'free/donation' },
+    { id: 'irish-2027-02-21', event: 'folk session, mainly Irish', date: '2027-02-21', start: '13:00', end: '14:30', location: 'Domplein 4, Utrecht', cost: 'free/donation' }
   ];
 
   const MONTHS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
@@ -375,6 +382,7 @@
     if (!SCRIPT_URL) {
       $('demo').hidden = false;
       renderEvents(DEMO_EVENTS);
+      if (CLOSED) closeSignups();
       return;
     }
     try {
@@ -406,6 +414,7 @@
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     msg.hidden = true;
+    if (CLOSED) return showMsg('err', "Sign-ups aren't open yet. Please check back soon.");
 
     const fd = new FormData(form);
     const events = fd.getAll('events');
@@ -476,6 +485,15 @@
       submitBtn.textContent = 'Sign me up';
     }
   });
+
+  // Live site without SCRIPT_URL: show the sessions, but nobody can sign up yet.
+  function closeSignups() {
+    $('demo').textContent = "Sign-ups open soon. You can't sign up on this page yet.";
+    form.querySelectorAll('input, textarea').forEach((el) => { el.disabled = true; });
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sign-ups open soon';
+    submitBtn.dataset.closed = '1';
+  }
 
   loadEvents();
 </script>
