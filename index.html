@@ -188,6 +188,9 @@
   .msg.ok  { width: fit-content; padding: .1em .3em; background: var(--yellow); }
   .msg.err { color: var(--maroon); }
 
+  .cancel { margin: 18px 0 0; font-size: .92rem; }
+  .cancel a { color: var(--maroon); font-weight: 700; overflow-wrap: anywhere; }
+
   @media (max-width: 420px) {
     body { padding-top: 28px; font-size: 17px; }
     .panel { padding: 16px; }
@@ -246,6 +249,8 @@
 
       <button type="submit" id="submit">Sign me up</button>
       <p id="msg" class="msg" role="status" aria-live="polite" hidden></p>
+      <p class="cancel">Signed up but can't make it? To cancel, send an email to
+        <a href="mailto:folkmuziekutrecht@gmail.com">folkmuziekutrecht@gmail.com</a>.</p>
     </div>
   </form>
 </main>
