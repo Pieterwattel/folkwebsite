@@ -11,7 +11,7 @@ body {
 }
 
 .banner {
-  background: #c6a83a url("../textile.jpg") center / cover no-repeat;
+  background: #c6a83a url("../assets/img/textile.jpg") center / cover no-repeat;
   padding: 2.5rem 1rem;
 }
 

@@ -1,454 +1,258 @@
 <!doctype html>
-<html lang="en">
+<html lang="nl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Folk Session Utrecht</title>
-<style>
-  /* Layout and look of the original page (info.html): fabric with instruments
-     on the left; on the right a grey top part with the sessions in big bold
-     lines and the maroon sign-up button, and a white panel below with the text. */
-  :root {
-    --grey: #ebece8;
-    --ink: #000;
-    --muted: #444;
-    --maroon: #7a1f2b;
-    --maroon-dark: #641825;
-    --yellow: #fdc81e;
-    --top-h: 38vh;   /* height of the grey top part */
-    --btn-h: 5.5vh;  /* height of the SIGN UP button */
-  }
-
-  * { box-sizing: border-box; }
-
-  html, body {
-    margin: 0;
-    height: 100%;
-    overflow: hidden;
-    background: var(--grey);
-    color: var(--ink);
-    font-family: Arial, Helvetica, sans-serif;
-  }
-
-  .page { display: flex; height: 100vh; width: 100vw; overflow: hidden; }
-
-  /* ---------- left: fabric with the four instruments ---------- */
-  .fabric {
-    flex: 0 0 35.6%;
-    height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    align-items: center;
-    justify-items: center;
-    padding: 4vh 2vw;
-    position: relative;
-    background: #c6a83a;
-  }
-  /* The fabric photo, turned half a round so its maroon circle sits in the
-     bottom-left corner (the instruments stay upright). */
-  .fabric::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: url("textile.jpg") center / cover no-repeat;
-    transform: rotate(180deg);
-  }
-  .fabric img {
-    position: relative;
-    display: block;
-    width: auto;
-    height: auto;
-    max-width: 72%;
-    max-height: 68%;
-    object-fit: contain;
-  }
-
-  /* ---------- right ---------- */
-  .right {
-    flex: 1 1 auto;
-    min-width: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-  }
-
-  /* Grey top part: the sessions */
-  /* Fixed height, so the grey top and white panel always keep the same size,
-     however many sessions there are; the list scrolls inside. */
-  .top {
-    position: relative;
-    flex: 0 0 var(--top-h);
-    height: var(--top-h);
-    display: flex;
-    flex-direction: column;
-    background: var(--grey);
-  }
-  /* One session per line (up to two on phones), stacked; the list scrolls
-     when there are more than fit. */
-  .session-list {
-    list-style: none;
-    margin: 0;
-    /* bottom padding: room to scroll the last session clear of the button */
-    padding: 2.2vh 2.6% calc(var(--btn-h) + 1vh);
-    flex: 1;
-    min-height: 0;
-    overflow: auto;
-    overscroll-behavior: contain;
-  }
-  .session-list li {
-    margin: 0;
-    padding: .6em 0;
-    text-align: center;
-    white-space: nowrap;
-    font-size: clamp(16px, 1.35vw, 26px);
-    font-weight: 800;
-    line-height: 1.35;
-    letter-spacing: -0.02em;
-  }
-  /* short line between sessions: a third of the width, centred, 2px thick */
-  .session-list li { position: relative; }
-  .session-list li + li::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 33.33%;
-    width: 33.33%;
-    height: 2px;
-    background: rgba(0, 0, 0, .35);
-  }
-  .session-emoji { margin-right: .45em; font-weight: 400; }
-
-  .session-full {
-    display: inline-block;
-    margin-left: .35em;
-    padding: .05em .4em;
-    background: var(--maroon);
-    color: #fff;
-    font-size: .5em;
-    letter-spacing: .06em;
-    vertical-align: .35em;
-  }
-  .note { font-size: clamp(18px, 1.4vw, 24px) !important; font-weight: 700 !important; }
-  .note a { color: var(--maroon); }
-
-  /* SIGN UP button: a band along the bottom of the grey part, full width */
-  .signup-button {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: var(--btn-h);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--maroon);
-    color: #fff;
-    text-decoration: none;
-    font-size: clamp(18px, 1.65vw, 32px);
-    font-weight: 800;
-    letter-spacing: 0.04em;
-  }
-  .signup-button:hover, .signup-button:focus-visible { background: var(--maroon-dark); }
-
-  /* White bottom panel: the text, scrolls inside */
-  .info {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    background: #fff;
-    padding: 2.2vh 6% 8vh 2.4%;
-    font-size: clamp(16px, 1.15vw, 20px);
-    line-height: 1.45;
-    outline: none;
-  }
-  .info p { margin: 0 0 1.15em; }
-  .info h2 {
-    width: fit-content;
-    margin: 1.35em 0 .4em;
-    background: var(--yellow);
-    font-size: 1.2em;
-    font-weight: 800;
-    line-height: 1.25;
-  }
-  .info a { color: var(--maroon); font-weight: 700; overflow-wrap: anywhere; }
-  .photo { margin: 6px 0 4px; }
-  .photo img { display: block; width: 100%; max-width: 520px; height: auto; }
-
-  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-
-  /* ---------- phones: narrow fabric strip, like the original ---------- */
-  @media (max-width: 760px) {
-    .fabric {
-      flex-basis: 4.6rem;
-      grid-template-columns: 1fr;
-      grid-template-rows: repeat(4, 1fr);
-      padding: .35rem 0;
-    }
-    .fabric img { max-width: 90%; max-height: 90%; }
-    :root { --top-h: 40vh; }
-    :root { --btn-h: 1.9rem; }
-    .session-list { padding: .55rem .55rem calc(var(--btn-h) + .4rem) .65rem; }
-    .session-list li { font-size: .95rem; line-height: 1.3; padding: .6em 0; white-space: normal; }   /* may wrap to 2 lines */
-    .signup-button { font-size: .95rem; }
-    .info { padding: .75rem .65rem 2rem; font-size: 1.1rem; }
-  }
-</style>
+<title>Folksessie Utrecht</title>
+<link rel="stylesheet" href="site.css?v=1">
 </head>
-<body>
-<div class="page">
+<body class="view-home">
+<!--
+  One page with three views, so the music keeps playing:
+    #           home: sessions, explanation and about us
+    #aanmelden  sign-up form
+    #tunes      tunebook
+  Texts are in Dutch here; the English versions are in site.js (EN).
+  Elements with data-i18n="key" are switched by the language button.
+-->
+
+<button class="audio-toggle" id="audio-toggle" type="button" aria-pressed="false" aria-label="muziek afspelen">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4z"></path>
+    <path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M16 9.5a3.5 3.5 0 010 5"></path>
+    <path class="audio-slash" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5 19L19 5"></path>
+  </svg>
+</button>
+<audio id="bg-audio" src="assets/audio/kesh-set.webm" loop preload="none"></audio>
+
+<button class="lang-button" id="lang-button" type="button">translate to English</button>
+
+<!-- ======================= HOME ======================= -->
+<div class="view" id="home">
 
   <section class="fabric" aria-hidden="true">
-    <img id="bodhran" src="bodhran.png" alt="">
-    <img id="violin" src="violin.png" alt="">
-    <img id="guitar" src="guitar.png" alt="">
-    <img id="whistle" src="whistle.png" alt="">
+    <img id="bodhran" src="assets/img/bodhran.png" alt="">
+    <img id="violin" src="assets/img/violin.png" alt="">
+    <img id="guitar" src="assets/img/guitar.png" alt="">
+    <img id="whistle" src="assets/img/whistle.png" alt="">
   </section>
 
   <main class="right">
-
     <section class="top" aria-labelledby="sessions-title">
-      <h1 class="sr-only" id="sessions-title">Coming sessions</h1>
-      <ul class="session-list" id="session-list"><li class="note">Loading sessions…</li></ul>
-      <a class="signup-button" href="signup.html">SIGN UP</a>
+      <h1 class="sr-only" id="sessions-title" data-i18n="sessionsTitle">Komende sessies</h1>
+      <ul class="session-list" id="session-list"><li class="note" data-i18n="loading">Sessies laden…</li></ul>
+      <a class="signup-button" href="#aanmelden" data-i18n="signupButton">INSCHRIJVEN</a>
     </section>
 
-    <article class="info" id="info-body" tabindex="0" aria-label="About the session">
-        <p>Do you feel like playing music together with others in a freer way, something other than
-          an orchestra or a band? Come and discover fresh folk music in Utrecht!</p>
-        <p><strong>All levels welcome.</strong> But it is advisable to have been playing for at least
-          <strong>1 year</strong>.</p>
-        <p>If you would like to come, please <a href="signup.html">sign up</a>. Once we have a signup,
-          we will assume that you are coming. If it turns out you cannot make it, please let us know at
-          <a href="mailto:folkmuziekutrecht@gmail.com">folkmuziekutrecht@gmail.com</a>.</p>
-        <p>We will mainly play <strong>Irish tunes</strong>, but there is certainly room for other styles
-          of folk music. We are open to all sorts of things.</p>
+    <article class="info" id="info-body" tabindex="0">
+      <p data-i18n="invite">Heb jij zin om op een vrijere manier samen muziek te spelen met anderen, een keer iets anders
+        dan een orkest of een bandje? Kom de frisse folkmuziek ontdekken in Utrecht!</p>
+      <p data-i18n="levels"><strong>Alle niveaus welkom.</strong> Maar het is aan te raden om al minstens
+        <strong>1 jaar</strong> te spelen.</p>
+      <p data-i18n="signupText">Wanneer je wilt komen, <a href="#aanmelden">meld je dan aan</a>. Wanneer we een aanmelding
+        hebben, gaan we ervan uit dat je komt. Wanneer het toch niet lukt, laat het dan even weten via
+        <a href="mailto:folkmuziekutrecht@gmail.com">folkmuziekutrecht@gmail.com</a>.</p>
+      <p data-i18n="styles">We zullen vooral <strong>Ierse tunes</strong> spelen, maar er is ook zeker ruimte voor andere
+        stijlen volksmuziek. We staan open voor van alles.</p>
 
-        <h2 id="how">How does it work?</h2>
-        <p>Folk music is basically made up of <strong>“tunes”</strong>, melodies that several people
-          know and then play together. To make sure you have something to play, we have
-          <a href="info.html#tunes">collected some tunes for you</a>. But if you are already playing
-          folk music and you bring some tunes yourself, that is very welcome! There is bound to be
-          someone who can play along with you. <strong>The session is supposed to be played without
-          sheet music, using your ears! :)</strong> If it helps you to feel a bit more confident, it is
-          understandable to bring some sheet music for the first time, but we will encourage you to
-          leave it at home the next time. Also it is much more fun and exciting like this, really!</p>
-        <p>There are instruments that play <strong>melodies</strong> (tunes), and instruments that play
-          <strong>chords</strong> (guitar, bouzouki, the left hand of the accordion). Because the chords
-          are often made up on the spot, you can end up playing something different from the others,
-          so it is often better to have <strong>1 person</strong> playing chords. If the chords are
-          written down somewhere, everyone plays the same thing, and then it does work to have several
-          people playing chords.</p>
-        <p>When someone starts playing a tune, they start a <strong>set</strong>, 1 or more tunes in a
-          row. You usually play a tune 3 times through, and then the leader of the set starts the next
-          tune. If you don't know the tune, don't play along, or play very quietly in the background,
-          so the others can still hear the music well.</p>
+      <h2 id="how" data-i18n="howTitle">Hoe werkt het?</h2>
+      <p data-i18n="howTunes">Folkmuziek bestaat in basis uit <strong>“tunes”</strong>: melodieën die meerdere mensen kennen,
+        en dan samen spelen. Om ervoor te zorgen dat je sowieso iets hebt om te spelen hebben we
+        <a href="#tunes">wat tunes voor je verzameld</a>. Maar als je al bezig bent met volksmuziek en je neemt zelf
+        wat tunes mee, heel erg leuk! Er is vast iemand die met je mee kan spelen. <strong>In principe spelen we de
+        muziek zonder bladmuziek.</strong> Als die stap wat te groot voor je is, neem de bladmuziek de eerste keer
+        gerust mee als dat je wat rust geeft. Maar het is veel leuker en interessanter om het zonder te doen, en we
+        raden aan om het dus de volgende keer thuis te laten.</p>
+      <p data-i18n="howChords">Er zijn instrumenten die <strong>melodieën</strong> spelen (tunes), en er zijn instrumenten die
+        <strong>akkoorden</strong> spelen (gitaar, bouzouki, linkerhand van de accordeon). Omdat de akkoorden vaak ter
+        plekke bedacht worden, kun je iets anders spelen dan de anderen, daarom is het vaak beter om
+        <strong>1 persoon</strong> te hebben die akkoorden speelt. Als de akkoorden ergens staan opgeschreven speelt
+        iedereen hetzelfde, en dan werkt het dus wel om met meerdere mensen akkoorden te spelen.</p>
+      <p data-i18n="howSets">Als iemand een tune begint te spelen, begint deze een <strong>set</strong>, 1 of meer tunes
+        achter elkaar. Een tune speel je meestal 3 keer door, en dan gaat de leider van de set de volgende tune
+        spelen. Als je de tune niet kent, speel dan niet mee, of speel heel zacht mee op de achtergrond, zodat de
+        rest de muziek nog goed kan horen.</p>
 
-        <h2>Should I prepare anything?</h2>
-        <p>It is certainly a good idea to <strong>practise some tunes</strong> before you come to the
-          session. There will not be much time to teach you the tunes. Someone might be able to help you
-          briefly, but the focus is on <strong>playing together</strong>.</p>
-        <p><a href="info.html#tunes">We have put a collection of tunes here!</a></p>
+      <h2 data-i18n="prepareTitle">Moet ik iets voorbereiden?</h2>
+      <p data-i18n="prepare">Het is zeker een goed idee om alvast <strong>wat tunes te oefenen</strong> voordat je naar de
+        sessie komt. Er zal niet veel tijd zijn om je de tunes aan te leren. Iemand kan je misschien wel even helpen,
+        maar de focus ligt op <strong>samen spelen</strong>.</p>
+      <p data-i18n="prepareLink"><a href="#tunes">Hier hebben we een verzameling tunes neergezet!</a></p>
 
-        <h2>I think this might still be too difficult for me..</h2>
-        <p>You can always play a tune more slowly. Inisheer is especially beautiful when it is played
-          slowly. See if you can play the first note of each bar (the thin vertical line), and leave out
-          the rest. You could play along with others that way, and that would work fine! Once you have
-          that down, you can learn it very slowly, and then ask someone else at the session to start
-          Inisheer slowly for you. It is a session, so you do not have to do it on your own. We all play
-          along!</p>
-        <p>There are also chords written above the melodies. Maybe you can already play those? If you
-          do not have a chord instrument, you can also try playing the note of the chord, so a D for a D
-          chord, and an E for an Em chord.</p>
-        <p>If you still cannot quite work it out, you can email us at
-          <a href="mailto:folkmuziekutrecht@gmail.com">folkmuziekutrecht@gmail.com</a>.</p>
-        <p>Also, the first tune is definitely the hardest. It is definitely not easy to learn your first
-          tune. Learning it is a real achievement that deserves some recognition. Once you have Inisheer
-          though, I am convinced you could learn Egan's Polka. Once you have that one you already know 2
-          tunes! Now you are basically in.</p>
+      <h2 data-i18n="hardTitle">Ik denk dat dit misschien nog te moeilijk voor me is..</h2>
+      <p data-i18n="hardSlow">Je kunt een tune altijd langzamer spelen. Inisheer is specifiek erg mooi als die langzaam
+        gespeeld wordt, kijk eens of je daarvan de eerste noot van elke maat (de verticale dunne streep) kan spelen,
+        en dan laat je de rest weg. Zo zou je die ook met anderen kunnen meespelen en dat zou prima werken! Als je
+        dat onder de knie hebt kun je 'm heel langzaam leren, en dan iemand anders bij de sessie vragen of die
+        Inisheer langzaam voor je in wil zetten. Het is een sessie dus je hoeft het niet alleen te doen, we spelen
+        allemaal mee!</p>
+      <p data-i18n="hardChords">Er staan ook akkoorden boven de melodieën, misschien kun je die wel al spelen? Als je geen
+        akkoorden instrument hebt, dan kun je ook nog kijken of je de toon van het akkoord kunt spelen, dus voor een
+        D een D toon, voor een Em een E toon.</p>
+      <p data-i18n="hardMail">Als je er toch niet helemaal uitkomt kun je ons mailen op
+        <a href="mailto:folkmuziekutrecht@gmail.com">folkmuziekutrecht@gmail.com</a>.</p>
+      <p data-i18n="hardFirst">De eerste tune is ook echt de moeilijkste. Het is echt niet makkelijk om je eerste tune te
+        leren. Die leren is een echte prestatie die best wat erkenning verdient. Als je Inisheer eenmaal hebt, ben ik
+        ervan overtuigd dat je Egan's Polka kunt leren. Als je die hebt, ken je al 2 tunes! Dan heb je het
+        tunes-leren wel al echt onder de knie.</p>
 
-        <h2>What if I already have more experience?</h2>
-        <p>If you are more experienced, you are very welcome too. We think it is especially interesting
-          to have <strong>a mix of levels</strong>, so we also learn from each other. Some tunes will be
-          played calmly, so everyone can join in, and now and then mainly experienced players will play,
-          on less familiar or faster tunes. We like that both of those things can happen!</p>
+      <h2 data-i18n="experienceTitle">Wat als ik al meer ervaring heb?</h2>
+      <p data-i18n="experience">Wanneer je meer ervaren bent, ben je ook zeker welkom. We denken dat het juist interessant
+        is om <strong>een mix te hebben van niveaus</strong>, zo leren we ook van elkaar. En sommige tunes zullen
+        rustig gespeeld worden, zodat iedereen mee kan doen, en af en toe zullen er vooral ervaren spelers spelen,
+        bij onbekendere of snellere tunes. En dat beide kunnen gebeuren, vinden wij juist leuk!</p>
 
-        <h2>Should I bring my electric guitar?</h2>
-        <p>This folk session is meant for acoustic instruments. There will be no amplifiers or
-          microphones.</p>
+      <h2 data-i18n="ampTitle">Zal ik mijn elektrische gitaar meenemen?</h2>
+      <p data-i18n="amp">Deze folksessie is bedoeld voor akoestische instrumenten. Er zullen geen versterkers of microfoons
+        aanwezig zijn.</p>
 
-        <h2 id="about">About us</h2>
-        <p>Hi! We are Pieter and Boet. Folk music is a very social and welcoming way to make music
-          together, and it has brought us a lot of joy and fun. This is something we would like to
-          share with the people around us.</p>
-        <p>We are both active in folk music in the Netherlands. We often play together and in
-          different bands, and we perform all over the country.
-          <a href="https://pieterwattel.nl/">Pieter</a> (guitar) plays in
-          <a href="https://odevare.com/">Odevare</a> and studied at the Utrecht Conservatory. Boet
-          plays in <a href="https://www.youtube.com/watch?v=BFdNJ7wBQdg">Celtic Constellation</a>.
-          We also have experience teaching. But we are also looking for another, playful way to share
-          the music with others, where you can figure things out and discover them together, and we
-          think a session is the perfect setting for that.</p>
-        <p>For now it's the two of us, but we'd love to see it grow into something bigger: more
-          sessions, more places, and more people discovering this music, whether you've played for
-          years or are just starting out.</p>
-        <p>If that sounds good to you, come and play with us. And if you'd like to help it grow, or
-          have ideas, send us a message at
-          <a href="mailto:folkmuziekutrecht@gmail.com">folkmuziekutrecht@gmail.com</a>.</p>
-        <figure class="photo">
-          <img src="pieter-en-boet.jpg" alt="Pieter and Boet playing on stage, on accordion and guitar" width="458" height="300">
-        </figure>
+      <h2 id="about" data-i18n="aboutTitle">Over ons</h2>
+      <p data-i18n="about1">Hoi! Wij zijn Pieter en Boet. Folkmuziek is een heel sociale en gastvrije manier om samen
+        muziek te maken, en het heeft ons veel plezier gebracht. Dat willen we graag delen met de mensen om ons
+        heen.</p>
+      <p data-i18n="about2">We zijn allebei actief in de volksmuziek in Nederland. We spelen vaak samen en in
+        verschillende bands, en doen optredens door het hele land. <a href="https://pieterwattel.nl/">Pieter</a>
+        (gitaar) speelt in <a href="https://odevare.com/">Odevare</a> en heeft gestudeerd aan het Utrechts
+        Conservatorium. Boet speelt in
+        <a href="https://www.youtube.com/watch?v=BFdNJ7wBQdg">Celtic Constellation</a>. Daarnaast hebben we ervaring
+        in het geven van lessen. Maar we zoeken ook naar een andere, speelse manier om de muziek met anderen te
+        delen. Dat je samen een beetje mag uitzoeken en ontdekken, en we denken dat een sessie daar de perfecte
+        setting voor is.</p>
+      <p data-i18n="about3">Voorlopig doen we het met z'n tweeën, maar we zouden het graag zien groeien: meer sessies, op
+        meer plekken, en meer mensen die deze muziek ontdekken, of je nu al jaren speelt of net begint.</p>
+      <p data-i18n="about4">Klinkt dat goed? Kom met ons spelen. En wil je helpen het te laten groeien, of heb je ideeën?
+        Stuur ons een bericht op <a href="mailto:folkmuziekutrecht@gmail.com">folkmuziekutrecht@gmail.com</a>.</p>
+      <figure class="photo">
+        <img src="assets/img/pieter-en-boet.jpg" width="458" height="300"
+             alt="Pieter en Boet spelen op een podium, op accordeon en gitaar" data-i18n-alt="photoAlt">
+      </figure>
     </article>
-
   </main>
 </div>
 
-<script>
-  // Same web app as the sign-up page (signup.html). If it ever changes, update both.
-  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw0r8UrZg8HKXYhMn1ezGbpwxAoUIrd3oBcUaLUkzBrYAbSMIvAypGAaqPGCLT_g2Mg/exec';
-  const MAIL = 'folkmuziekutrecht@gmail.com';
-  const MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july',
-                  'august', 'september', 'october', 'november', 'december'];
+<!-- ======================= SIGN-UP ======================= -->
+<div class="view" id="signup">
+  <div class="signup-strip" aria-hidden="true"></div>
+  <div class="signup-circle" aria-hidden="true"></div>
 
-  const $ = (id) => document.getElementById(id);
-  const list = $('session-list');
+  <main>
+    <p class="home-link"><a href="#" data-i18n="backHome">&larr; Folksessie Utrecht</a></p>
+    <h1 data-i18n="signupTitle">Schrijf je in voor een sessie</h1>
+    <p class="intro" data-i18n="signupIntro">Kies de sessies waar je bij wilt zijn, dan houden we een plekje voor je vrij.</p>
 
-  function el(tag, cls, text) {
-    const n = document.createElement(tag);
-    if (cls) n.className = cls;
-    if (text != null) n.textContent = text;
-    return n;
-  }
+    <p id="demo" class="demo" data-i18n="demo" hidden>Voorbeeldweergave: demo-sessies, aanmeldingen worden niet opgeslagen.</p>
+    <div id="unavailable" class="unavailable" role="alert" hidden></div>
 
-  // '2026-12-19' -> '19 december' (year added when it's not this year)
-  function formatDate(iso) {
-    const [y, m, d] = iso.split('-').map(Number);
-    const sameYear = y === new Date().getFullYear();
-    return `${d} ${MONTHS[m - 1]}${sameYear ? '' : ' ' + y}`;
-  }
+    <form id="form" novalidate>
+      <fieldset>
+        <legend class="sr-only" data-i18n="chooseSessions">Kies een of meer sessies</legend>
+        <div id="events" class="events"><p class="empty" data-i18n="loading">Sessies laden…</p></div>
+      </fieldset>
 
-  function showNote(...parts) {
-    const li = el('li', 'note');
-    li.append(...parts);
-    list.replaceChildren(li);
-  }
+      <div class="panel">
+        <div class="row row-first">
+          <fieldset>
+            <legend data-i18n="joinedBefore">Ben je al eens geweest?</legend>
+            <div class="choice">
+              <label><input type="radio" name="returning" value="yes"> <span data-i18n="yes">Ja</span></label>
+              <label><input type="radio" name="returning" value="no"> <span data-i18n="noNew">Nee, ik ben nieuw</span></label>
+            </div>
+          </fieldset>
 
-  function mailLink() {
-    const a = el('a', null, MAIL);
-    a.href = 'mailto:' + MAIL;
-    return a;
-  }
+          <div class="field">
+            <label for="name" data-i18n="name">Naam *</label>
+            <input id="name" name="name" autocomplete="name" required maxlength="100">
+          </div>
+        </div>
 
-  // Sessions are kept in this browser tab for 10 minutes ("folkSessions"), so the
-  // sign-up page (and coming back here) can show them straight away.
-  const CACHE_KEY = 'folkSessions';
-  const CACHE_MAX_AGE = 10 * 60 * 1000;
+        <div id="new-fields" class="row row-new" hidden>
+          <div class="field">
+            <label for="email" data-i18n="email">E-mail *</label>
+            <input id="email" name="email" type="email" autocomplete="email" maxlength="200">
+          </div>
+          <div class="field">
+            <label for="instrument" data-i18n="instrument">Instrument *</label>
+            <input id="instrument" name="instrument" maxlength="200">
+          </div>
+          <div class="field">
+            <label for="experience" data-i18n="experienceLabel">Hoe lang speel je al?</label>
+            <input id="experience" name="experience" maxlength="200">
+          </div>
+          <div class="field field-wide">
+            <label for="note" data-i18n="remark">Opmerking</label>
+            <textarea id="note" name="note" rows="2" maxlength="500"></textarea>
+          </div>
+        </div>
 
-  function readCache() {
-    try {
-      const c = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null');
-      return c && Date.now() - c.time < CACHE_MAX_AGE ? c.events : null;
-    } catch (e) { return null; }
-  }
-  function writeCache(events) {
-    try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ time: Date.now(), events })); } catch (e) {}
-  }
+        <div class="hp" aria-hidden="true">
+          <label>Website <input name="website" tabindex="-1" autocomplete="off"></label>
+        </div>
 
-  // A random music emoji in front of each session, shuffled once per page visit
-  // (so they don't change when the list refreshes).
-  const EMOJIS = ['🎻', '🪕', '🪗', '🎸', '🪈', '🎶', '🎵'];
-  for (let i = EMOJIS.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [EMOJIS[i], EMOJIS[j]] = [EMOJIS[j], EMOJIS[i]];
-  }
+        <div class="row row-end">
+          <button class="submit" type="submit" id="submit" data-i18n="submit">Schrijf me in</button>
+          <div class="end-text">
+            <p id="msg" class="msg" role="status" aria-live="polite" hidden></p>
+            <p class="cancel" data-i18n="cancel">Ingeschreven maar kun je toch niet? Stuur dan een mail naar
+              <a href="mailto:folkmuziekutrecht@gmail.com">folkmuziekutrecht@gmail.com</a>.</p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>
+</div>
 
-  function render(events) {
-    if (!events.length) {
-      showNote('No sessions planned right now. Check back soon!');
-      return;
-    }
-    // One line per session: "🎻 folk session, mainly Irish · 19 december"
-    list.replaceChildren(...events.map((ev, i) => {
-      const li = el('li');
-      const icon = el('span', 'session-emoji', EMOJIS[i % EMOJIS.length]);
-      icon.setAttribute('aria-hidden', 'true');
-      li.append(icon, ev.event + (ev.date ? ' · ' + formatDate(ev.date) : ''));
-      if (ev.full) li.append(el('span', 'session-full', 'FULL'));
-      return li;
-    }));
-  }
+<!-- ======================= TUNES ======================= -->
+<div class="view" id="tunes">
+  <div class="tunes-stripe" aria-hidden="true"></div>
+  <header class="tunes-bar">
+    <div class="tunes-back"><a href="#" data-i18n="tunesBack">terug naar de folksessie</a></div>
+    <div class="tunes-heading">
+      <h1>Tunes</h1>
+      <p class="tunes-level" id="tunes-level">Level I</p>
+    </div>
+  </header>
+  <main class="tunes-main">
+    <p class="more-tunes" data-i18n="tunebookCredit">Veel van de tunes, zoals ze hier opgeschreven staan, komen uit dit
+      tunebook. Er staat ook extra informatie in over de tunes, en de uitleg over hoe sessies werken is zeer de moeite
+      waard om even door te lezen. Credits aan Tijn Berends.
+      <a href="assets/The-Dutch-Session-Tunebook-2nd-ed.pdf" download>Download The Dutch Session Tunebook (2e editie)</a></p>
 
-  async function loadSessions() {
-    const cached = readCache();
-    if (cached) render(cached);   // show right away, then refresh below
-    try {
-      const res = await fetch(SCRIPT_URL);
-      const data = await res.json();
-      if (!data.ok) throw new Error(data.error);
-      const events = data.events || [];
-      writeCache(events);
-      render(events);
-    } catch (err) {
-      if (!cached) showNote("The sessions can't be loaded right now. To join one, email ", mailLink(), '.');
-    }
-  }
+    <section class="tune-level" data-level="Level I">
+      <h2>Level I</h2>
+      <div class="tune-row">
+        <article class="tune-card"><img src="assets/tunebook/Inisheer.png" alt="Inisheer" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/211" target="_blank" rel="noopener noreferrer">Inisheer</a></article>
+        <article class="tune-card"><img src="assets/tunebook/The%20Kesh.png" alt="The Kesh" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/55" target="_blank" rel="noopener noreferrer">The Kesh</a></article>
+        <article class="tune-card"><img src="assets/tunebook/Egan%27s%20Polka.png" alt="Egan's Polka" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/39" target="_blank" rel="noopener noreferrer">Egan's Polka</a></article>
+      </div>
+    </section>
+    <section class="tune-level" data-level="Level II">
+      <h2>Level II</h2>
+      <div class="tune-row">
+        <article class="tune-card"><img src="assets/tunebook/John%20Ryan%27s.png" alt="John Ryan's" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/441" target="_blank" rel="noopener noreferrer">John Ryan's</a></article>
+        <article class="tune-card"><img src="assets/tunebook/The%20Butterfly.png" alt="The Butterfly" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/10" target="_blank" rel="noopener noreferrer">The Butterfly</a></article>
+        <article class="tune-card"><img src="assets/tunebook/Out%20on%20the%20Ocean.png" alt="Out on the Ocean" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/108" target="_blank" rel="noopener noreferrer">Out on the Ocean</a></article>
+        <article class="tune-card"><img src="assets/tunebook/Morrison%27s.png" alt="Morrison's" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/71" target="_blank" rel="noopener noreferrer">Morrison's</a></article>
+        <article class="tune-card"><img src="assets/tunebook/The%20Silver%20Spear.png" alt="The Silver Spear" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/182" target="_blank" rel="noopener noreferrer">The Silver Spear</a></article>
+      </div>
+    </section>
+    <section class="tune-level" data-level="Level III">
+      <h2>Level III</h2>
+      <div class="tune-row">
+        <article class="tune-card"><img src="assets/tunebook/Cooley%27s.png" alt="Cooley's" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/1" target="_blank" rel="noopener noreferrer">Cooley's</a></article>
+        <article class="tune-card"><img src="assets/tunebook/Vankarin.png" alt="Vankarin" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/7962" target="_blank" rel="noopener noreferrer">Vankarin</a></article>
+        <article class="tune-card"><img src="assets/tunebook/Banish%20Misfortune.png" alt="Banish Misfortune" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/9" target="_blank" rel="noopener noreferrer">Banish Misfortune</a></article>
+        <article class="tune-card"><img src="assets/tunebook/Return%20from%20Helsinki.png" alt="Return to Helsinki" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/11091" target="_blank" rel="noopener noreferrer">Return to Helsinki</a></article>
+        <article class="tune-card"><img src="assets/tunebook/Drowsy%20Maggie.png" alt="Drowsy Maggie" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/27" target="_blank" rel="noopener noreferrer">Drowsy Maggie</a></article>
+        <article class="tune-card"><img src="assets/tunebook/Superfly.png" alt="Superfly" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/9942" target="_blank" rel="noopener noreferrer">Superfly</a></article>
+        <article class="tune-card"><img src="assets/tunebook/Mouse%20in%20the%20Kitchen.png" alt="The Mouse in the Kitchen" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/6655" target="_blank" rel="noopener noreferrer">The Mouse in the Kitchen</a></article>
+        <article class="tune-card"><img src="assets/tunebook/Blarney%20Pilgrim.png" alt="Blarney Pilgrim" loading="lazy"><a class="tune-link" href="https://thesession.org/tunes/5" target="_blank" rel="noopener noreferrer">Blarney Pilgrim</a></article>
+      </div>
+    </section>
 
-  loadSessions();
+    <p class="more-tunes" style="margin-top:1.6rem"><a href="https://thesession.org/tunes/popular" target="_blank" rel="noopener noreferrer" data-i18n="moreTunes">meer tunes (geordend van meest bekend naar minder bekend)</a></p>
+  </main>
+</div>
 
-  /* Instruments tilt in small steps while scrolling, like on the original page.
-     Each one has its own step size and its own list of angles. They follow
-     the scrolling of the white text panel. */
-  (function wobble() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const items = [
-      { el: $('bodhran'), stride: 102, offset: 0, arc: [8, -7, 2, -5, 7, -1, -8, 4, -3, 6] },
-      { el: $('violin'),  stride: 66,  offset: 4, arc: [-6, 8, -2, 5, -8, 1, 7, -4, 3, -7] },
-      { el: $('guitar'),  stride: 123, offset: 2, arc: [5, -8, 7, -3, -7, 8, -1, 4, -6, 2] },
-      { el: $('whistle'), stride: 81,  offset: 6, arc: [-8, 3, -5, 8, -2, 6, -7, 1, 7, -4] }
-    ];
-    const infoBody = $('info-body');
-    const position = () => infoBody.scrollTop;
-
-    let lastScroll = position();
-    let lastTime = performance.now();
-    const progress = items.map((item) => lastScroll / item.stride);
-
-    function turnFor(item, steps) {
-      if (steps <= 0) return 0;
-      return item.arc[(steps - 1 + item.offset) % item.arc.length];
-    }
-
-    function place() {
-      const scroll = position();
-      const now = performance.now();
-      const gap = Math.max(now - lastTime, 16);
-      const delta = scroll - lastScroll;
-      const fast = Math.abs(delta) / gap > 0.8;
-
-      if (scroll <= 0) {
-        progress.fill(0);
-      } else {
-        items.forEach((item, i) => {
-          const requested = delta / item.stride;
-          // When scrolling fast, don't let them flip through angles too quickly.
-          progress[i] += fast ? Math.sign(requested) * Math.min(Math.abs(requested), gap / 450) : requested;
-        });
-      }
-
-      items.forEach((item, i) => {
-        const turn = turnFor(item, Math.floor(progress[i]));
-        item.el.style.transform = turn === 0 ? '' : `rotate(${turn}deg)`;
-      });
-
-      lastScroll = scroll;
-      lastTime = now;
-    }
-
-    infoBody.addEventListener('scroll', place, { passive: true });
-  })();
-</script>
+<script src="site.js?v=1"></script>
 </body>
 </html>

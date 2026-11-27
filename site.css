@@ -1,0 +1,529 @@
+/* Folksessie Utrecht: one page with three views.
+     home     (#)          fabric with instruments, sessions, explanation + about us
+     sign-up  (#aanmelden) sessions to tick, form along the bottom
+     tunes    (#tunes)     the tunebook
+   Only one view is visible at a time (body.view-home / view-signup / view-tunes),
+   so the music keeps playing when you switch. */
+
+:root {
+  --grey: #ebece8;
+  --panel: #fff;
+  --ink: #000;
+  --line: #111;
+  --muted: #444;
+  --maroon: #7a1f2b;
+  --maroon-dark: #641825;
+  --yellow: #fdc81e;
+  --fabric: url("assets/img/textile.jpg");
+  --fabric-plain: url("assets/img/textile-plain.jpg");
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--grey);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+[hidden] { display: none !important; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.view { display: none; }
+body.view-home   #home   { display: flex; }
+body.view-signup #signup { display: block; }
+body.view-tunes  #tunes  { display: block; }
+
+/* ============================================================
+   Sound and language buttons (on every view)
+   ============================================================ */
+.audio-toggle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
+  width: 2.8rem;
+  height: 2.8rem;
+  padding: .3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: #111;
+  cursor: pointer;
+}
+.audio-toggle svg { width: 2rem; height: 2rem; }
+.audio-toggle .audio-slash { display: block; }
+.audio-toggle.is-playing .audio-slash { display: none; }
+
+.lang-button {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 50;
+  margin: 0;
+  padding: .35em .7em;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: #111;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1.2;
+  cursor: pointer;
+}
+.lang-button:hover, .lang-button:focus-visible { background: #f7f7f5; }
+
+/* ============================================================
+   HOME
+   ============================================================ */
+body.view-home { height: 100vh; overflow: hidden; }
+
+#home {
+  --top-h: 38vh;   /* height of the grey top part */
+  --btn-h: 5.5vh;  /* height of the INSCHRIJVEN button */
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+/* left: fabric with the four instruments (they tilt as you scroll the text) */
+.fabric {
+  flex: 0 0 35.6%;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+  padding: 4vh 2vw;
+  position: relative;
+  background: #c6a83a;
+}
+/* the fabric photo, turned half a round so its maroon circle sits bottom-left */
+.fabric::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--fabric) center / cover no-repeat;
+  transform: rotate(180deg);
+}
+.fabric img {
+  position: relative;
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 72%;
+  max-height: 68%;
+  object-fit: contain;
+}
+
+.right {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* grey top part with the sessions; fixed height, the list scrolls inside */
+.top {
+  position: relative;
+  flex: 0 0 var(--top-h);
+  height: var(--top-h);
+  display: flex;
+  flex-direction: column;
+  background: var(--grey);
+}
+.session-list {
+  list-style: none;
+  margin: 0;
+  padding: 2.2vh 2.6% calc(var(--btn-h) + 1vh);   /* room to scroll clear of the button */
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.session-list li {
+  position: relative;
+  margin: 0;
+  padding: .6em 0;
+  text-align: center;
+  white-space: nowrap;
+  font-size: clamp(16px, 1.35vw, 26px);
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+}
+/* short line between sessions: a third of the width, centred, 2px thick */
+.session-list li + li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 33.33%;
+  width: 33.33%;
+  height: 2px;
+  background: rgba(0, 0, 0, .35);
+}
+.session-emoji { margin-right: .45em; font-weight: 400; }
+.session-full {
+  display: inline-block;
+  margin-left: .35em;
+  padding: .05em .4em;
+  background: var(--maroon);
+  color: #fff;
+  font-size: .5em;
+  letter-spacing: .06em;
+  vertical-align: .35em;
+}
+.session-list .note { font-size: clamp(16px, 1.3vw, 22px); font-weight: 700; white-space: normal; }
+.session-list .note a { color: var(--maroon); }
+
+/* INSCHRIJVEN: a band along the bottom of the grey part */
+.signup-button {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--btn-h);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--maroon);
+  color: #fff;
+  text-decoration: none;
+  font-size: clamp(18px, 1.65vw, 32px);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+.signup-button:hover, .signup-button:focus-visible { background: var(--maroon-dark); }
+
+/* white panel with the explanation and about us; scrolls inside */
+.info {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #fff;
+  padding: 2.2vh 6% 8vh 2.4%;
+  font-size: clamp(16px, 1.15vw, 20px);
+  line-height: 1.45;
+  outline: none;
+}
+.info p { margin: 0 0 1.15em; }
+.info h2 {
+  width: fit-content;
+  margin: 1.35em 0 .4em;
+  background: var(--yellow);
+  font-size: 1.2em;
+  font-weight: 800;
+  line-height: 1.25;
+}
+.info a { color: var(--maroon); font-weight: 700; overflow-wrap: anywhere; }
+.photo { margin: 6px 0 4px; }
+.photo img { display: block; width: 100%; max-width: 520px; height: auto; }
+
+@media (max-width: 760px) {
+  #home { --top-h: 40vh; --btn-h: 1.9rem; }
+  .fabric {
+    flex-basis: 4.6rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1fr);
+    padding: 3.2rem 0 .35rem;   /* top: room for the sound button */
+  }
+  .fabric img { max-width: 90%; max-height: 90%; }
+  .session-list { padding: 2.2rem .55rem calc(var(--btn-h) + .4rem) .65rem; }   /* top: room for the language button */
+  .session-list li { font-size: .95rem; line-height: 1.3; white-space: normal; }
+  .signup-button { font-size: .95rem; }
+  .info { padding: .75rem .65rem 2rem; font-size: 1.1rem; }
+}
+
+/* ============================================================
+   SIGN-UP
+   ============================================================ */
+#signup {
+  min-height: 100vh;
+  padding: 48px 16px 72px;
+  font-size: 18px;
+  line-height: 1.45;
+}
+
+/* fabric strip down the left (15% of the width) with a maroon circle over it */
+.signup-strip,
+.signup-circle {
+  position: fixed;
+  pointer-events: none;
+}
+.signup-strip {
+  z-index: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 15vw;
+  background: #e0b21a var(--fabric-plain) right center / cover;
+}
+.signup-circle {
+  --r: 14vh;
+  z-index: 1;
+  left: calc(-1 * var(--r));
+  top: calc(-2 * var(--r) / 3);   /* the top third is above the window */
+  width: calc(2 * var(--r));
+  height: calc(2 * var(--r));
+  border-radius: 50%;
+  background: var(--maroon);
+}
+
+#signup main { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
+
+#signup h1 {
+  width: fit-content;
+  margin: 0 auto 10px;
+  padding: .08em .25em;
+  background: var(--yellow);
+  font-size: clamp(1.7rem, 5vw, 2.3rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+  text-align: center;
+}
+.intro { margin: 0 0 40px; text-align: center; }
+.home-link { margin: 0 0 24px; text-align: center; }
+.home-link a { color: var(--maroon); font-weight: 700; }
+
+.unavailable {
+  background: var(--panel);
+  padding: 28px;
+  border-radius: 2em 0 2em 0;
+  text-align: center;
+}
+.unavailable p { margin: 0 0 12px; }
+.unavailable p:last-child { margin-bottom: 0; }
+.unavailable a, .msg a { color: var(--maroon); font-weight: 700; overflow-wrap: anywhere; }
+
+.demo {
+  width: fit-content;
+  margin: -24px auto 32px;
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  font-size: .85rem;
+}
+
+#signup fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+#signup legend { font-weight: 800; margin-bottom: 10px; padding: 0; }
+
+/* sessions: plain text, one column, centred */
+.events {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 26px;
+  margin-bottom: 48px;
+}
+.event { display: block; text-align: center; cursor: pointer; padding: 2px 8px; }
+.event:has(input:focus-visible) { outline: 2px solid var(--line); outline-offset: 4px; }
+.event-title {
+  display: inline;
+  padding: 0 .2em;
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -.01em;
+}
+.event:has(input:checked) .event-title { background: var(--yellow); }
+.event-when, .event-where { font-weight: 700; }
+.event-when { margin-top: 4px; font-variant-numeric: tabular-nums; }
+.event-cost { font-weight: 400; }
+.icon { margin-right: .3em; font-weight: 400; }
+.icon-gap { margin-left: 1em; }
+
+/* fabric dot between sessions */
+.sep {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--yellow) var(--fabric) center / 280px;
+}
+
+.join { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; font-size: .95rem; }
+.join input { width: 20px; height: 20px; margin: 0; accent-color: var(--maroon); cursor: pointer; }
+
+.event.is-full { cursor: default; }
+.event.is-full .event-title,
+.event.is-full .event-when,
+.event.is-full .event-where,
+.event.is-full .event-cost { opacity: .5; }
+.full-tag {
+  display: inline-block;
+  margin-left: .5em;
+  vertical-align: .15em;
+  padding: .15em .6em;
+  background: var(--maroon);
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.empty { margin: 0; text-align: center; }
+
+/* the form: a plain white band along the bottom, always in view.
+   The page gets extra room at the bottom (set by the script). */
+.panel {
+  position: fixed;
+  left: 15vw;
+  right: 0;
+  bottom: 0;
+  z-index: 3;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--panel);
+  padding: 18px max(26px, calc((85vw - 900px) / 2));
+}
+
+/* fields side by side; boxes in a row line up along the bottom,
+   even when a label is longer and wraps */
+.row { display: grid; gap: 14px 24px; }
+.row-first { grid-template-columns: 1.3fr 1fr; align-items: end; }
+.row-new   { grid-template-columns: repeat(3, 1fr); margin-top: 14px; align-items: end; }
+.row-new .field-wide { grid-column: 1 / -1; }
+.row-end { display: flex; align-items: center; gap: 14px 24px; margin-top: 16px; }
+.end-text { flex: 1; min-width: 0; }
+
+.choice { display: flex; gap: 10px; flex-wrap: wrap; }
+.choice label {
+  flex: 1 1 140px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: .45em .75em;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  font-weight: 800;
+  cursor: pointer;
+}
+.choice label:has(input:checked) { background: var(--yellow); }
+.choice input { accent-color: var(--ink); width: 18px; height: 18px; margin: 0; }
+
+.field { margin: 0; }
+.field label { display: block; font-weight: 700; margin-bottom: 4px; }
+.field input, .field textarea {
+  width: 100%;
+  resize: vertical;
+  font: inherit;
+  padding: .45rem .55rem;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--panel);
+  color: var(--ink);
+}
+.field input:focus, .field textarea:focus { outline: 2px solid var(--yellow); outline-offset: 0; }
+
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.submit {
+  display: block;
+  flex: none;
+  margin: 0;
+  padding: .8rem 1.6rem;
+  border: 0;
+  background: var(--maroon);
+  color: #fff;
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.submit:hover, .submit:focus-visible { background: var(--maroon-dark); }
+.submit:disabled { opacity: .65; cursor: progress; }
+
+.msg { margin: 0 0 4px; font-weight: 700; }
+.msg.ok  { width: fit-content; padding: .1em .3em; background: var(--yellow); }
+.msg.err { color: var(--maroon); }
+.cancel { margin: 0; font-size: .92rem; }
+.cancel a { color: var(--maroon); font-weight: 700; overflow-wrap: anywhere; }
+
+@media (max-width: 680px) {
+  .row-first, .row-new { grid-template-columns: 1fr; }
+  .row-end { flex-direction: column; align-items: stretch; }
+  .submit { width: 100%; }
+  .panel { max-height: 70vh; padding: 16px 18px; }
+}
+@media (max-width: 600px) {
+  #signup { padding-left: calc(15vw + 16px); }   /* start right of the strip */
+  .signup-circle { --r: 7vh; }
+}
+@media (max-width: 420px) {
+  #signup { padding-top: 40px; font-size: 17px; }
+  .panel { padding: 12px 14px; font-size: 15px; }
+  .row { gap: 8px; }
+  .row-end { gap: 8px; margin-top: 10px; }
+  #signup legend { margin-bottom: 6px; }
+  .choice label { padding: .3em .6em; }
+  .field input { padding: .35rem .5rem; }
+  .submit { padding: .55rem 1rem; font-size: 1rem; }
+  .cancel { font-size: .78rem; }
+}
+
+/* ============================================================
+   TUNES
+   ============================================================ */
+#tunes { --tune-column: 860px; }
+
+.tunes-stripe {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: max(0px, calc(50% - var(--tune-column) / 2 - 1em));
+  height: 100vh;
+  background: var(--fabric) center / cover no-repeat;
+  pointer-events: none;
+}
+
+.tunes-bar {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: #fff;
+  padding: 1rem 1.25rem 1.15rem 4rem;   /* left: room for the sound button */
+}
+.tunes-back { margin: 0 0 .65rem; padding-right: 9rem; }   /* right: room for the language button */
+.tunes-back a, .tune-card a, .more-tunes a { color: var(--maroon); font-weight: 700; }
+.tunes-heading { display: flex; align-items: center; gap: 1rem; }
+#tunes h1 {
+  width: fit-content;
+  margin: 0;
+  padding: .08em .22em;
+  background: var(--yellow);
+  font-size: 1.7rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+.tunes-level { margin: 0; font-size: 1.7rem; font-weight: 800; line-height: 1.25; }
+#tunes h2 { margin: 0 0 .75rem; padding: .06em .2em; font-size: 1.35rem; font-weight: 800; line-height: 1.25; }
+
+.tunes-main { position: relative; z-index: 1; padding: 1.25rem 1.1rem 2.5rem; }
+.tune-level, .more-tunes { width: min(var(--tune-column), 100%); margin-left: auto; margin-right: auto; }
+.tune-level + .tune-level { margin-top: 1.6rem; }
+.more-tunes { margin-top: 0; margin-bottom: 1.6rem; }
+.tune-row { display: flex; flex-direction: column; gap: 1rem; }
+.tune-card {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .16);
+  padding: .75rem .75rem .9rem;
+}
+.tune-card img { display: block; width: 100%; height: auto; }
+.tune-card img + .tune-link { margin-top: .65rem; }
+.tune-link { display: inline-block; }
+
+@media (max-width: 560px) {
+  .tunes-bar { padding-left: 3.6rem; padding-right: .75rem; }
+  .tunes-back { padding-right: 0; padding-top: 2rem; }
+  .tunes-main { padding-left: .75rem; padding-right: .75rem; }
+}
