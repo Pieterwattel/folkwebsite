@@ -95,12 +95,13 @@
     min-height: 320px;
   }
 
-  /* The two top cards are staggered: About us starts and ends higher, Coming
-     sessions starts and ends lower. About us stops one tab-height above the end
-     of the row, so the Workshops tab (under About us) and the Workshops box
-     (under Coming sessions) are the same distance from the card above them. */
-  .about    { margin-bottom: var(--tab-h); }
-  .sessions { margin-top: calc(var(--tab-h) / 2); }
+  /* Workshops slots in under the other two (like the sketch): both top cards
+     start at the same height, About us ends one tab-height earlier, and the
+     Workshops tab moves up into that space, next to the bottom of Coming
+     sessions. So the tab sits the same distance below About us as the
+     Workshops box sits below Coming sessions. */
+  .about     { margin-bottom: var(--tab-h); }
+  .workshops { margin-top: calc(-1 * var(--tab-h)); }
   .about .card-body {
     flex: 1;
     min-height: 0;
@@ -167,7 +168,7 @@
       gap: 32px;
     }
     .about { contain: none; min-height: 0; max-height: 75vh; margin-bottom: 0; }
-    .sessions { margin-top: 0; }
+    .workshops { margin-top: 0; }
   }
   @media (max-width: 420px) {
     body { padding-top: 24px; font-size: 17px; }
