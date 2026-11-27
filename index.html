@@ -96,8 +96,18 @@
     line-height: 1.35;
     letter-spacing: -0.02em;
   }
-  /* thin line between sessions */
-  .session-list li + li { border-top: 1px solid rgba(0, 0, 0, .35); }
+  /* short line between sessions: a third of the width, centred, 2px thick */
+  .session-list li { position: relative; }
+  .session-list li + li::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 33.33%;
+    width: 33.33%;
+    height: 2px;
+    background: rgba(0, 0, 0, .35);
+  }
+  .session-emoji { margin-right: .45em; font-weight: 400; }
 
   .session-full {
     display: inline-block;
@@ -335,14 +345,25 @@
     try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ time: Date.now(), events })); } catch (e) {}
   }
 
+  // A random music emoji in front of each session, shuffled once per page visit
+  // (so they don't change when the list refreshes).
+  const EMOJIS = ['🎻', '🪕', '🪗', '🎸', '🪈', '🎶', '🎵'];
+  for (let i = EMOJIS.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [EMOJIS[i], EMOJIS[j]] = [EMOJIS[j], EMOJIS[i]];
+  }
+
   function render(events) {
     if (!events.length) {
       showNote('No sessions planned right now. Check back soon!');
       return;
     }
-    // One line per session: "folk session, mainly Irish · 19 december"
-    list.replaceChildren(...events.map((ev) => {
-      const li = el('li', null, ev.event + (ev.date ? ' · ' + formatDate(ev.date) : ''));
+    // One line per session: "🎻 folk session, mainly Irish · 19 december"
+    list.replaceChildren(...events.map((ev, i) => {
+      const li = el('li');
+      const icon = el('span', 'session-emoji', EMOJIS[i % EMOJIS.length]);
+      icon.setAttribute('aria-hidden', 'true');
+      li.append(icon, ev.event + (ev.date ? ' · ' + formatDate(ev.date) : ''));
       if (ev.full) li.append(el('span', 'session-full', 'FULL'));
       return li;
     }));
