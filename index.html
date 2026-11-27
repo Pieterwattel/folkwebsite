@@ -207,7 +207,7 @@
     position: fixed;
     top: 0;
     bottom: 0;
-    left: 0;
+    left: 10vw;
     width: var(--instrument-col);
     z-index: 0;
     pointer-events: none;
@@ -229,9 +229,9 @@
   #bodhran { max-width: 96%; }   /* wide and flat, so give it the full width */
 
   /* Narrower screens: make room for the column so it never covers the text. */
-  @media (max-width: 860px) {
+  @media (max-width: 1000px) {
     :root { --instrument-col: 4.6rem; }
-    body { padding-left: calc(var(--instrument-col) + 12px); }
+    body { padding-left: calc(10vw + var(--instrument-col) + 12px); }
   }
 </style>
 </head>
