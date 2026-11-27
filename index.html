@@ -48,6 +48,17 @@
   }
   .intro { margin: 0 0 40px; text-align: center; }
 
+  /* Shown instead of the sessions and form when online sign-up isn't working. */
+  .unavailable {
+    background: var(--panel);
+    padding: 28px;
+    border-radius: 2em 0 2em 0;
+    text-align: center;
+  }
+  .unavailable p { margin: 0 0 12px; }
+  .unavailable p:last-child { margin-bottom: 0; }
+  .unavailable a, .msg a { color: var(--maroon); font-weight: 700; overflow-wrap: anywhere; }
+
   .demo {
     width: fit-content;
     margin: -24px auto 32px;
@@ -183,7 +194,6 @@
   }
   button:hover, button:focus-visible { background: var(--maroon-dark); }
   button:disabled { opacity: .65; cursor: progress; }
-  button[data-closed] { cursor: default; }
 
   .msg { margin: 16px 0 0; font-weight: 700; }
   .msg.ok  { width: fit-content; padding: .1em .3em; background: var(--yellow); }
@@ -204,6 +214,7 @@
   <p class="intro">Pick the sessions you'd like to join and we'll save you a spot.</p>
 
   <p id="demo" class="demo" hidden>Preview mode: demo sessions, sign-ups are not saved.</p>
+  <div id="unavailable" class="unavailable" role="alert" hidden></div>
 
   <form id="form" novalidate>
     <fieldset>
@@ -264,9 +275,12 @@
   const SCRIPT_URL = '';
 
   // Without SCRIPT_URL nothing can be saved. On your own computer the page then
-  // runs as a preview with demo sessions; on the live site sign-ups are closed.
+  // runs as a preview with demo sessions; on the live site it shows no sessions,
+  // only a message with the email address below.
   const LOCAL = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1)$/.test(location.hostname);
-  const CLOSED = !SCRIPT_URL && !LOCAL;
+
+  // Where people can sign up by email when signing up online doesn't work.
+  const MAIL = 'folkmuziekutrecht@gmail.com';
 
   const DEMO_EVENTS = [
     { id: 'irish-2026-12-19', event: 'folk session, mainly Irish', date: '2026-12-19', start: '13:00', end: '14:30', location: 'Domplein 4, Utrecht', cost: 'free/donation' },
@@ -380,9 +394,12 @@
 
   async function loadEvents() {
     if (!SCRIPT_URL) {
-      $('demo').hidden = false;
-      renderEvents(DEMO_EVENTS);
-      if (CLOSED) closeSignups();
+      if (LOCAL) {
+        $('demo').hidden = false;
+        renderEvents(DEMO_EVENTS);
+      } else {
+        showUnavailable("Signing up online isn't open yet.");
+      }
       return;
     }
     try {
@@ -391,13 +408,33 @@
       if (!data.ok) throw new Error(data.error || 'Could not load sessions');
       renderEvents(data.events || []);
     } catch (err) {
-      eventsBox.replaceChildren(el('p', 'empty', 'Sorry, the sessions could not be loaded. Please refresh the page or try again later.'));
+      showUnavailable("Sorry, the sessions can't be loaded right now.");
     }
   }
 
-  function showMsg(kind, text) {
+  function mailLink() {
+    const a = el('a', null, MAIL);
+    a.href = 'mailto:' + MAIL;
+    return a;
+  }
+
+  // Hides the sessions and form, and explains how to sign up by email instead.
+  function showUnavailable(text) {
+    form.hidden = true;
+    document.querySelector('.intro').hidden = true;
+    const box = $('unavailable');
+    const how = el('p');
+    how.append('To join a session, send an email to ', mailLink(),
+      " with your name and the session you'd like to join.");
+    box.replaceChildren(el('p', null, text), how);
+    box.hidden = false;
+  }
+
+  // withMail: add "You can also sign up by email" for errors on our side.
+  function showMsg(kind, text, withMail) {
     msg.className = 'msg ' + kind;
     msg.textContent = text;
+    if (withMail) msg.append(' You can also sign up by sending an email to ', mailLink(), '.');
     msg.hidden = false;
   }
 
@@ -414,7 +451,6 @@
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     msg.hidden = true;
-    if (CLOSED) return showMsg('err', "Sign-ups aren't open yet. Please check back soon.");
 
     const fd = new FormData(form);
     const events = fd.getAll('events');
@@ -464,8 +500,12 @@
       }
 
       if (!data.ok) {
-        if (data.full && data.full.length) loadEvents();   // show the session as full now
-        throw new Error(data.error || 'Sign-up failed');
+        if (data.full && data.full.length) {
+          loadEvents();   // show the session as full now
+          showMsg('err', data.error || 'Sorry, this session is full.');
+          return;
+        }
+        throw new Error(data.error || '');
       }
 
       const n = data.count || events.length;
@@ -476,24 +516,17 @@
       setNewcomer(false);
       if (SCRIPT_URL) loadEvents();   // refresh, a session may have just filled up
     } catch (err) {
+      // Anything that goes wrong here is on our side or the connection:
+      // always offer signing up by email.
       const text = err instanceof TypeError
-        ? 'Could not reach the server. Please check your connection and try again.'
-        : err.message;
-      showMsg('err', text);
+        ? "Your sign-up couldn't be sent. Please check your connection and try again."
+        : (err.message && !(err instanceof SyntaxError) ? err.message : "Sorry, something went wrong and your sign-up wasn't saved.");
+      showMsg('err', text, true);
     } finally {
       submitBtn.disabled = false;
       submitBtn.textContent = 'Sign me up';
     }
   });
-
-  // Live site without SCRIPT_URL: show the sessions, but nobody can sign up yet.
-  function closeSignups() {
-    $('demo').textContent = "Sign-ups open soon. You can't sign up on this page yet.";
-    form.querySelectorAll('input, textarea').forEach((el) => { el.disabled = true; });
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Sign-ups open soon';
-    submitBtn.dataset.closed = '1';
-  }
 
   loadEvents();
 </script>

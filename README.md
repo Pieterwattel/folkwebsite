@@ -77,7 +77,10 @@ In `index.html`, near the top of the `<script>`:
 const SCRIPT_URL = 'https://script.google.com/macros/s/XXXX/exec';
 ```
 
-With `SCRIPT_URL` empty the page shows demo sessions and doesn't save anything.
+With `SCRIPT_URL` empty, the live page shows no sessions, only a message that online sign-up isn't open yet
+and that people can email folkmuziekutrecht@gmail.com to join. On your own computer (localhost) it shows
+demo sessions instead, so you can try the page. The same email message appears whenever the sessions
+can't be loaded or a sign-up can't be saved.
 
 ## 4. Host the page
 
