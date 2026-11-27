@@ -53,6 +53,22 @@
     padding: 12px 20px;
     background: var(--maroon);
   }
+  /* A tiny instrument in the far (right) corner of each header. */
+  .card-head, .workshops .tab {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .head-icon {
+    display: block;
+    height: 34px;
+    width: auto;
+    flex: none;
+    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .35));
+  }
+  .head-icon.wide { height: 26px; }   /* bodhran: flat, so a bit lower */
+
   .label {
     display: inline-block;
     padding: .05em .3em;
@@ -134,7 +150,8 @@
 
   /* ---------- workshops: a tab on top of a wide box ---------- */
   .workshops .tab {
-    display: inline-block;
+    display: inline-flex;
+    gap: 22px;
     margin: 0 0 -1.5px;           /* sits on the box's top border */
     padding: 12px 20px;
     background: var(--maroon);
@@ -176,7 +193,7 @@
 <main>
 
   <section class="card about" aria-labelledby="about-title">
-    <h2 class="card-head"><span class="label" id="about-title">About us</span></h2>
+    <h2 class="card-head"><span class="label" id="about-title">About us</span><img class="head-icon wide" src="bodhran.png" alt=""></h2>
     <img class="deco" src="violin.png" alt="">
     <div class="card-body">
       <p>Hi! We are Pieter and Boet. Folk music is a very social and welcoming way to make music
@@ -195,7 +212,7 @@
   </section>
 
   <section class="card sessions" aria-labelledby="sessions-title">
-    <h2 class="card-head"><span class="label" id="sessions-title">Coming sessions</span></h2>
+    <h2 class="card-head"><span class="label" id="sessions-title">Coming sessions</span><img class="head-icon" src="guitar.png" alt=""></h2>
     <img class="deco" src="whistle.png" alt="">
     <div class="card-body">
       <ul class="session-list" id="session-list"><li class="note">Loading sessions…</li></ul>
@@ -207,7 +224,7 @@
   </section>
 
   <section class="workshops" aria-labelledby="workshops-title">
-    <h2 class="tab"><span class="label" id="workshops-title">Workshops</span></h2>
+    <h2 class="tab"><span class="label" id="workshops-title">Workshops</span><img class="head-icon" src="violin.png" alt=""></h2>
     <div class="box">to be announced</div>
   </section>
 
