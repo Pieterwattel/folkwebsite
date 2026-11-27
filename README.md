@@ -1,12 +1,14 @@
-# Session sign-up page
+# Folk session Utrecht
 
-Note: `Code.gs` is kept out of git (see `.gitignore`) because it contains the sheet IDs and
-this repo is public. It only exists on your computer and, once pasted in, in Apps Script.
+The main page (`index.html`) is the session sign-up page.
 
-Two files in this folder:
-
-- `index.html`: the public sign-up page. It's a single file with no build step.
-- `Code.gs`: a Google Apps Script that reads events from your sheet and saves sign-ups.
+| File | What it is |
+|---|---|
+| `index.html` | Sign-up page: lists the upcoming sessions from the sheet and collects sign-ups. |
+| `Code.gs` | Google Apps Script behind the sign-up page. Kept out of git (see `.gitignore`) because it contains the sheet IDs and this repo is public. It only exists on your computer and, once pasted in, in Apps Script. |
+| `info.html` | The earlier info page (what the session is, how it works, tunes). Not linked from the sign-up page; open it at `<site address>/info.html`. It still has its own older sign-up form, which uses `aanmeldingen.gs`. |
+| `tunes.html` | Redirects to the tunes part of `info.html`. |
+| `aanmelden/` | Redirects to the main page, for anyone with the old link. |
 
 ## 1. Prepare the sheet
 
@@ -78,13 +80,16 @@ With `SCRIPT_URL` empty the page shows demo sessions and doesn't save anything.
 
 ## 4. Host the page
 
-The page lives in the folk website, in the `aanmelden/` folder. Wherever the folk website is
-published, the sign-up page is at `<site address>/aanmelden/`.
+The sign-up page is the site's main page, so wherever the site is published, it's the first
+thing people see.
 
 ## Look and files
 
-The colours match the folk session website: grey `#ebece8`, maroon `#7a1f2b` and yellow `#fdc81e`.
-The big dots between sessions are filled with the site's own `textile.jpg` (`../textile.jpg`).
+The colours match the info page: grey `#ebece8`, maroon `#7a1f2b` and yellow `#fdc81e`.
+The big dots between sessions are filled with `textile.jpg`. The bodhrán, violin, guitar and
+tin whistle in the background (`bodhran.png`, `violin.png`, `guitar.png`, `whistle.png`) tilt a
+little as you scroll, the same way as on the info page. On phones they're small and faint so
+the text stays readable, and they stand still for people who have "reduce motion" turned on.
 
 ## Counting sign-ups
 
