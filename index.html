@@ -193,62 +193,9 @@
     body { padding-top: 28px; font-size: 17px; }
     .panel { padding: 16px; }
   }
-
-  /* ---------- instruments in the background ---------- */
-  /* Same images as the folk website; they tilt a little as you scroll. */
-  main { position: relative; z-index: 1; }
-
-  /* A column down the left side, the full height of the screen, split into four
-     equal rows (like the info page on a phone). Every instrument is fitted into
-     the same size box, so they look about equally big. */
-  :root { --instrument-col: 6.5rem; }
-
-  .instruments {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 10vw;
-    width: var(--instrument-col);
-    z-index: 0;
-    pointer-events: none;
-    display: grid;
-    grid-template-rows: repeat(4, 1fr);
-    align-items: center;
-    justify-items: center;
-    padding: 2vh 0;
-  }
-  .instruments img {
-    display: block;
-    width: auto;
-    height: auto;
-    max-width: 82%;
-    max-height: 17vh;     /* a bit less than one row */
-    object-fit: contain;
-    filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .18));
-  }
-  #bodhran { max-width: 96%; }   /* wide and flat, so give it the full width */
-
-  /* The instruments are background only: the page sits on top of them and
-     doesn't move aside. On narrower screens the column is a bit slimmer. */
-  @media (max-width: 1000px) {
-    :root { --instrument-col: 4.6rem; }
-  }
-
-  /* Phones: no gap, the column sits against the left edge. */
-  @media (max-width: 600px) {
-    :root { --instrument-col: 2.3rem; }   /* half the size of the 4.6rem column */
-    .instruments { left: 0; }
-    .instruments img { max-height: 8.5vh; }
-  }
 </style>
 </head>
 <body>
-<div class="instruments" aria-hidden="true">
-  <img id="bodhran" src="bodhran.png" alt="">
-  <img id="violin" src="violin.png" alt="">
-  <img id="guitar" src="guitar.png" alt="">
-  <img id="whistle" src="whistle.png" alt="">
-</div>
 <main>
   <h1>Sign up for a session</h1>
   <p class="intro">Pick the sessions you'd like to join and we'll save you a spot.</p>
@@ -528,56 +475,6 @@
   });
 
   loadEvents();
-
-  /* Instruments tilt in small steps while scrolling, like on the folk website.
-     Each one has its own step size and its own list of angles. */
-  (function wobble() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const items = [
-      { el: $('bodhran'), stride: 102, offset: 0, arc: [8, -7, 2, -5, 7, -1, -8, 4, -3, 6] },
-      { el: $('violin'),  stride: 66,  offset: 4, arc: [-6, 8, -2, 5, -8, 1, 7, -4, 3, -7] },
-      { el: $('guitar'),  stride: 123, offset: 2, arc: [5, -8, 7, -3, -7, 8, -1, 4, -6, 2] },
-      { el: $('whistle'), stride: 81,  offset: 6, arc: [-8, 3, -5, 8, -2, 6, -7, 1, 7, -4] }
-    ];
-
-    let lastScroll = window.scrollY;
-    let lastTime = performance.now();
-    const progress = items.map((item) => lastScroll / item.stride);
-
-    function turnFor(item, steps) {
-      if (steps <= 0) return 0;
-      return item.arc[(steps - 1 + item.offset) % item.arc.length];
-    }
-
-    function place() {
-      const scroll = window.scrollY;
-      const now = performance.now();
-      const gap = Math.max(now - lastTime, 16);
-      const delta = scroll - lastScroll;
-      const fast = Math.abs(delta) / gap > 0.8;
-
-      if (scroll <= 0) {
-        progress.fill(0);
-      } else {
-        items.forEach((item, i) => {
-          const requested = delta / item.stride;
-          // When scrolling fast, don't let them flip through angles too quickly.
-          progress[i] += fast ? Math.sign(requested) * Math.min(Math.abs(requested), gap / 450) : requested;
-        });
-      }
-
-      items.forEach((item, i) => {
-        const turn = turnFor(item, Math.floor(progress[i]));
-        item.el.style.transform = turn === 0 ? '' : `rotate(${turn}deg)`;
-      });
-
-      lastScroll = scroll;
-      lastTime = now;
-    }
-
-    window.addEventListener('scroll', place, { passive: true });
-  })();
 </script>
 </body>
 </html>
