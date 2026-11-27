@@ -1,15 +1,19 @@
 # Folk session Utrecht
 
-The main page (`index.html`) is the session sign-up page.
+The main page (`index.html`) has three cards: About us, Coming sessions (loaded live from the
+sheet) and Workshops. The sign-up form is on `signup.html`.
 
 | File | What it is |
 |---|---|
-| `index.html` | Sign-up page: lists the upcoming sessions from the sheet and collects sign-ups. |
-| `Code.gs` | Google Apps Script behind the sign-up page. Kept out of git (see `.gitignore`) because it contains the sheet IDs and this repo is public. It only exists on your computer and, once pasted in, in Apps Script. |
-| `info.html` | The earlier info page (what the session is, how it works, tunes). Not linked from the sign-up page; open it at `<site address>/info.html`. Its INSCHRIJVEN button links to the sign-up page. |
+| `index.html` | Home page. About us (with `pieter-en-boet.jpg`), Coming sessions with links to sign up and to "how does a session work" on the info page, and Workshops ("to be announced"; edit the text in the file). |
+| `signup.html` | Sign-up page: lists the upcoming sessions from the sheet and collects sign-ups. |
+| `Code.gs` | Google Apps Script behind both pages. Kept out of git (see `.gitignore`) because it contains the sheet IDs and this repo is public. It only exists on your computer and, once pasted in, in Apps Script. |
+| `info.html` | The earlier info page (what the session is, how it works, tunes). The home page links to its "Hoe werkt het?" part; its INSCHRIJVEN button links to the sign-up page. |
 | `aanmeldingen.gs` | Older Apps Script. No longer used for sign-ups, but the video page (`sessie-video-k7q2/`) still sends its messages through it, so keep it deployed. |
 | `tunes.html` | Redirects to the tunes part of `info.html`. |
-| `aanmelden/` | Redirects to the main page, for anyone with the old link. |
+| `aanmelden/` | Redirects to the sign-up page, for anyone with the old link. |
+
+Both `index.html` and `signup.html` contain the web app URL (`SCRIPT_URL`). If it ever changes, update both.
 
 ## 1. Prepare the sheet
 
