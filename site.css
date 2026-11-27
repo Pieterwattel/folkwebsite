@@ -168,7 +168,15 @@ body.view-home { height: 100vh; overflow: hidden; }
   height: 2px;
   background: rgba(0, 0, 0, .35);
 }
-.session-emoji { margin-right: .45em; font-weight: 400; }
+.session-emoji {
+  display: inline-block;
+  width: 1.3em;              /* same width for every symbol, so the text lines up */
+  margin-right: .3em;
+  text-align: center;
+  font-weight: 400;
+}
+/* 1.4x bigger, so width and gap are divided by 1.4 to keep the same slot */
+.session-emoji.is-text { font-size: 1.4em; width: calc(1.3em / 1.4); margin-right: calc(.3em / 1.4); line-height: 1; vertical-align: -.08em; }
 .session-full {
   display: inline-block;
   margin-left: .35em;

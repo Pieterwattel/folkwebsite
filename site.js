@@ -236,7 +236,7 @@ let sessionsState = 'loading'; // loading | ok | error | closed | demo
 
 // A random music emoji in front of each session on the home view,
 // shuffled once per visit.
-const EMOJIS = ['🎻', '🪕', '🪗', '🪈', '🎶', '🎵'];
+const EMOJIS = ['🎻', '🪕', '🪗', '🪈', '🎶', '🎵', '🎹', '🎉', '𝄞', '♫'];
 for (let i = EMOJIS.length - 1; i > 0; i--) {
   const j = Math.floor(Math.random() * (i + 1));
   [EMOJIS[i], EMOJIS[j]] = [EMOJIS[j], EMOJIS[i]];
@@ -283,7 +283,9 @@ function renderHomeSessions() {
 
   list.replaceChildren(...events.map((ev, i) => {
     const li = el('li');
-    const icon = el('span', 'session-emoji', EMOJIS[i % EMOJIS.length]);
+    const symbol = EMOJIS[i % EMOJIS.length];
+    // the G clef and ♫ are plain black text characters; they get a bit bigger (CSS)
+    const icon = el('span', 'session-emoji' + (symbol === '𝄞' || symbol === '♫' ? ' is-text' : ''), symbol);
     icon.setAttribute('aria-hidden', 'true');
     li.append(icon, ev.event + (ev.date ? ' · ' + longDate(ev.date) : ''));
     if (ev.full) li.append(el('span', 'session-full', t('full').toUpperCase()));
