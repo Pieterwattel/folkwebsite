@@ -33,7 +33,7 @@
     line-height: 1.45;
   }
 
-  main { max-width: 560px; margin: 0 auto; }
+  main { max-width: 900px; margin: 0 auto; }
 
   h1 {
     width: fit-content;
@@ -145,11 +145,34 @@
   .empty { margin: 0; text-align: center; }
 
   /* ---------- form ---------- */
+  /* The form is a plain white band along the bottom of the screen, from the
+     fabric strip to the right edge, always in view (like the white text panel
+     on the home page). The fields are centred in it. The page gets extra room
+     at the bottom (set by the script) so the last session isn't hidden. */
   .panel {
+    position: fixed;
+    left: 15vw;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+    max-height: 85vh;
+    overflow-y: auto;
     background: var(--panel);
-    padding: 32px 28px;
-    border-radius: 2em 0 2em 0;   /* top-left and bottom-right rounded */
+    padding: 18px max(26px, calc((85vw - 900px) / 2));
   }
+
+  /* Fields side by side, so the box isn't so tall */
+  .row { display: grid; gap: 14px 24px; }
+  .row-first { grid-template-columns: 1.3fr 1fr; align-items: end; }
+  .row-new   { grid-template-columns: repeat(3, 1fr); margin-top: 14px; }
+  .row-new .field-wide { grid-column: 1 / -1; }
+  .row-end {
+    display: flex;
+    align-items: center;
+    gap: 14px 24px;
+    margin-top: 16px;
+  }
+  .end-text { flex: 1; min-width: 0; }
 
   .choice { display: flex; gap: 10px; flex-wrap: wrap; }
   .choice label {
@@ -164,7 +187,7 @@
   .choice label:has(input:checked) { background: var(--yellow); }
   .choice input { accent-color: var(--ink); width: 18px; height: 18px; margin: 0; }
 
-  .field { margin-top: 18px; }
+  .field { margin: 0; }
   .field label { display: block; font-weight: 700; margin-bottom: 4px; }
   .field input, .field textarea {
     width: 100%;
@@ -182,9 +205,9 @@
 
   button {
     display: block;
-    width: 100%;
-    margin-top: 24px;
-    padding: .8rem 1.1rem;
+    flex: none;
+    margin: 0;
+    padding: .8rem 1.6rem;
     border: 0;
     background: var(--maroon);
     color: #fff;
@@ -198,16 +221,31 @@
   button:hover, button:focus-visible { background: var(--maroon-dark); }
   button:disabled { opacity: .65; cursor: progress; }
 
-  .msg { margin: 16px 0 0; font-weight: 700; }
+  .msg { margin: 0 0 4px; font-weight: 700; }
   .msg.ok  { width: fit-content; padding: .1em .3em; background: var(--yellow); }
   .msg.err { color: var(--maroon); }
 
-  .cancel { margin: 18px 0 0; font-size: .92rem; }
+  .cancel { margin: 0; font-size: .92rem; }
   .cancel a { color: var(--maroon); font-weight: 700; overflow-wrap: anywhere; }
 
+  /* Narrow screens: one field per row again, button full width */
+  @media (max-width: 680px) {
+    .row-first, .row-new { grid-template-columns: 1fr; }
+    .row-end { flex-direction: column; align-items: stretch; }
+    button { width: 100%; }
+    .panel { max-height: 70vh; padding: 16px 18px; }
+  }
   @media (max-width: 420px) {
     body { padding-top: 28px; font-size: 17px; }
-    .panel { padding: 16px; }
+    /* keep the sticky box compact on phones */
+    .panel { padding: 12px 14px; font-size: 15px; }
+    .row { gap: 8px; }
+    .row-end { gap: 8px; margin-top: 10px; }
+    legend { margin-bottom: 6px; }
+    .choice label { padding: .3em .6em; }
+    .field input { padding: .35rem .5rem; }
+    button { padding: .55rem 1rem; font-size: 1rem; }
+    .cancel { font-size: .78rem; }
   }
 
   /* A strip of fabric down the left side (15% of the width), with a maroon
@@ -261,20 +299,22 @@
     </fieldset>
 
     <div class="panel">
-      <fieldset>
-        <legend>Have you joined before?</legend>
-        <div class="choice">
-          <label><input type="radio" name="returning" value="yes"> Yes</label>
-          <label><input type="radio" name="returning" value="no"> No, I'm new</label>
-        </div>
-      </fieldset>
+      <div class="row row-first">
+        <fieldset>
+          <legend>Have you joined before?</legend>
+          <div class="choice">
+            <label><input type="radio" name="returning" value="yes"> Yes</label>
+            <label><input type="radio" name="returning" value="no"> No, I'm new</label>
+          </div>
+        </fieldset>
 
-      <div class="field">
-        <label for="name">Name *</label>
-        <input id="name" name="name" autocomplete="name" required maxlength="100">
+        <div class="field">
+          <label for="name">Name *</label>
+          <input id="name" name="name" autocomplete="name" required maxlength="100">
+        </div>
       </div>
 
-      <div id="new-fields" hidden>
+      <div id="new-fields" class="row row-new" hidden>
         <div class="field">
           <label for="email">Email *</label>
           <input id="email" name="email" type="email" autocomplete="email" maxlength="200">
@@ -287,9 +327,9 @@
           <label for="experience">How long have you been playing?</label>
           <input id="experience" name="experience" maxlength="200">
         </div>
-        <div class="field">
+        <div class="field field-wide">
           <label for="note">Remark</label>
-          <textarea id="note" name="note" rows="3" maxlength="500"></textarea>
+          <textarea id="note" name="note" rows="2" maxlength="500"></textarea>
         </div>
       </div>
 
@@ -297,10 +337,14 @@
         <label>Website <input name="website" tabindex="-1" autocomplete="off"></label>
       </div>
 
-      <button type="submit" id="submit">Sign me up</button>
-      <p id="msg" class="msg" role="status" aria-live="polite" hidden></p>
-      <p class="cancel">Signed up but can't make it? To cancel, send an email to
-        <a href="mailto:folkmuziekutrecht@gmail.com">folkmuziekutrecht@gmail.com</a>.</p>
+      <div class="row row-end">
+        <button type="submit" id="submit">Sign me up</button>
+        <div class="end-text">
+          <p id="msg" class="msg" role="status" aria-live="polite" hidden></p>
+          <p class="cancel">Signed up but can't make it? To cancel, send an email to
+            <a href="mailto:folkmuziekutrecht@gmail.com">folkmuziekutrecht@gmail.com</a>.</p>
+        </div>
+      </div>
     </div>
   </form>
 </main>
@@ -586,6 +630,16 @@
       submitBtn.textContent = 'Sign me up';
     }
   });
+
+  // Room at the bottom of the page for the fixed sign-up band, so the last
+  // session can scroll above it. Follows the band's height (it grows for newcomers).
+  (function keepRoomForForm() {
+    const panel = document.querySelector('.panel');
+    const update = () => { document.body.style.paddingBottom = (panel.offsetHeight + 24) + 'px'; };
+    if (window.ResizeObserver) new ResizeObserver(update).observe(panel);
+    window.addEventListener('resize', update);
+    update();
+  })();
 
   loadEvents();
 </script>

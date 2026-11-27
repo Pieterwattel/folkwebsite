@@ -42,9 +42,20 @@
     align-items: center;
     justify-items: center;
     padding: 4vh 2vw;
-    background: #c6a83a url("textile.jpg") center / cover no-repeat;
+    position: relative;
+    background: #c6a83a;
+  }
+  /* The fabric photo, turned half a round so its maroon circle sits in the
+     bottom-left corner (the instruments stay upright). */
+  .fabric::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("textile.jpg") center / cover no-repeat;
+    transform: rotate(180deg);
   }
   .fabric img {
+    position: relative;
     display: block;
     width: auto;
     height: auto;
