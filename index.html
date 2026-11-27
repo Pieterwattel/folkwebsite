@@ -80,7 +80,9 @@
     list-style: none;
     margin: 0;
     /* bottom padding: room to scroll the last session clear of the button */
-    padding: 2.2vh 2% calc(var(--btn-h) + 1vh) 2.6%;
+    /* right padding = the button's width, so the sessions are centred in the
+       space left of the SIGN UP button (phones override this below) */
+    padding: 2.2vh 28% calc(var(--btn-h) + 1vh) 2.6%;
     flex: 1;
     min-height: 0;
     overflow: auto;
