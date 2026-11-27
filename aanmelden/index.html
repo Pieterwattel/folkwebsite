@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Folk Session Sign-up</title>
+<style>
+  /* Colours and fabric match the folk session website (folkwebsite/styles.css). */
+  :root {
+    --bg: #ebece8;          /* page grey */
+    --panel: #fff;
+    --ink: #000;
+    --line: #111;
+    --muted: #444;
+    --maroon: #7a1f2b;      /* buttons, links, errors */
+    --maroon-dark: #641825;
+    --yellow: #fdc81e;      /* highlight */
+    --fabric: url("../textile.jpg");
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  body {
+    min-height: 100vh;
+    padding: 48px 16px 72px;
+    font-size: 18px;
+    line-height: 1.45;
+  }
+
+  main { max-width: 560px; margin: 0 auto; }
+
+  h1 {
+    width: fit-content;
+    margin: 0 auto 10px;
+    padding: .08em .25em;
+    background: var(--yellow);
+    font-size: clamp(1.7rem, 5vw, 2.3rem);
+    font-weight: 800;
+    letter-spacing: -.02em;
+    line-height: 1.2;
+    text-align: center;
+  }
+  .intro { margin: 0 0 40px; text-align: center; }
+
+  .demo {
+    width: fit-content;
+    margin: -24px auto 32px;
+    padding: 4px 10px;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    font-size: .85rem;
+  }
+
+  fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+  legend { font-weight: 800; margin-bottom: 10px; padding: 0; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  [hidden] { display: none !important; }
+
+  /* ---------- sessions: plain text, one column, centred ---------- */
+  .events {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 26px;
+    margin-bottom: 48px;
+  }
+
+  .event {
+    display: block;
+    text-align: center;
+    cursor: pointer;
+    padding: 2px 8px;
+  }
+  .event:has(input:focus-visible) { outline: 2px solid var(--line); outline-offset: 4px; }
+
+  .event-title {
+    display: inline;
+    padding: 0 .2em;
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: -.01em;
+  }
+  .event:has(input:checked) .event-title { background: var(--yellow); }
+
+  .event-when, .event-where, .event-cost { font-weight: 700; }
+  .event-when { margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .event-cost { font-weight: 400; }
+
+  .icon { margin-right: .3em; font-weight: 400; }
+  .icon-gap { margin-left: 1em; }
+
+  /* big fabric dot between sessions */
+  .sep {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--yellow) var(--fabric) center / 280px;
+  }
+
+  .join {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 8px;
+    font-size: .95rem;
+  }
+  .join input { width: 20px; height: 20px; margin: 0; accent-color: var(--maroon); cursor: pointer; }
+
+  .empty { margin: 0; text-align: center; }
+
+  /* ---------- form ---------- */
+  .panel {
+    background: var(--panel);
+    padding: 32px 28px;
+    border-radius: 2em 0 2em 0;   /* top-left and bottom-right rounded */
+  }
+
+  .choice { display: flex; gap: 10px; flex-wrap: wrap; }
+  .choice label {
+    flex: 1 1 140px;
+    display: flex; align-items: center; gap: 8px;
+    padding: .45em .75em;
+    border: 1px solid var(--line);
+    background: var(--panel);
+    font-weight: 800;
+    cursor: pointer;
+  }
+  .choice label:has(input:checked) { background: var(--yellow); }
+  .choice input { accent-color: var(--ink); width: 18px; height: 18px; margin: 0; }
+
+  .field { margin-top: 18px; }
+  .field label { display: block; font-weight: 700; margin-bottom: 4px; }
+  .field input, .field textarea {
+    width: 100%;
+    resize: vertical;
+    font: inherit;
+    padding: .45rem .55rem;
+    border: 1px solid var(--line);
+    border-radius: 0;
+    background: var(--panel);
+    color: var(--ink);
+  }
+  .field input:focus, .field textarea:focus { outline: 2px solid var(--yellow); outline-offset: 0; }
+  .hint { font-size: .88rem; color: var(--muted); margin-top: 4px; }
+
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+  button {
+    display: block;
+    width: 100%;
+    margin-top: 24px;
+    padding: .8rem 1.1rem;
+    border: 0;
+    background: var(--maroon);
+    color: #fff;
+    font: inherit;
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  button:hover, button:focus-visible { background: var(--maroon-dark); }
+  button:disabled { opacity: .65; cursor: progress; }
+
+  .msg { margin: 16px 0 0; font-weight: 700; }
+  .msg.ok  { width: fit-content; padding: .1em .3em; background: var(--yellow); }
+  .msg.err { color: var(--maroon); }
+
+  @media (max-width: 420px) {
+    body { padding-top: 28px; font-size: 17px; }
+    .panel { padding: 16px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <h1>Sign up for a session</h1>
+  <p class="intro">Pick the sessions you'd like to join and we'll save you a spot.</p>
+
+  <p id="demo" class="demo" hidden>Preview mode: demo sessions, sign-ups are not saved.</p>
+
+  <form id="form" novalidate>
+    <fieldset>
+      <legend class="sr-only">Choose one or more sessions</legend>
+      <div id="events" class="events"><p class="empty">Loading sessions…</p></div>
+    </fieldset>
+
+    <div class="panel">
+      <fieldset>
+        <legend>Have you joined before?</legend>
+        <div class="choice">
+          <label><input type="radio" name="returning" value="yes"> Yes</label>
+          <label><input type="radio" name="returning" value="no"> No, I'm new</label>
+        </div>
+      </fieldset>
+
+      <div class="field">
+        <label for="name">Name *</label>
+        <input id="name" name="name" autocomplete="name" required maxlength="100">
+      </div>
+
+      <div id="new-fields" hidden>
+        <div class="field">
+          <label for="email">Email *</label>
+          <input id="email" name="email" type="email" autocomplete="email" maxlength="200">
+          <div class="hint">Only used to contact you about the sessions. Never shown publicly.</div>
+        </div>
+        <div class="field">
+          <label for="instrument">Instrument *</label>
+          <input id="instrument" name="instrument" maxlength="200">
+        </div>
+        <div class="field">
+          <label for="experience">How long have you been playing? *</label>
+          <input id="experience" name="experience" maxlength="200">
+        </div>
+        <div class="field">
+          <label for="note">Remark</label>
+          <textarea id="note" name="note" rows="3" maxlength="500"></textarea>
+        </div>
+      </div>
+
+      <div class="hp" aria-hidden="true">
+        <label>Website <input name="website" tabindex="-1" autocomplete="off"></label>
+      </div>
+
+      <button type="submit" id="submit">Sign me up</button>
+      <p id="msg" class="msg" role="status" aria-live="polite" hidden></p>
+    </div>
+  </form>
+</main>
+
+<script>
+  /* ============================================================
+     Paste your Apps Script web-app URL here (ends in /exec).
+     Leave empty to preview the page with demo sessions.
+     ============================================================ */
+  const SCRIPT_URL = '';
+
+  const DEMO_EVENTS = [
+    { id: 'irish-2026-12-19', event: 'folk session, mainly Irish', date: '2026-12-19', start: '13:00', end: '14:30', location: 'Domplein 4, Utrecht', cost: 'free/donation' },
+    { id: 'irish-2027-01-16', event: 'folk session, mainly Irish', date: '2027-01-16', start: '13:00', end: '14:30', location: 'Domplein 4, Utrecht', cost: 'free/donation' },
+    { id: 'irish-2027-02-06', event: 'folk session, mainly Irish', date: '2027-02-06', start: '13:00', end: '14:30', location: 'Domplein 4, Utrecht', cost: 'free/donation' },
+    { id: 'tune-workshop', event: 'tune learning workshop (date to be announced)' }
+  ];
+
+  const MONTHS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+
+  const $ = (id) => document.getElementById(id);
+  const form = $('form'), eventsBox = $('events'), msg = $('msg'), submitBtn = $('submit');
+  const newFields = $('new-fields'), emailInput = $('email'), nameInput = $('name');
+  const instrumentInput = $('instrument'), experienceInput = $('experience');
+
+  // '2026-12-19' -> "19 dec '26"
+  function formatDate(iso) {
+    const [y, m, d] = iso.split('-').map(Number);
+    return `${d} ${MONTHS[m - 1]} '${String(y).slice(-2)}`;
+  }
+
+  function todayIso() {
+    const t = new Date();
+    return `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, '0')}-${String(t.getDate()).padStart(2, '0')}`;
+  }
+
+  function el(tag, cls, text) {
+    const n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  function icon(symbol) {
+    const s = el('span', 'icon', symbol);
+    s.setAttribute('aria-hidden', 'true');
+    return s;
+  }
+
+  // Only a name is needed. Events with a date in the past are hidden;
+  // events without a date are shown after the dated ones.
+  function renderEvents(list) {
+    const today = todayIso();
+    const key = (e) => (e.date ? '0' + e.date : '1') + (e.start || '');
+    const events = list
+      .filter((e) => e && e.event && (!e.date || e.date >= today))
+      .sort((a, b) => key(a).localeCompare(key(b)));
+
+    eventsBox.replaceChildren();
+    if (!events.length) {
+      eventsBox.append(el('p', 'empty', 'There are no upcoming sessions right now. Check back soon!'));
+      return;
+    }
+
+    events.forEach((ev, i) => {
+      if (i > 0) {
+        const sep = el('div', 'sep');
+        sep.setAttribute('aria-hidden', 'true');
+        eventsBox.append(sep);
+      }
+
+      const card = el('label', 'event');
+      const text = el('div');
+
+      text.append(el('div', 'event-title', ev.event));
+
+      const time = [ev.start, ev.end].filter(Boolean).join(' - ');
+      if (ev.date || time) {
+        const when = el('div', 'event-when');
+        if (ev.date) when.append(icon('📅'), document.createTextNode(formatDate(ev.date)));
+        if (time) {
+          const clock = icon('🕐');
+          if (ev.date) clock.classList.add('icon-gap');
+          when.append(clock, document.createTextNode(time));
+        }
+        text.append(when);
+      }
+
+      if (ev.location) {
+        const where = el('div', 'event-where');
+        where.append(icon('📍'), document.createTextNode(ev.location));
+        text.append(where);
+      }
+      if (ev.cost) {
+        const cost = el('div', 'event-cost');
+        cost.append(icon('🪙'), document.createTextNode(ev.cost));
+        text.append(cost);
+      }
+
+      const box = el('input');
+      box.type = 'checkbox';
+      box.name = 'events';
+      box.value = ev.id || ev.event;
+
+      const join = el('span', 'join');
+      join.append(box, document.createTextNode("I'll join"));
+
+      card.append(text, join);
+      eventsBox.append(card);
+    });
+  }
+
+  async function loadEvents() {
+    if (!SCRIPT_URL) {
+      $('demo').hidden = false;
+      renderEvents(DEMO_EVENTS);
+      return;
+    }
+    try {
+      const res = await fetch(SCRIPT_URL);
+      const data = await res.json();
+      if (!data.ok) throw new Error(data.error || 'Could not load sessions');
+      renderEvents(data.events || []);
+    } catch (err) {
+      eventsBox.replaceChildren(el('p', 'empty', 'Sorry, the sessions could not be loaded. Please refresh the page or try again later.'));
+    }
+  }
+
+  function showMsg(kind, text) {
+    msg.className = 'msg ' + kind;
+    msg.textContent = text;
+    msg.hidden = false;
+  }
+
+  // Email, instrument and experience are asked only from newcomers.
+  function setNewcomer(isNew) {
+    newFields.hidden = !isNew;
+    for (const input of [emailInput, instrumentInput, experienceInput]) input.required = isNew;
+  }
+
+  form.addEventListener('change', (e) => {
+    if (e.target.name === 'returning') setNewcomer(e.target.value === 'no');
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msg.hidden = true;
+
+    const fd = new FormData(form);
+    const events = fd.getAll('events');
+    const returning = fd.get('returning');
+    const name = (fd.get('name') || '').trim();
+    const email = (fd.get('email') || '').trim();
+    const instrument = (fd.get('instrument') || '').trim();
+    const experience = (fd.get('experience') || '').trim();
+    const note = (fd.get('note') || '').trim();
+    const isNew = returning === 'no';
+
+    if (!events.length) return showMsg('err', 'Please choose at least one session.');
+    if (!returning) return showMsg('err', 'Please tell us whether you have joined before.');
+    if (!name) { nameInput.focus(); return showMsg('err', 'Please enter your name.'); }
+    if (isNew && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      emailInput.focus();
+      return showMsg('err', 'Please enter a valid email address.');
+    }
+    if (isNew && !instrument) { instrumentInput.focus(); return showMsg('err', 'Please tell us which instrument you play.'); }
+    if (isNew && !experience) { experienceInput.focus(); return showMsg('err', 'Please tell us how long you have been playing.'); }
+
+    const payload = {
+      events,
+      returning: !isNew,
+      name,
+      email: isNew ? email : '',
+      instrument: isNew ? instrument : '',
+      experience: isNew ? experience : '',
+      note: isNew ? note : '',
+      website: fd.get('website') || ''
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Sending…';
+
+    try {
+      let data;
+      if (!SCRIPT_URL) {
+        await new Promise((r) => setTimeout(r, 600));
+        data = { ok: true, count: events.length };
+      } else {
+        // text/plain keeps this a "simple" request, so the browser skips the CORS preflight.
+        const res = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        data = await res.json();
+      }
+
+      if (!data.ok) throw new Error(data.error || 'Sign-up failed');
+
+      const n = data.count || events.length;
+      showMsg('ok', `Thanks ${name}! You're signed up for ${n} session${n === 1 ? '' : 's'}. See you there!`);
+      form.reset();
+      setNewcomer(false);
+    } catch (err) {
+      const text = err instanceof TypeError
+        ? 'Could not reach the server. Please check your connection and try again.'
+        : err.message;
+      showMsg('err', text);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Sign me up';
+    }
+  });
+
+  loadEvents();
+</script>
+</body>
+</html>
