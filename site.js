@@ -236,7 +236,7 @@ let sessionsState = 'loading'; // loading | ok | error | closed | demo
 
 // A random music emoji in front of each session on the home view,
 // shuffled once per visit.
-const EMOJIS = ['🎻', '🪕', '🪗', '🎸', '🪈', '🎶', '🎵'];
+const EMOJIS = ['🎻', '🪕', '🪗', '🪈', '🎶', '🎵'];
 for (let i = EMOJIS.length - 1; i > 0; i--) {
   const j = Math.floor(Math.random() * (i + 1));
   [EMOJIS[i], EMOJIS[j]] = [EMOJIS[j], EMOJIS[i]];
