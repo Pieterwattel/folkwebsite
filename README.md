@@ -87,9 +87,10 @@ thing people see.
 
 The colours match the info page: grey `#ebece8`, maroon `#7a1f2b` and yellow `#fdc81e`.
 The big dots between sessions are filled with `textile.jpg`. The bodhrán, violin, guitar and
-tin whistle in the background (`bodhran.png`, `violin.png`, `guitar.png`, `whistle.png`) tilt a
-little as you scroll, the same way as on the info page. On phones they're small and faint so
-the text stays readable, and they stand still for people who have "reduce motion" turned on.
+tin whistle (`bodhran.png`, `violin.png`, `guitar.png`, `whistle.png`) sit in the background in a
+column down the left side, 10vw from the edge (against the edge on phones), with the page on top.
+They tilt a little as you scroll, the same way as on the info page, and stand still for people
+who have "reduce motion" turned on.
 
 ## Counting sign-ups
 
