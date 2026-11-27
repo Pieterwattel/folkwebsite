@@ -1,13 +1,13 @@
 # Folk session Utrecht
 
 The main page (`index.html`) is laid out like the original page: the fabric with the four
-instruments on the left (they tilt as you scroll), and on the right a Coming sessions card (loaded
-live from the sheet) above a card with the explanation of how a session works and About us.
+instruments on the left (they tilt as you scroll), and on the right the coming sessions (loaded
+live from the sheet) above a white panel with the explanation of how a session works and About us.
 The sign-up form is on `signup.html`.
 
 | File | What it is |
 |---|---|
-| `index.html` | Home page: fabric and instruments on the left; Coming sessions (with links to sign up and to the explanation below), and the explanation plus About us with `pieter-en-boet.jpg`. All text is in English. |
+| `index.html` | Home page in the original look: fabric and instruments on the left (they tilt as you scroll the text); on the right a grey top with the coming sessions (one per line, loaded live from the sheet; the list scrolls when there are many) and a maroon SIGN UP button, and a white panel with the explanation and About us with `pieter-en-boet.jpg`. All text is in English. |
 | `signup.html` | Sign-up page: lists the upcoming sessions from the sheet and collects sign-ups. |
 | `Code.gs` | Google Apps Script behind both pages. Kept out of git (see `.gitignore`) because it contains the sheet IDs and this repo is public. It only exists on your computer and, once pasted in, in Apps Script. |
 | `info.html` | The earlier info page (what the session is, how it works, tunes). The home page links to its "Hoe werkt het?" part; its INSCHRIJVEN button links to the sign-up page. |

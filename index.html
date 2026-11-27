@@ -5,19 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Folk Session Utrecht</title>
 <style>
-  /* Layout like the original page (info.html): fabric with instruments on the
-     left, the sessions top right, the explanation and About us below it.
-     Cards use the same design as the sign-up page. */
+  /* Layout and look of the original page (info.html): fabric with instruments
+     on the left; on the right a grey top part with the sessions in big bold
+     lines and the maroon sign-up button, and a white panel below with the text. */
   :root {
-    --bg: #ebece8;
-    --panel: #fff;
+    --grey: #ebece8;
     --ink: #000;
     --muted: #444;
     --maroon: #7a1f2b;
+    --maroon-dark: #641825;
     --yellow: #fdc81e;
-    --round: 2em;
-    --fabric-width: 35.6vw;
-    --gap: 28px;
   }
 
   * { box-sizing: border-box; }
@@ -25,17 +22,17 @@
   html, body {
     margin: 0;
     height: 100%;
-    background: var(--bg);
+    overflow: hidden;
+    background: var(--grey);
     color: var(--ink);
     font-family: Arial, Helvetica, sans-serif;
   }
-  body { font-size: 18px; line-height: 1.45; }
 
-  .page { display: flex; height: 100vh; }
+  .page { display: flex; height: 100vh; width: 100vw; overflow: hidden; }
 
   /* ---------- left: fabric with the four instruments ---------- */
   .fabric {
-    flex: 0 0 var(--fabric-width);
+    flex: 0 0 35.6%;
     height: 100vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -54,131 +51,123 @@
     object-fit: contain;
   }
 
-  /* ---------- right: two cards ---------- */
+  /* ---------- right ---------- */
   .right {
     flex: 1 1 auto;
     min-width: 0;
     height: 100vh;
     display: flex;
     flex-direction: column;
-    gap: var(--gap);
-    padding: var(--gap) clamp(16px, 3vw, 44px);
-  }
-
-  .card {
-    background: var(--panel);
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
   }
-  .sessions { flex: none; border-radius: 0 0 0 var(--round); }                     /* bottom-left */
-  .info     { flex: 1; min-height: 0; border-radius: var(--round) 0 var(--round) 0; } /* top-left, bottom-right */
 
-  /* Header: maroon band with the title on a yellow label and a tiny instrument. */
-  .card-head {
-    margin: 0;
-    padding: 12px 20px;
-    background: var(--maroon);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-  }
-  .label {
-    display: inline-block;
-    padding: .05em .3em;
-    background: var(--yellow);
-    color: var(--ink);
-    font-size: clamp(1.3rem, 2.2vw, 1.8rem);
-    font-weight: 800;
-    letter-spacing: .02em;
-    line-height: 1.15;
-    text-transform: uppercase;
-  }
-  .head-icon {
-    display: block;
-    height: 34px;
-    width: auto;
-    flex: none;
-    filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .35));
-  }
-  .head-icon.wide { height: 26px; }
-
-  .card-body { padding: 18px 28px 22px; }
-
-  /* ---------- coming sessions ---------- */
+  /* Grey top part: the sessions */
+  .top { flex: 0 0 auto; background: var(--grey); }
+  /* One session per line, stacked; the list scrolls when there are many
+     (or sideways, when a line is longer than the screen). */
   .session-list {
     list-style: none;
     margin: 0;
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px 40px;
+    padding: 2.2vh 2% 1.2vh 2.6%;
+    max-height: 34vh;
+    overflow: auto;
+    overscroll-behavior: contain;
   }
-  .session-name, .session-date { font-weight: 800; font-size: 1.1rem; }
+  .session-list li {
+    margin: 0;
+    white-space: nowrap;
+    font-size: clamp(22px, 2.35vw, 46px);
+    font-weight: 800;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+  }
   .session-full {
     display: inline-block;
-    margin-left: .4em;
-    padding: .05em .45em;
+    margin-left: .35em;
+    padding: .05em .4em;
     background: var(--maroon);
     color: #fff;
-    font-size: .8rem;
-    font-weight: 800;
-    letter-spacing: .05em;
-    vertical-align: .15em;
+    font-size: .5em;
+    letter-spacing: .06em;
+    vertical-align: .35em;
   }
-  .note { color: var(--muted); }
-  .note a, .info a { color: var(--maroon); font-weight: 700; overflow-wrap: anywhere; }
+  .note { font-size: clamp(18px, 1.4vw, 24px) !important; font-weight: 700 !important; }
+  .note a { color: var(--maroon); }
 
-  .links { display: flex; flex-wrap: wrap; gap: 8px 28px; margin-top: 18px; }
-  .links a { color: var(--ink); font-weight: 800; font-size: 1.1rem; text-underline-offset: .18em; }
-  .links a:hover { color: var(--maroon); }
+  .signup-row {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    height: 11vh;
+  }
+  .prompt {
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 2.6%;
+    color: var(--ink);
+    font-size: clamp(22px, 2.35vw, 46px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+  .signup-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 28%;
+    background: var(--maroon);
+    color: #fff;
+    text-decoration: none;
+    font-size: clamp(18px, 1.65vw, 32px);
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+  .signup-button:hover, .signup-button:focus-visible { background: var(--maroon-dark); }
 
-  /* ---------- explanation + about us (scrolls inside) ---------- */
-  .info .card-body {
-    flex: 1;
+  /* White bottom panel: the text, scrolls inside */
+  .info {
+    flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
-    overscroll-behavior: contain;
+    overflow-x: hidden;
+    background: #fff;
+    padding: 2.2vh 6% 8vh 2.4%;
+    font-size: clamp(16px, 1.15vw, 20px);
+    line-height: 1.45;
     outline: none;
   }
-  .info p { margin: 0 0 1em; }
-  .info h3 {
+  .info p { margin: 0 0 1.15em; }
+  .info h2 {
     width: fit-content;
-    margin: 1.4em 0 .5em;
-    padding: .04em .25em;
+    margin: 1.35em 0 .4em;
     background: var(--yellow);
-    font-size: 1.15em;
+    font-size: 1.2em;
     font-weight: 800;
     line-height: 1.25;
   }
-  .info h3:first-child { margin-top: 0; }
+  .info a { color: var(--maroon); font-weight: 700; overflow-wrap: anywhere; }
   .photo { margin: 6px 0 4px; }
-  .photo img {
-    display: block;
-    width: 100%;
-    max-width: 520px;
-    height: auto;
-    border-radius: 0 0 1.2em 0;
-  }
+  .photo img { display: block; width: 100%; max-width: 520px; height: auto; }
 
-  /* ---------- phones: narrow fabric strip, page scrolls normally ---------- */
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* ---------- phones: narrow fabric strip, like the original ---------- */
   @media (max-width: 760px) {
-    :root { --fabric-width: 4.6rem; --gap: 20px; }
-    html, body { height: auto; }
-    .page { height: auto; min-height: 100vh; }
     .fabric {
-      position: sticky;
-      top: 0;
+      flex-basis: 4.6rem;
       grid-template-columns: 1fr;
       grid-template-rows: repeat(4, 1fr);
       padding: .35rem 0;
     }
     .fabric img { max-width: 90%; max-height: 90%; }
-    .right { height: auto; padding: var(--gap) 12px; }
-    .info .card-body { overflow: visible; }
-    .card-body { padding: 16px 16px 20px; }
-    body { font-size: 17px; }
+    .session-list { padding: .55rem .55rem .4rem .65rem; max-height: 30vh; }
+    .session-list li { font-size: 1.05rem; line-height: 1.3; margin-bottom: .25rem; }
+    .signup-row { height: 3.2rem; }
+    .prompt { margin-left: .65rem; font-size: 1.2rem; }
+    .signup-button { flex-basis: 42%; font-size: .95rem; }
+    .info { padding: .75rem .65rem 2rem; font-size: 1.1rem; }
   }
 </style>
 </head>
@@ -194,20 +183,16 @@
 
   <main class="right">
 
-    <section class="card sessions" aria-labelledby="sessions-title">
-      <h1 class="card-head"><span class="label" id="sessions-title">Coming sessions</span><img class="head-icon" src="guitar.png" alt=""></h1>
-      <div class="card-body">
-        <ul class="session-list" id="session-list"><li class="note">Loading sessions…</li></ul>
-        <div class="links">
-          <a href="signup.html">sign up</a>
-          <a href="#how">how does a session work</a>
-        </div>
+    <section class="top" aria-labelledby="sessions-title">
+      <h1 class="sr-only" id="sessions-title">Coming sessions</h1>
+      <ul class="session-list" id="session-list"><li class="note">Loading sessions…</li></ul>
+      <div class="signup-row">
+        <a class="prompt" href="signup.html">Sign up here &gt;&gt;</a>
+        <a class="signup-button" href="signup.html">SIGN UP</a>
       </div>
     </section>
 
-    <section class="card info" aria-labelledby="info-title">
-      <h2 class="card-head"><span class="label" id="info-title">Folk session Utrecht</span><img class="head-icon wide" src="bodhran.png" alt=""></h2>
-      <div class="card-body" id="info-body" tabindex="0">
+    <article class="info" id="info-body" tabindex="0" aria-label="About the session">
         <p>Do you feel like playing music together with others in a freer way, something other than
           an orchestra or a band? Come and discover fresh folk music in Utrecht!</p>
         <p><strong>All levels welcome.</strong> But it is advisable to have been playing for at least
@@ -218,7 +203,7 @@
         <p>We will mainly play <strong>Irish tunes</strong>, but there is certainly room for other styles
           of folk music. We are open to all sorts of things.</p>
 
-        <h3 id="how">How does it work?</h3>
+        <h2 id="how">How does it work?</h2>
         <p>Folk music is basically made up of <strong>“tunes”</strong>, melodies that several people
           know and then play together. To make sure you have something to play, we have
           <a href="info.html#tunes">collected some tunes for you</a>. But if you are already playing
@@ -238,13 +223,13 @@
           tune. If you don't know the tune, don't play along, or play very quietly in the background,
           so the others can still hear the music well.</p>
 
-        <h3>Should I prepare anything?</h3>
+        <h2>Should I prepare anything?</h2>
         <p>It is certainly a good idea to <strong>practise some tunes</strong> before you come to the
           session. There will not be much time to teach you the tunes. Someone might be able to help you
           briefly, but the focus is on <strong>playing together</strong>.</p>
         <p><a href="info.html#tunes">We have put a collection of tunes here!</a></p>
 
-        <h3>I think this might still be too difficult for me..</h3>
+        <h2>I think this might still be too difficult for me..</h2>
         <p>You can always play a tune more slowly. Inisheer is especially beautiful when it is played
           slowly. See if you can play the first note of each bar (the thin vertical line), and leave out
           the rest. You could play along with others that way, and that would work fine! Once you have
@@ -261,17 +246,17 @@
           though, I am convinced you could learn Egan's Polka. Once you have that one you already know 2
           tunes! Now you are basically in.</p>
 
-        <h3>What if I already have more experience?</h3>
+        <h2>What if I already have more experience?</h2>
         <p>If you are more experienced, you are very welcome too. We think it is especially interesting
           to have <strong>a mix of levels</strong>, so we also learn from each other. Some tunes will be
           played calmly, so everyone can join in, and now and then mainly experienced players will play,
           on less familiar or faster tunes. We like that both of those things can happen!</p>
 
-        <h3>Should I bring my electric guitar?</h3>
+        <h2>Should I bring my electric guitar?</h2>
         <p>This folk session is meant for acoustic instruments. There will be no amplifiers or
           microphones.</p>
 
-        <h3 id="about">About us</h3>
+        <h2 id="about">About us</h2>
         <p>Hi! We are Pieter and Boet. Folk music is a very social and welcoming way to make music
           together, and it has brought us a lot of joy and fun. This is something we would like to
           share with the people around us.</p>
@@ -284,8 +269,7 @@
         <figure class="photo">
           <img src="pieter-en-boet.jpg" alt="Pieter on accordion and Boet on guitar, playing on stage" width="458" height="300">
         </figure>
-      </div>
-    </section>
+    </article>
 
   </main>
 </div>
@@ -307,10 +291,13 @@
     return n;
   }
 
-  // '2026-12-19' -> '19 december' (year added when it's not this year)
+  // '2026-12-19' -> '19 december' (year added when it's not this year).
+  // On phones shorter, so a session fits on one line: '19 dec' / '16 jan '27'.
+  const SHORT = window.matchMedia('(max-width: 760px)').matches;
   function formatDate(iso) {
     const [y, m, d] = iso.split('-').map(Number);
     const sameYear = y === new Date().getFullYear();
+    if (SHORT) return `${d} ${MONTHS[m - 1].slice(0, 3)}${sameYear ? '' : " '" + String(y).slice(-2)}`;
     return `${d} ${MONTHS[m - 1]}${sameYear ? '' : ' ' + y}`;
   }
 
@@ -336,12 +323,10 @@
         showNote('No sessions planned right now. Check back soon!');
         return;
       }
+      // One big line per session: "folk session, mainly Irish · 19 december"
       list.replaceChildren(...events.map((ev) => {
-        const li = el('li');
-        const name = el('div', 'session-name', ev.event);
-        if (ev.full) name.append(el('span', 'session-full', 'FULL'));
-        li.append(name);
-        if (ev.date) li.append(el('div', 'session-date', formatDate(ev.date)));
+        const li = el('li', null, ev.event + (ev.date ? ' · ' + formatDate(ev.date) : ''));
+        if (ev.full) li.append(el('span', 'session-full', 'FULL'));
         return li;
       }));
     } catch (err) {
@@ -351,15 +336,9 @@
 
   loadSessions();
 
-  // "how does a session work": scroll the text card (desktop) or the page (phone).
-  document.querySelector('a[href="#how"]').addEventListener('click', (e) => {
-    e.preventDefault();
-    $('how').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-
   /* Instruments tilt in small steps while scrolling, like on the original page.
-     Each one has its own step size and its own list of angles. On desktop this
-     follows the text card's scrolling; on phones the page's scrolling. */
+     Each one has its own step size and its own list of angles. They follow
+     the scrolling of the white text panel. */
   (function wobble() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -370,7 +349,7 @@
       { el: $('whistle'), stride: 81,  offset: 6, arc: [-8, 3, -5, 8, -2, 6, -7, 1, 7, -4] }
     ];
     const infoBody = $('info-body');
-    const position = () => infoBody.scrollTop + window.scrollY;
+    const position = () => infoBody.scrollTop;
 
     let lastScroll = position();
     let lastTime = performance.now();
@@ -408,7 +387,6 @@
     }
 
     infoBody.addEventListener('scroll', place, { passive: true });
-    window.addEventListener('scroll', place, { passive: true });
   })();
 </script>
 </body>
