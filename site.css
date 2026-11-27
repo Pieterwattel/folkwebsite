@@ -38,10 +38,9 @@ body.view-tunes  #tunes  { display: block; }
 /* ============================================================
    Sound and language buttons (on every view)
    ============================================================ */
-/* sound button: bottom-left; on phones centred in the fabric strip (below) */
 .audio-toggle {
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   z-index: 50;
   width: 2.8rem;
@@ -233,7 +232,7 @@ body.view-home { height: 100vh; overflow: hidden; }
     flex-basis: 4.6rem;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(4, 1fr);
-    padding: .35rem 0 3.4rem;   /* bottom: room for the sound button */
+    padding: 3.2rem 0 .35rem;   /* top: room for the sound button */
   }
   .fabric img { max-width: 90%; max-height: 90%; }
   .session-list { padding: 2.2rem .55rem calc(var(--btn-h) + .4rem) .65rem; }   /* top: room for the language button */
@@ -505,7 +504,7 @@ body.view-home { height: 100vh; overflow: hidden; }
   top: 0;
   z-index: 5;
   background: #fff;
-  padding: 1rem 1.25rem 1.15rem;
+  padding: 1rem 1.25rem 1.15rem 4rem;   /* left: room for the sound button */
 }
 .tunes-back { margin: 0 0 .65rem; padding-right: 9rem; }   /* right: room for the language button */
 .tunes-back a, .tune-card a, .more-tunes a { color: var(--maroon); font-weight: 700; }
@@ -538,18 +537,7 @@ body.view-home { height: 100vh; overflow: hidden; }
 .tune-link { display: inline-block; }
 
 @media (max-width: 560px) {
-  .tunes-bar { padding-left: .75rem; padding-right: .75rem; }
+  .tunes-bar { padding-left: 3.6rem; padding-right: .75rem; }
   .tunes-back { padding-right: 0; padding-top: 2rem; }
   .tunes-main { padding-left: .75rem; padding-right: .75rem; }
-}
-
-/* The sound button sits at the bottom, centred in the fabric strip of each view
-   (2.8rem wide, so its left edge is half the strip minus 1.4rem). */
-.audio-toggle { bottom: .8rem; }
-body.view-home .audio-toggle   { left: calc(35.6vw / 2 - 1.4rem); }   /* home fabric: 35.6% wide */
-body.view-signup .audio-toggle { left: calc(15vw / 2 - 1.4rem); }     /* sign-up strip: 15% wide */
-body.view-tunes .audio-toggle  { left: max(0px, calc((50% - 430px - 1em) / 2 - 1.4rem)); }   /* tunes stripe; at the edge when there's none */
-@media (max-width: 760px) {
-  .audio-toggle { bottom: .5rem; }
-  body.view-home .audio-toggle { left: calc(4.6rem / 2 - 1.4rem); }   /* home strip is 4.6rem wide on phones */
 }
