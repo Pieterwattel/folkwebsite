@@ -74,10 +74,45 @@
   }
   /* One session per line (up to two on phones), stacked; the list scrolls
      when there are more than fit. */
+  /* Two circles behind the sessions: a maroon one coming in from the top-left
+     corner and a fabric one from the bottom-right corner. The list scrolls on
+     top of them; it starts right of the maroon circle so the text stays readable. */
+  .sessions-area {
+    --c1: 8vh;    /* radius of the maroon circle */
+    --c2: 11vh;   /* radius of the fabric circle */
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    overflow: hidden;
+  }
+  .sessions-area::before,
+  .sessions-area::after {
+    content: "";
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .sessions-area::before {
+    left: calc(-1 * var(--c1));
+    top: calc(-1 * var(--c1));
+    width: calc(2 * var(--c1));
+    height: calc(2 * var(--c1));
+    background: var(--maroon);
+  }
+  .sessions-area::after {
+    right: calc(-1 * var(--c2));
+    bottom: calc(-1 * var(--c2));
+    width: calc(2 * var(--c2));
+    height: calc(2 * var(--c2));
+    background: #c6a83a url("textile.jpg") 20% 80% / 700px;   /* a plain yellow part of the fabric */
+  }
   .session-list {
+    position: relative;
+    z-index: 1;
     list-style: none;
     margin: 0;
-    padding: 2.2vh 2% 1.2vh 2.6%;
+    padding: 2.2vh 2% 1.2vh calc(var(--c1) + 2%);
     flex: 1;
     min-height: 0;
     overflow: auto;
@@ -178,7 +213,8 @@
     }
     .fabric img { max-width: 90%; max-height: 90%; }
     :root { --top-h: 40vh; }
-    .session-list { padding: .55rem .55rem .4rem .65rem; }
+    .sessions-area { --c1: 5vh; --c2: 7vh; }
+    .session-list { padding: .55rem .55rem .4rem calc(var(--c1) + .5rem); }
     .session-list li { font-size: 1.05rem; line-height: 1.3; white-space: normal; }   /* may wrap to 2 lines */
     .signup-row { height: 3.2rem; }
     .prompt { margin-left: .65rem; font-size: 1.2rem; }
@@ -201,7 +237,9 @@
 
     <section class="top" aria-labelledby="sessions-title">
       <h1 class="sr-only" id="sessions-title">Coming sessions</h1>
-      <ul class="session-list" id="session-list"><li class="note">Loading sessions…</li></ul>
+      <div class="sessions-area">
+        <ul class="session-list" id="session-list"><li class="note">Loading sessions…</li></ul>
+      </div>
       <div class="signup-row">
         <a class="prompt" href="signup.html">Sign up here &gt;&gt;</a>
         <a class="signup-button" href="signup.html">SIGN UP</a>
