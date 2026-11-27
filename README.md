@@ -6,7 +6,8 @@ The main page (`index.html`) is the session sign-up page.
 |---|---|
 | `index.html` | Sign-up page: lists the upcoming sessions from the sheet and collects sign-ups. |
 | `Code.gs` | Google Apps Script behind the sign-up page. Kept out of git (see `.gitignore`) because it contains the sheet IDs and this repo is public. It only exists on your computer and, once pasted in, in Apps Script. |
-| `info.html` | The earlier info page (what the session is, how it works, tunes). Not linked from the sign-up page; open it at `<site address>/info.html`. It still has its own older sign-up form, which uses `aanmeldingen.gs`. |
+| `info.html` | The earlier info page (what the session is, how it works, tunes). Not linked from the sign-up page; open it at `<site address>/info.html`. Its INSCHRIJVEN button links to the sign-up page. |
+| `aanmeldingen.gs` | Older Apps Script. No longer used for sign-ups, but the video page (`sessie-video-k7q2/`) still sends its messages through it, so keep it deployed. |
 | `tunes.html` | Redirects to the tunes part of `info.html`. |
 | `aanmelden/` | Redirects to the main page, for anyone with the old link. |
 

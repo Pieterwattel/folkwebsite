@@ -147,27 +147,6 @@ body {
   text-underline-offset: 0.12em;
 }
 
-#back-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  gap: 0.35em;
-  margin: 0 0 0 2.6%;
-  padding: 0 0.75em;
-  border: 1px solid #111;
-  background: #fff;
-  color: #111;
-  font: inherit;
-  font-size: clamp(18px, 1.65vw, 32px);
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.back-arrow {
-  display: inline-block;
-}
-
 #signup-button {
   display: flex;
   align-items: center;
@@ -228,68 +207,6 @@ h2{
   display: none !important;
 }
 
-.signup-form {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.28rem;
-  font-weight: 700;
-}
-
-.field input,
-.field textarea {
-  font: inherit;
-  font-weight: 400;
-  padding: 0.45rem 0.55rem;
-  border: 1px solid #111;
-  background: #fff;
-  color: #000;
-}
-
-.signup-note {
-  margin: 0;
-  font-weight: 400;
-}
-
-.signup-error {
-  margin: 0;
-  color: #7a1f2b;
-  font-weight: 700;
-}
-
-.signup-error a {
-  color: #7a1f2b;
-  font-weight: 700;
-}
-
-.form-submit {
-  align-self: flex-start;
-  margin-top: 0.3rem;
-  border: 0;
-  background: #7a1f2b;
-  color: #fff;
-  font: inherit;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  padding: 0.7rem 1.1rem;
-  cursor: pointer;
-}
-
-.form-submit:hover,
-.form-submit:focus-visible {
-  background: #641825;
-}
-
-.signup-thanks a {
-  color: #7a1f2b;
-  font-weight: 700;
-}
-
 @media (max-width: 760px) {
   :root {
     --fabric-width: 4.6rem;
@@ -324,18 +241,10 @@ h2{
     margin-left: 0.65rem;
   }
 
-  #back-button {
-    margin: 0 0 0 0.65rem;
-  }
-
   .fact {
     white-space: normal;
     font-size: 1.2rem;
     line-height: 1.25;
-  }
-
-  #back-button {
-    font-size: 0.95rem;
   }
 
   #event-signup {

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Folksessie Utrecht</title>
-  <link rel="stylesheet" href="styles.css?v=39">
+  <link rel="stylesheet" href="styles.css?v=40">
 </head>
 <body>
   <script>if (location.hash === "#tunes") document.body.classList.add("tunes-page");</script>
@@ -64,10 +64,7 @@
           <p class="fact" id="fact-prompt">
             <span class="fact-value" id="fact-prompt-value">Meld je hier aan &gt;&gt;</span>
           </p>
-          <button class="back-button" id="back-button" type="button" hidden>
-            <span id="back-label">terug</span> <span class="back-arrow" aria-hidden="true">↩️</span>
-          </button>
-          <button class="signup-button" id="signup-button" type="button">INSCHRIJVEN</button>
+          <a class="signup-button" id="signup-button" href="./">INSCHRIJVEN</a>
         </div>
       </header>
 
@@ -137,36 +134,6 @@
           We zijn een groepje bevriende muzikanten die actief bezig zijn in de volksmuziek in Nederland. We spelen vaak samen en in verschillende bands, en doen optredens over het hele land. <a href="https://pieterwattel.nl">Pieter</a> (gitaar) en Ide (viool) spelen samen in <a href="https://odevare.com">Odevare</a>, hebben gestudeerd aan het Utrechts Conservatorium. Boet Hoitink speelt in <a href="https://www.youtube.com/watch?v=BFdNJ7wBQdg">Celtic Constellation</a>. Daarnaast hebben we ervaring in het geven van lessen. Maar we zoeken ook naar een andere, speelse manier om de muziek met anderen te delen. Dat je samen een beetje mag uitzoeken en ontdekken, en we denken dat dit de perfecte setting is om dat in te doen.
         </p>
         </div>
-
-        <form class="signup-form" id="signup-form" hidden>
-          <h2 class="detail-heading" id="heading-signup">Inschrijven --SESSIE IS VOL-- Schrijf je vooral wel in! We houden je graag op de hoogte voor een volgende sessie</h2>
-          <p class="detail" id="signup-stay">Je mag je ook aanmelden als je deze keer niet komt, maar wel graag op de hoogte wilt blijven voor een volgende sessie. Zet dat dan even in de opmerking.</p>
-          <label class="field" for="signup-name">
-            <span id="label-name">Naam *</span>
-            <input id="signup-name" name="naam" type="text" autocomplete="name" required>
-          </label>
-          <label class="field" for="signup-email">
-            <span id="label-email">E-mail *</span>
-            <input id="signup-email" name="email" type="email" autocomplete="email" required>
-          </label>
-          <label class="field" for="signup-instrument">
-            <span id="label-instrument">Instrument *</span>
-            <input id="signup-instrument" name="instrument" type="text" required>
-          </label>
-          <label class="field" for="signup-experience">
-            <span id="label-experience">Hoelang speel je al *</span>
-            <input id="signup-experience" name="ervaring" type="text" required>
-          </label>
-          <label class="field" for="signup-note">
-            <span id="label-note">Opmerking</span>
-            <textarea id="signup-note" name="opmerking" rows="4"></textarea>
-          </label>
-          <button class="form-submit" id="form-submit" type="submit">Verstuur aanmelding</button>
-          <p class="signup-error" id="signup-error" hidden>Het versturen lukte niet. Mail dan even naar <a href="mailto:pieterwattel@gmail.com">pieterwattel@gmail.com</a>.</p>
-        </form>
-        <p class="signup-thanks" id="signup-thanks" hidden>
-          Bedankt. Je aanmelding staat genoteerd. Afmeldingen kunnen via <a href="mailto:pieterwattel@gmail.com">pieterwattel@gmail.com</a>.
-        </p>
       </article>
     </section>
   </div>
@@ -268,6 +235,6 @@
       <p class="more-tunes"><a id="more-tunes-link" href="https://thesession.org/tunes/popular" target="_blank" rel="noopener noreferrer">meer tunes (geordend van meest bekend naar minder bekend)</a></p>
     </main>
   </div>
-  <script src="script.js?v=39"></script>
+  <script src="script.js?v=40"></script>
 </body>
 </html>

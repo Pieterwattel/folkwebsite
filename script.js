@@ -1,5 +1,3 @@
-const SIGNUP_ENDPOINT = "https://script.google.com/macros/s/AKfycbzHjwtOrjf4AA1KqaM25kMwbx4ET1vx_bOAGJqNGJwNBbP0h5flHlL7jNj0wjjJoFKV/exec";
-
 const translateButtons = document.querySelectorAll("[data-translate]");
 const englishCopy = {
   "fact-what-label": "What",
@@ -11,7 +9,6 @@ const englishCopy = {
   "fact-cost-label": "Cost",
   "fact-cost-value": "free",
   "fact-prompt-value": "Sign up here &gt;&gt;",
-  "back-label": "back",
   "signup-button": "SIGN UP",
   "alt-bodhran": "Bodhrán",
   "alt-violin": "Violin",
@@ -41,16 +38,6 @@ const englishCopy = {
   "detail-amplification": "This folk session is meant for acoustic instruments. There will be no amplifiers or microphones.",
   "heading-who": "Who are we?",
   "detail-who": "We are a group of musician friends who are active in folk music in the Netherlands. We often play together and in different bands, and we perform all over the country. <a href=\"https://pieterwattel.nl\">Pieter</a> (guitar) and Ide (violin) play together in <a href=\"https://odevare.com\">Odevare</a> and studied at the Utrecht Conservatory. Boet Hoitink plays in <a href=\"https://www.youtube.com/watch?v=BFdNJ7wBQdg\">Celtic Constellation</a>. We also have experience teaching. But we are also looking for another, playful way to share the music with others. So that you can figure things out and discover them together a bit, and we think this is the perfect setting for that.",
-  "heading-signup": "Sign up --SESSION IS FULL-- Do sign up anyway! We would love to keep you posted about the next session",
-  "signup-stay": "You can also sign up if you are not coming this time, but would like to stay informed about a next session. Please mention that in the comment.",
-  "label-name": "Name *",
-  "label-email": "Email *",
-  "label-instrument": "Instrument *",
-  "label-experience": "How long have you been playing *",
-  "label-note": "Comment",
-  "form-submit": "Send signup",
-  "signup-error": "Sending did not work. Please email <a href=\"mailto:pieterwattel@gmail.com\">pieterwattel@gmail.com</a>.",
-  "signup-thanks": "Thank you. Your signup has been noted. Cancellations can be sent to <a href=\"mailto:pieterwattel@gmail.com\">pieterwattel@gmail.com</a>.",
   "learn-music": "learn the music here",
   "tunes-back-link": "back to the folk session",
   "more-tunes-link": "more tunes (sorted from most to least popular)"
@@ -97,72 +84,6 @@ translateButtons.forEach((button) => {
 });
 
 const detailPanel = document.querySelector("#detail-panel");
-const detailCopy = document.querySelector("#detail-copy");
-const signupForm = document.querySelector("#signup-form");
-const signupThanks = document.querySelector("#signup-thanks");
-const signupError = document.querySelector("#signup-error");
-const signupButton = document.querySelector("#signup-button");
-const factPrompt = document.querySelector("#fact-prompt");
-const backButton = document.querySelector("#back-button");
-
-function showSignup(event) {
-  event.preventDefault();
-  detailCopy.hidden = true;
-  signupThanks.hidden = true;
-  signupForm.hidden = false;
-  signupError.hidden = true;
-  factPrompt.hidden = true;
-  backButton.hidden = false;
-  detailPanel.scrollTop = 0;
-  signupForm.querySelector("input").focus();
-}
-
-function showText() {
-  signupForm.hidden = true;
-  signupThanks.hidden = true;
-  detailCopy.hidden = false;
-  backButton.hidden = true;
-  factPrompt.hidden = false;
-  detailPanel.scrollTop = 0;
-}
-
-signupButton.addEventListener("click", showSignup);
-backButton.addEventListener("click", showText);
-
-signupForm.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  const submitButton = signupForm.querySelector("[type=submit]");
-  submitButton.disabled = true;
-  signupError.hidden = true;
-
-  const payload = {
-    naam: signupForm.naam.value.trim(),
-    email: signupForm.email.value.trim(),
-    instrument: signupForm.instrument.value.trim(),
-    ervaring: signupForm.ervaring.value.trim(),
-    opmerking: signupForm.opmerking.value.trim()
-  };
-
-  try {
-    if (!SIGNUP_ENDPOINT) {
-      throw new Error("missing signup endpoint");
-    }
-    await fetch(SIGNUP_ENDPOINT, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(payload)
-    });
-    signupForm.reset();
-    signupForm.hidden = true;
-    signupThanks.hidden = false;
-  } catch (error) {
-    signupError.hidden = false;
-  }
-
-  submitButton.disabled = false;
-  detailPanel.scrollTop = 0;
-});
 
 const instruments = [
   { el: document.querySelector("#bodhran img"), stride: 102, offset: 0, arc: [8, -7, 2, -5, 7, -1, -8, 4, -3, 6] },
