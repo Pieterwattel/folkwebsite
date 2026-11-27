@@ -210,38 +210,38 @@
     .panel { padding: 16px; }
   }
 
-  /* Two circles behind everything: a maroon one coming in from the left edge
-     (two thirds of the way up) and a fabric one from the bottom-right corner.
-     They stay put while the page scrolls. */
-  main { position: relative; z-index: 1; }
+  /* A strip of fabric down the left side (15% of the width), with a maroon
+     circle on top of it, coming in from the left edge a third down from the
+     top. Both stay put while the page scrolls. */
+  main { position: relative; z-index: 2; }
   body::before,
   body::after {
     content: "";
     position: fixed;
-    z-index: 0;
-    border-radius: 50%;
     pointer-events: none;
   }
-  body::before {
-    --r: 28vh;
+  body::after {                      /* fabric strip */
+    z-index: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 15vw;
+    background: #e0b21a url("textile-plain.jpg") right center / cover;
+  }
+  body::before {                     /* maroon circle, over the strip */
+    --r: 14vh;
+    z-index: 1;
     left: calc(-1 * var(--r));
-    top: calc(33.33vh - var(--r));   /* centre on the left edge, a third down from the top */
+    top: calc(33.33vh - var(--r));
     width: calc(2 * var(--r));
     height: calc(2 * var(--r));
+    border-radius: 50%;
     background: var(--maroon);
   }
-  body::after {
-    --r: 40vh;
-    right: calc(-1 * var(--r));
-    bottom: calc(-1 * var(--r));
-    width: calc(2 * var(--r));
-    height: calc(2 * var(--r));
-    background: #c6a83a url("textile.jpg") 65% 85% / 1500px;   /* a plain part of the weave, away from the frayed edge */
-  }
   @media (max-width: 600px) {
-    /* smaller on phones, so no text ends up on top of the maroon */
-    body::before { --r: 5vh; }
-    body::after  { --r: 12vh; }
+    /* the strip would cover the text, so the page starts right of it */
+    body { padding-left: calc(15vw + 16px); }
+    body::before { --r: 7vh; }
   }
 </style>
 </head>
