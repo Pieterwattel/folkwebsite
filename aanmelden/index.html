@@ -233,7 +233,7 @@
           <input id="instrument" name="instrument" maxlength="200">
         </div>
         <div class="field">
-          <label for="experience">How long have you been playing? *</label>
+          <label for="experience">How long have you been playing?</label>
           <input id="experience" name="experience" maxlength="200">
         </div>
         <div class="field">
@@ -270,7 +270,7 @@
   const $ = (id) => document.getElementById(id);
   const form = $('form'), eventsBox = $('events'), msg = $('msg'), submitBtn = $('submit');
   const newFields = $('new-fields'), emailInput = $('email'), nameInput = $('name');
-  const instrumentInput = $('instrument'), experienceInput = $('experience');
+  const instrumentInput = $('instrument');
 
   // '2026-12-19' -> "19 dec '26"
   function formatDate(iso) {
@@ -390,10 +390,10 @@
     msg.hidden = false;
   }
 
-  // Email, instrument and experience are asked only from newcomers.
+  // Newcomers only: email and instrument are required; experience and remark are optional.
   function setNewcomer(isNew) {
     newFields.hidden = !isNew;
-    for (const input of [emailInput, instrumentInput, experienceInput]) input.required = isNew;
+    for (const input of [emailInput, instrumentInput]) input.required = isNew;
   }
 
   form.addEventListener('change', (e) => {
@@ -422,8 +422,6 @@
       return showMsg('err', 'Please enter a valid email address.');
     }
     if (isNew && !instrument) { instrumentInput.focus(); return showMsg('err', 'Please tell us which instrument you play.'); }
-    if (isNew && !experience) { experienceInput.focus(); return showMsg('err', 'Please tell us how long you have been playing.'); }
-
     const payload = {
       events,
       returning: !isNew,
