@@ -32,7 +32,7 @@ html, body {
 
 .view { display: none; }
 body.view-home   #home   { display: flex; }
-body.view-signup #signup { display: block; }
+body.view-signup #signup { display: flex; }
 body.view-tunes  #tunes  { display: block; }
 
 /* ============================================================
@@ -244,28 +244,28 @@ body.view-home { height: 100vh; overflow: hidden; }
 /* ============================================================
    SIGN-UP
    ============================================================ */
+/* Two columns: the fabric strip (15% of the width) and the content block,
+   which takes the rest. Everything in the content block is centred in it. */
 #signup {
   min-height: 100vh;
-  padding: 48px 16px 72px;
   font-size: 18px;
   line-height: 1.45;
 }
 
-/* fabric strip down the left (15% of the width) with a maroon circle over it */
-.signup-strip,
+.signup-strip {
+  flex: 0 0 15vw;
+  align-self: flex-start;
+  position: sticky;          /* stays in view while the page scrolls */
+  top: 0;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+  background: #e0b21a var(--fabric-plain) right center / cover;
+}
+/* maroon circle over the strip, top-left, partly outside the window */
 .signup-circle {
   position: fixed;
   pointer-events: none;
-}
-.signup-strip {
-  z-index: 0;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 15vw;
-  background: #e0b21a var(--fabric-plain) right center / cover;
-}
-.signup-circle {
   --r: 14vh;
   z-index: 1;
   left: calc(-1 * var(--r));
@@ -276,7 +276,15 @@ body.view-home { height: 100vh; overflow: hidden; }
   background: var(--maroon);
 }
 
-#signup main { position: relative; z-index: 2; max-width: 900px; margin: 0 auto; }
+#signup main {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  min-width: 0;
+  padding: 48px 16px 72px;
+}
+#signup .demo, #signup .unavailable { max-width: 900px; }
+#signup .unavailable { margin: 0 auto; }
 
 #signup h1 {
   width: fit-content;
@@ -453,11 +461,11 @@ body.view-home { height: 100vh; overflow: hidden; }
   .panel { max-height: 70vh; padding: 16px 18px; }
 }
 @media (max-width: 600px) {
-  #signup { padding-left: calc(15vw + 16px); }   /* start right of the strip */
   .signup-circle { --r: 7vh; }
 }
 @media (max-width: 420px) {
-  #signup { padding-top: 40px; font-size: 17px; }
+  #signup { font-size: 17px; }
+  #signup main { padding-top: 40px; }
   .panel { padding: 12px 14px; font-size: 15px; }
   .row { gap: 8px; }
   .row-end { gap: 8px; margin-top: 10px; }
