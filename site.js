@@ -150,7 +150,6 @@ const EN = {
   photoAlt: 'Pieter and Boet playing on stage, on accordion and guitar',
   backHome: '&larr; Folk session Utrecht',
   signupTitle: 'Sign up for a session',
-  signupIntro: "Pick the sessions you'd like to join and we'll save you a spot.",
   demo: 'Preview mode: demo sessions, sign-ups are not saved.',
   chooseSessions: 'Choose one or more sessions',
   joinedBefore: 'Have you joined before?',
@@ -300,7 +299,6 @@ function renderSignupSessions() {
   if (sessionsState === 'closed' || sessionsState === 'error') {
     // no sessions: explain how to sign up by email instead
     form.hidden = true;
-    document.querySelector('#signup .intro').hidden = true;
     const how = el('p');
     how.append(t('mailHow')[0], mailLink(), t('mailHow')[1]);
     $('unavailable').replaceChildren(el('p', null, sessionsState === 'closed' ? t('notOpen') : t('cantLoad')), how);
@@ -308,7 +306,6 @@ function renderSignupSessions() {
     return;
   }
   form.hidden = false;
-  document.querySelector('#signup .intro').hidden = false;
   $('unavailable').hidden = true;
 
   if (sessionsState === 'loading') { box.replaceChildren(el('p', 'empty', t('loading'))); return; }

@@ -280,7 +280,7 @@ body.view-home { height: 100vh; overflow: hidden; }
 
 #signup h1 {
   width: fit-content;
-  margin: 0 auto 10px;
+  margin: 0 auto 40px;
   padding: .08em .25em;
   background: var(--yellow);
   font-size: clamp(1.7rem, 5vw, 2.3rem);
@@ -289,7 +289,6 @@ body.view-home { height: 100vh; overflow: hidden; }
   line-height: 1.2;
   text-align: center;
 }
-.intro { margin: 0 0 40px; text-align: center; }
 .home-link { margin: 0 0 24px; text-align: center; }
 .home-link a { color: var(--maroon); font-weight: 700; }
 
