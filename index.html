@@ -16,7 +16,7 @@
     --maroon-dark: #641825;
     --yellow: #fdc81e;
     --top-h: 38vh;   /* height of the grey top part */
-    --btn-h: 11vh;   /* height of the SIGN UP button */
+    --btn-h: 5.5vh;  /* height of the SIGN UP button */
   }
 
   * { box-sizing: border-box; }
@@ -80,9 +80,7 @@
     list-style: none;
     margin: 0;
     /* bottom padding: room to scroll the last session clear of the button */
-    /* right padding = the button's width, so the sessions are centred in the
-       space left of the SIGN UP button (phones override this below) */
-    padding: 2.2vh 28% calc(var(--btn-h) + 1vh) 2.6%;
+    padding: 2.2vh 2.6% calc(var(--btn-h) + 1vh);
     flex: 1;
     min-height: 0;
     overflow: auto;
@@ -124,12 +122,12 @@
   .note { font-size: clamp(18px, 1.4vw, 24px) !important; font-weight: 700 !important; }
   .note a { color: var(--maroon); }
 
-  /* SIGN UP button in the bottom-right corner of the grey part */
+  /* SIGN UP button: a band along the bottom of the grey part, full width */
   .signup-button {
     position: absolute;
+    left: 0;
     right: 0;
     bottom: 0;
-    width: 28%;
     height: var(--btn-h);
     display: flex;
     align-items: center;
@@ -180,10 +178,10 @@
     }
     .fabric img { max-width: 90%; max-height: 90%; }
     :root { --top-h: 40vh; }
-    :root { --btn-h: 3.2rem; }
+    :root { --btn-h: 1.9rem; }
     .session-list { padding: .55rem .55rem calc(var(--btn-h) + .4rem) .65rem; }
     .session-list li { font-size: .95rem; line-height: 1.3; padding: .6em 0; white-space: normal; }   /* may wrap to 2 lines */
-    .signup-button { width: 42%; font-size: .95rem; }
+    .signup-button { font-size: .95rem; }
     .info { padding: .75rem .65rem 2rem; font-size: 1.1rem; }
   }
 </style>
