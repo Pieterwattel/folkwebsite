@@ -15,6 +15,7 @@
     --maroon: #7a1f2b;
     --yellow: #fdc81e;
     --round: 2em;
+    --tab-h: 64px;   /* height of the Workshops tab */
   }
 
   * { box-sizing: border-box; }
@@ -41,7 +42,6 @@
   .card {
     position: relative;
     background: var(--panel);
-    border: 1.5px solid var(--line);
     overflow: hidden;
   }
   .about    { border-radius: var(--round) 0 var(--round) 0; }   /* top-left, bottom-right */
@@ -94,6 +94,13 @@
     contain: size;
     min-height: 320px;
   }
+
+  /* The two top cards are staggered: About us starts and ends higher, Coming
+     sessions starts and ends lower. About us stops one tab-height above the end
+     of the row, so the Workshops tab (under About us) and the Workshops box
+     (under Coming sessions) are the same distance from the card above them. */
+  .about    { margin-bottom: var(--tab-h); }
+  .sessions { margin-top: calc(var(--tab-h) / 2); }
   .about .card-body {
     flex: 1;
     min-height: 0;
@@ -107,7 +114,6 @@
     display: block;
     width: 100%;
     height: auto;
-    border: 1.5px solid var(--line);
     border-radius: 0 0 1.2em 0;
   }
 
@@ -138,18 +144,16 @@
   .workshops .tab {
     display: inline-flex;
     gap: 22px;
-    margin: 0 0 -1.5px;           /* sits on the box's top border */
-    padding: 12px 20px;
+    height: var(--tab-h);
+    margin: 0;
+    padding: 0 20px;
     background: var(--maroon);
-    border: 1.5px solid var(--line);
-    border-bottom: 0;
     border-radius: 1.2em 1.2em 0 0;
     position: relative;
     z-index: 1;
   }
   .workshops .box {
     background: var(--panel);
-    border: 1.5px solid var(--line);
     border-radius: 0 .8em .8em .8em;
     padding: 34px 36px;
     font-size: clamp(1.4rem, 3vw, 2.2rem);
@@ -162,7 +166,8 @@
       grid-template-areas: "sessions" "about" "workshops";
       gap: 32px;
     }
-    .about { contain: none; min-height: 0; max-height: 75vh; }
+    .about { contain: none; min-height: 0; max-height: 75vh; margin-bottom: 0; }
+    .sessions { margin-top: 0; }
   }
   @media (max-width: 420px) {
     body { padding-top: 24px; font-size: 17px; }
