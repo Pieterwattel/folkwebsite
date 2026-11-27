@@ -198,37 +198,40 @@
   /* Same images as the folk website; they tilt a little as you scroll. */
   main { position: relative; z-index: 1; }
 
-  /* A small stack down the left side, vertically centred. */
+  /* A column down the left side, the full height of the screen, split into four
+     equal rows (like the info page on a phone). Every instrument is fitted into
+     the same size box, so they look about equally big. */
+  :root { --instrument-col: 6.5rem; }
+
   .instruments {
     position: fixed;
-    top: 50%;
-    left: clamp(12px, 4vw, 56px);
-    transform: translateY(-50%);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: var(--instrument-col);
     z-index: 0;
     pointer-events: none;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
     align-items: center;
-    gap: 28px;
+    justify-items: center;
+    padding: 2vh 0;
   }
   .instruments img {
     display: block;
+    width: auto;
     height: auto;
+    max-width: 82%;
+    max-height: 17vh;     /* a bit less than one row */
+    object-fit: contain;
     filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .18));
   }
-  #bodhran { width: 64px; }
-  #violin  { width: 26px; }
-  #guitar  { width: 46px; }
-  #whistle { width: 12px; }
+  #bodhran { max-width: 96%; }   /* wide and flat, so give it the full width */
 
-  /* Narrow screens: no room beside the text, so smaller and faint. */
-  @media (max-width: 900px) {
-    .instruments { left: 4px; gap: 18px; }
-    .instruments img { opacity: .3; }
-    #bodhran { width: 40px; }
-    #violin  { width: 17px; }
-    #guitar  { width: 30px; }
-    #whistle { width: 8px; }
+  /* Narrower screens: make room for the column so it never covers the text. */
+  @media (max-width: 860px) {
+    :root { --instrument-col: 4.6rem; }
+    body { padding-left: calc(var(--instrument-col) + 12px); }
   }
 </style>
 </head>
