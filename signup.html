@@ -568,8 +568,7 @@
         throw new Error(data.error || '');
       }
 
-      const n = data.count || events.length;
-      let text = `Thanks ${name}! You're signed up for ${n} session${n === 1 ? '' : 's'}. See you there!`;
+      let text = "Thank you, we've received your sign-up! :)";
       if (data.full && data.full.length) text += ` (Already full, so not signed up: ${data.full.join('; ')}.)`;
       showMsg('ok', text);
       form.reset();
