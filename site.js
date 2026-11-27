@@ -331,12 +331,9 @@ function renderSignupSessions() {
     const text = el('div');
     text.append(el('div', 'event-title', ev.event));
     const time = [ev.start, ev.end].filter(Boolean).join(' - ');
-    if (ev.date || time) {
-      const when = el('div', 'event-when');
-      if (ev.date) when.append(icon('📅'), shortDate(ev.date));
-      if (time) when.append(icon('🕐', ev.date ? 'icon-gap' : ''), time);
-      text.append(when);
-    }
+    // date and time on separate lines
+    if (ev.date) { const d = el('div', 'event-when'); d.append(icon('📅'), shortDate(ev.date)); text.append(d); }
+    if (time) { const tm = el('div', 'event-time'); tm.append(icon('🕐'), time); text.append(tm); }
     if (ev.location) { const w = el('div', 'event-where'); w.append(icon('📍'), ev.location); text.append(w); }
     if (ev.cost) { const c = el('div', 'event-cost'); c.append(icon('🪙'), ev.cost); text.append(c); }
 

@@ -332,11 +332,10 @@ body.view-home { height: 100vh; overflow: hidden; }
   letter-spacing: -.01em;
 }
 .event:has(input:checked) .event-title { background: var(--yellow); }
-.event-when, .event-where { font-weight: 700; }
-.event-when { margin-top: 4px; font-variant-numeric: tabular-nums; }
+.event-when, .event-time, .event-where { font-weight: 700; font-variant-numeric: tabular-nums; }
+.event-title + div { margin-top: 4px; }
 .event-cost { font-weight: 400; }
 .icon { margin-right: .3em; font-weight: 400; }
-.icon-gap { margin-left: 1em; }
 
 /* fabric dot between sessions */
 .sep {
@@ -352,6 +351,7 @@ body.view-home { height: 100vh; overflow: hidden; }
 .event.is-full { cursor: default; }
 .event.is-full .event-title,
 .event.is-full .event-when,
+.event.is-full .event-time,
 .event.is-full .event-where,
 .event.is-full .event-cost { opacity: .5; }
 .full-tag {
