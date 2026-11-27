@@ -236,7 +236,9 @@
 
   /* Phones: no gap, the column sits against the left edge. */
   @media (max-width: 600px) {
+    :root { --instrument-col: 2.3rem; }   /* half the size of the 4.6rem column */
     .instruments { left: 0; }
+    .instruments img { max-height: 8.5vh; }
   }
 </style>
 </head>
