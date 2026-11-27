@@ -16,6 +16,8 @@ The sign-up form is on `signup.html`.
 | `aanmelden/` | Redirects to the sign-up page, for anyone with the old link. |
 
 Both `index.html` and `signup.html` contain the web app URL (`SCRIPT_URL`). If it ever changes, update both.
+Once one page has loaded the sessions, they're kept in that browser tab for 10 minutes, so the
+other page shows them straight away and then quietly refreshes them from the sheet.
 
 ## 1. Prepare the sheet
 

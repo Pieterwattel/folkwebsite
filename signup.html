@@ -209,6 +209,39 @@
     body { padding-top: 28px; font-size: 17px; }
     .panel { padding: 16px; }
   }
+
+  /* Two circles in the page corners, behind everything: a maroon one coming in
+     from the top-left and a fabric one from the bottom-right. They stay put
+     while the page scrolls. */
+  main { position: relative; z-index: 1; }
+  body::before,
+  body::after {
+    content: "";
+    position: fixed;
+    z-index: 0;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  body::before {
+    --r: 14vh;
+    left: calc(-1 * var(--r));
+    top: calc(-1 * var(--r));
+    width: calc(2 * var(--r));
+    height: calc(2 * var(--r));
+    background: var(--maroon);
+  }
+  body::after {
+    --r: 20vh;
+    right: calc(-1 * var(--r));
+    bottom: calc(-1 * var(--r));
+    width: calc(2 * var(--r));
+    height: calc(2 * var(--r));
+    background: #c6a83a url("textile.jpg") 20% 80% / 800px;   /* a plain yellow part of the fabric */
+  }
+  @media (max-width: 600px) {
+    body::before { --r: 7vh; }
+    body::after  { --r: 10vh; }
+  }
 </style>
 </head>
 <body>
@@ -333,6 +366,9 @@
       .filter((e) => e && e.event && (!e.date || e.date >= today))
       .sort((a, b) => key(a).localeCompare(key(b)));
 
+    // Keep what someone already ticked when the list is redrawn (after a refresh).
+    const ticked = new Set([...eventsBox.querySelectorAll('input[name=events]:checked')].map((b) => b.value));
+
     eventsBox.replaceChildren();
     if (!events.length) {
       eventsBox.append(el('p', 'empty', 'There are no upcoming sessions right now. Check back soon!'));
@@ -387,6 +423,7 @@
       box.type = 'checkbox';
       box.name = 'events';
       box.value = ev.id || ev.event;
+      box.checked = ticked.has(box.value);
 
       const join = el('span', 'join');
       join.append(box, document.createTextNode("I'll join"));
@@ -406,14 +443,32 @@
       }
       return;
     }
+    // Sessions the home page already loaded in this tab show right away;
+    // then they're refreshed from the sheet (e.g. a session that just filled up).
+    const cached = readCache();
+    if (cached) renderEvents(cached);
     try {
       const res = await fetch(SCRIPT_URL);
       const data = await res.json();
       if (!data.ok) throw new Error(data.error || 'Could not load sessions');
+      writeCache(data.events || []);
       renderEvents(data.events || []);
     } catch (err) {
-      showUnavailable("Sorry, the sessions can't be loaded right now.");
+      if (!cached) showUnavailable("Sorry, the sessions can't be loaded right now.");
     }
+  }
+
+  // Same tab storage as the home page ("folkSessions", kept for 10 minutes).
+  const CACHE_KEY = 'folkSessions';
+  const CACHE_MAX_AGE = 10 * 60 * 1000;
+  function readCache() {
+    try {
+      const c = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null');
+      return c && Date.now() - c.time < CACHE_MAX_AGE ? c.events : null;
+    } catch (e) { return null; }
+  }
+  function writeCache(events) {
+    try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ time: Date.now(), events })); } catch (e) {}
   }
 
   function mailLink() {

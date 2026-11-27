@@ -16,6 +16,7 @@
     --maroon-dark: #641825;
     --yellow: #fdc81e;
     --top-h: 38vh;   /* height of the grey top part */
+    --btn-h: 11vh;   /* height of the SIGN UP button */
   }
 
   * { box-sizing: border-box; }
@@ -66,6 +67,7 @@
   /* Fixed height, so the grey top and white panel always keep the same size,
      however many sessions there are; the list scrolls inside. */
   .top {
+    position: relative;
     flex: 0 0 var(--top-h);
     height: var(--top-h);
     display: flex;
@@ -74,45 +76,11 @@
   }
   /* One session per line (up to two on phones), stacked; the list scrolls
      when there are more than fit. */
-  /* Two circles behind the sessions: a maroon one coming in from the top-left
-     corner and a fabric one from the bottom-right corner. The list scrolls on
-     top of them; it starts right of the maroon circle so the text stays readable. */
-  .sessions-area {
-    --c1: 8vh;    /* radius of the maroon circle */
-    --c2: 11vh;   /* radius of the fabric circle */
-    position: relative;
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    overflow: hidden;
-  }
-  .sessions-area::before,
-  .sessions-area::after {
-    content: "";
-    position: absolute;
-    border-radius: 50%;
-    pointer-events: none;
-  }
-  .sessions-area::before {
-    left: calc(-1 * var(--c1));
-    top: calc(-1 * var(--c1));
-    width: calc(2 * var(--c1));
-    height: calc(2 * var(--c1));
-    background: var(--maroon);
-  }
-  .sessions-area::after {
-    right: calc(-1 * var(--c2));
-    bottom: calc(-1 * var(--c2));
-    width: calc(2 * var(--c2));
-    height: calc(2 * var(--c2));
-    background: #c6a83a url("textile.jpg") 20% 80% / 700px;   /* a plain yellow part of the fabric */
-  }
   .session-list {
-    position: relative;
-    z-index: 1;
     list-style: none;
     margin: 0;
-    padding: 2.2vh 2% 1.2vh calc(var(--c1) + 2%);
+    /* bottom padding: room to scroll the last session clear of the button */
+    padding: 2.2vh 2% calc(var(--btn-h) + 1vh) 2.6%;
     flex: 1;
     min-height: 0;
     overflow: auto;
@@ -143,30 +111,16 @@
   .note { font-size: clamp(18px, 1.4vw, 24px) !important; font-weight: 700 !important; }
   .note a { color: var(--maroon); }
 
-  .signup-row {
-    flex: none;
-    display: flex;
-    align-items: stretch;
-    justify-content: space-between;
-    height: 11vh;
-  }
-  .prompt {
-    display: flex;
-    align-items: center;
-    margin: 0 0 0 2.6%;
-    color: var(--ink);
-    font-size: clamp(22px, 2.35vw, 46px);
-    font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.15;
-    text-decoration: underline;
-    text-underline-offset: 0.12em;
-  }
+  /* SIGN UP button in the bottom-right corner of the grey part */
   .signup-button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 28%;
+    height: var(--btn-h);
     display: flex;
     align-items: center;
     justify-content: center;
-    flex: 0 0 28%;
     background: var(--maroon);
     color: #fff;
     text-decoration: none;
@@ -213,12 +167,10 @@
     }
     .fabric img { max-width: 90%; max-height: 90%; }
     :root { --top-h: 40vh; }
-    .sessions-area { --c1: 5vh; --c2: 7vh; }
-    .session-list { padding: .55rem .55rem .4rem calc(var(--c1) + .5rem); }
+    :root { --btn-h: 3.2rem; }
+    .session-list { padding: .55rem .55rem calc(var(--btn-h) + .4rem) .65rem; }
     .session-list li { font-size: 1.05rem; line-height: 1.3; white-space: normal; }   /* may wrap to 2 lines */
-    .signup-row { height: 3.2rem; }
-    .prompt { margin-left: .65rem; font-size: 1.2rem; }
-    .signup-button { flex-basis: 42%; font-size: .95rem; }
+    .signup-button { width: 42%; font-size: .95rem; }
     .info { padding: .75rem .65rem 2rem; font-size: 1.1rem; }
   }
 </style>
@@ -237,13 +189,8 @@
 
     <section class="top" aria-labelledby="sessions-title">
       <h1 class="sr-only" id="sessions-title">Coming sessions</h1>
-      <div class="sessions-area">
-        <ul class="session-list" id="session-list"><li class="note">Loading sessions…</li></ul>
-      </div>
-      <div class="signup-row">
-        <a class="prompt" href="signup.html">Sign up here &gt;&gt;</a>
-        <a class="signup-button" href="signup.html">SIGN UP</a>
-      </div>
+      <ul class="session-list" id="session-list"><li class="note">Loading sessions…</li></ul>
+      <a class="signup-button" href="signup.html">SIGN UP</a>
     </section>
 
     <article class="info" id="info-body" tabindex="0" aria-label="About the session">
@@ -372,24 +319,46 @@
     return a;
   }
 
+  // Sessions are kept in this browser tab for 10 minutes ("folkSessions"), so the
+  // sign-up page (and coming back here) can show them straight away.
+  const CACHE_KEY = 'folkSessions';
+  const CACHE_MAX_AGE = 10 * 60 * 1000;
+
+  function readCache() {
+    try {
+      const c = JSON.parse(sessionStorage.getItem(CACHE_KEY) || 'null');
+      return c && Date.now() - c.time < CACHE_MAX_AGE ? c.events : null;
+    } catch (e) { return null; }
+  }
+  function writeCache(events) {
+    try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ time: Date.now(), events })); } catch (e) {}
+  }
+
+  function render(events) {
+    if (!events.length) {
+      showNote('No sessions planned right now. Check back soon!');
+      return;
+    }
+    // One line per session: "folk session, mainly Irish · 19 december"
+    list.replaceChildren(...events.map((ev) => {
+      const li = el('li', null, ev.event + (ev.date ? ' · ' + formatDate(ev.date) : ''));
+      if (ev.full) li.append(el('span', 'session-full', 'FULL'));
+      return li;
+    }));
+  }
+
   async function loadSessions() {
+    const cached = readCache();
+    if (cached) render(cached);   // show right away, then refresh below
     try {
       const res = await fetch(SCRIPT_URL);
       const data = await res.json();
       if (!data.ok) throw new Error(data.error);
       const events = data.events || [];
-      if (!events.length) {
-        showNote('No sessions planned right now. Check back soon!');
-        return;
-      }
-      // One big line per session: "folk session, mainly Irish · 19 december"
-      list.replaceChildren(...events.map((ev) => {
-        const li = el('li', null, ev.event + (ev.date ? ' · ' + formatDate(ev.date) : ''));
-        if (ev.full) li.append(el('span', 'session-full', 'FULL'));
-        return li;
-      }));
+      writeCache(events);
+      render(events);
     } catch (err) {
-      showNote("The sessions can't be loaded right now. To join one, email ", mailLink(), '.');
+      if (!cached) showNote("The sessions can't be loaded right now. To join one, email ", mailLink(), '.');
     }
   }
 
