@@ -117,7 +117,8 @@
   .event.is-full .event-cost { opacity: .5; }
   .full-tag {
     display: inline-block;
-    margin-top: 8px;
+    margin-left: .5em;
+    vertical-align: .15em;
     padding: .15em .6em;
     background: var(--maroon);
     color: #fff;
@@ -348,7 +349,8 @@
       if (ev.full) {
         // Full: no checkbox, just a label. A <div> so it can't be ticked.
         const fullCard = el('div', 'event is-full');
-        fullCard.append(text, el('span', 'full-tag', 'Full'));
+        text.querySelector('.event-title').after(el('span', 'full-tag', 'Full'));
+        fullCard.append(text);
         eventsBox.append(fullCard);
         return;
       }
