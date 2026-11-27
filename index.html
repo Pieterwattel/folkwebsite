@@ -83,17 +83,7 @@
 
   .card-body { padding: 20px 28px 26px; }
 
-  /* Small instrument on the right side of a card. */
-  .deco {
-    position: absolute;
-    right: 18px;
-    pointer-events: none;
-    filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .15));
-  }
-
   /* ---------- about us ---------- */
-  .about .card-body { padding-right: 128px; }
-
   /* About us scrolls inside the card. On wide screens the card takes the height
      of the Coming sessions card next to it ("contain: size" stops its own text
      from making the row taller); on phones it gets a maximum height. */
@@ -112,7 +102,6 @@
   }
   .about p { margin: 0 0 14px; }
   .about a { color: var(--maroon); font-weight: 700; overflow-wrap: anywhere; }
-  .about .deco { top: 84px; right: 22px; height: 160px; width: auto; }   /* violin */
   .photo { margin: 18px 0 0; }
   .photo img {
     display: block;
@@ -123,9 +112,6 @@
   }
 
   /* ---------- coming sessions ---------- */
-  .sessions .card-body { padding-right: 80px; }
-  /* The whistle picture is diagonal; turn it upright with the mouthpiece on top. */
-  .sessions .deco { top: 100px; right: -34px; width: 150px; transform: rotate(135deg); }
   .session-list { list-style: none; margin: 0; padding: 0; }
   .session-list li { margin: 0 0 22px; }
   .session-name { font-weight: 800; font-size: 1.15rem; }
@@ -181,10 +167,6 @@
   @media (max-width: 420px) {
     body { padding-top: 24px; font-size: 17px; }
     .card-body { padding: 16px 18px 20px; }
-    .about .card-body { padding-right: 86px; }
-    .sessions .card-body { padding-right: 58px; }
-    .about .deco { height: 100px; right: 12px; top: 74px; }
-    .sessions .deco { width: 100px; right: -26px; top: 80px; }
     .workshops .box { padding: 24px 22px; }
   }
 </style>
@@ -194,7 +176,6 @@
 
   <section class="card about" aria-labelledby="about-title">
     <h2 class="card-head"><span class="label" id="about-title">About us</span><img class="head-icon wide" src="bodhran.png" alt=""></h2>
-    <img class="deco" src="violin.png" alt="">
     <div class="card-body">
       <p>Hi! We are Pieter and Boet. Folk music is a very social and welcoming way to make music
         together, and it has brought us a lot of joy and fun. This is something we would like to
@@ -213,7 +194,6 @@
 
   <section class="card sessions" aria-labelledby="sessions-title">
     <h2 class="card-head"><span class="label" id="sessions-title">Coming sessions</span><img class="head-icon" src="guitar.png" alt=""></h2>
-    <img class="deco" src="whistle.png" alt="">
     <div class="card-body">
       <ul class="session-list" id="session-list"><li class="note">Loading sessions…</li></ul>
       <div class="links">
