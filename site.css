@@ -252,14 +252,21 @@ body.view-home { height: 100vh; overflow: hidden; }
   line-height: 1.45;
 }
 
+/* The strip keeps its 15% column in the layout, and the fabric itself is
+   fixed to the window, so it never scrolls (the page also gets extra room at
+   the bottom for the form, outside this block, so "sticky" wasn't enough). */
 .signup-strip {
   flex: 0 0 15vw;
-  align-self: flex-start;
-  position: sticky;          /* stays in view while the page scrolls */
-  top: 0;
-  height: 100vh;
-  z-index: 0;
   pointer-events: none;
+}
+.signup-strip::before {
+  content: "";
+  position: fixed;
+  z-index: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 15vw;
   background: #e0b21a var(--fabric-plain) right center / cover;
 }
 /* maroon circle over the strip, top-left, partly outside the window */
