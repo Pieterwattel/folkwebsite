@@ -220,6 +220,8 @@ body.view-home { height: 100vh; overflow: hidden; }
   border: 2px solid #000;
 }
 .learn-button:hover, .learn-button:focus-visible { background: #eee; }
+.signup-button:hover, .signup-button:focus-visible,
+.learn-button:hover, .learn-button:focus-visible { text-decoration: underline; text-underline-offset: .15em; }
 
 /* white panel with the explanation and about us; scrolls inside */
 .info {
