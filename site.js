@@ -149,7 +149,7 @@ const EN = {
   about3: "For now it's the two of us, but we'd love to see it grow into something bigger: more sessions, more places, and more people discovering this music, whether you've played for years or are just starting out.",
   about4: 'If that sounds good to you, come and play with us. And if you\'d like to help it grow, or have ideas, send us a message at <a href="mailto:folkmuziekutrecht@gmail.com">folkmuziekutrecht@gmail.com</a>.',
   photoAlt: 'Boet (accordion) and Pieter (guitar) playing on stage',
-  backHome: '&larr; Folk session Utrecht',
+  backHome: '&larr; back to Folkmuziek Utrecht',
   signupTitle: 'Sign up for a session',
   demo: 'Preview mode: demo sessions, sign-ups are not saved.',
   chooseSessions: 'Choose one or more sessions',
@@ -163,7 +163,7 @@ const EN = {
   remark: 'Remark',
   submit: 'Sign me up',
   cancel: 'Signed up but can\'t make it? To cancel, send an email to <a href="mailto:folkmuziekutrecht@gmail.com">folkmuziekutrecht@gmail.com</a>.',
-  tunesBack: 'back to the folk session',
+  tunesBack: '&larr; back to Folkmuziek Utrecht',
   tunebookCredit: 'Many of the tunes, as they are written here, come from this tunebook. It also has extra information about the tunes, and the explanation of how sessions work is well worth reading. Credits to Tijn Berends. <a href="assets/The-Dutch-Session-Tunebook-2nd-ed.pdf" download>Download The Dutch Session Tunebook (2nd edition)</a>',
   moreTunes: 'more tunes (sorted from most to least popular)'
 };
