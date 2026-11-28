@@ -186,17 +186,19 @@ function applyLanguage() {
     if (!a.dataset.tune) a.dataset.tune = a.textContent;
     a.textContent = a.dataset.tune + t('tuneOn');
   });
-  $('lang-button').textContent = t('langButton');
+  document.querySelectorAll('.lang-button').forEach((b) => { b.textContent = t('langButton'); });
   showAudioState();
   renderSessions();
   renderMessage();
 }
 
-$('lang-button').addEventListener('click', () => {
+// one fixed button for the sign-up and tunes pages, plus two on the home page
+// (in the title bar on desktop, above the button bar on a phone)
+document.querySelectorAll('.lang-button').forEach((b) => b.addEventListener('click', () => {
   lang = lang === 'nl' ? 'en' : 'nl';
   try { localStorage.setItem('folkLang', lang); } catch (e) {}
   applyLanguage();
-});
+}));
 
 /* ============================================================
    3. Views: home, sign-up (#aanmelden), tunes (#tunes)

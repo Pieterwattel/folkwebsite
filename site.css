@@ -136,25 +136,37 @@ body.view-home { height: 100vh; overflow: hidden; }
 }
 
 /* bar with the site name, on the same grey as the sessions, with a thin black line under it.
-   As high as the capital letters (text-box trims the space above and below; .015em covers the
-   round bottoms of O, U, C); same font as the buttons, twice as big */
-.site-title {
+   On desktop the language button sits in its right corner, just as high as the bar. */
+.title-bar {
   flex: 0 0 auto;
-  margin: 0;
-  padding: 0 0 .015em;
+  display: flex;
   border-bottom: 1px solid #000;
   background: var(--grey);
+}
+/* the name: as high as the capital letters (text-box trims the space above and below; .015em
+   covers the round bottoms of O, U, C); same font as the buttons */
+.site-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0 0 .015em;
   color: #000;
   text-align: center;
+  white-space: nowrap;
   font-weight: 800;
   letter-spacing: 0.04em;
   font-size: var(--title-size);
   line-height: 1;
   text-box: trim-both cap alphabetic;
 }
-:root { --title-size: clamp(36px, 3.3vw, 64px); }
-/* on the home page the language button sits just below the title bar (cap height of Arial ≈ .72em + .015em padding + 1px line) */
-body.view-home .lang-button { top: calc(var(--title-size) * .74 + 1px); }
+/* never bigger than fits on one line next to the language button (right column is 76.27vw) */
+:root { --title-size: min(clamp(36px, 3.3vw, 64px), calc((76.27vw - 170px) / 14)); }
+
+/* language buttons on the home page: the fixed one is hidden there */
+body.view-home #lang-button { display: none; }
+.lang-button.lang-desktop, .lang-button.lang-mobile { position: static; }
+.lang-desktop { flex: 0 0 auto; border-width: 0 0 0 1px; }
+.lang-mobile { display: none; }
 
 /* grey top part with the sessions; fixed height, the list scrolls inside */
 .top {
@@ -296,7 +308,7 @@ body.view-home .lang-button { top: calc(var(--title-size) * .74 + 1px); }
     padding: 3.2rem 0 .35rem;   /* top: room for the sound button */
   }
   .fabric img { max-width: 90%; max-height: 90%; }
-  .sessions-title { padding: 2.2rem .55rem 0 .65rem; font-size: 1.05rem; }   /* top: room for the language button */
+  .sessions-title { padding: .6rem .55rem 0 .65rem; font-size: 1.05rem; }
   .session-list { padding: .2rem .55rem .4rem .65rem; }
   .session-list li { font-size: .95rem; line-height: 1.3; white-space: normal; }
   .signup-button, .learn-button { font-size: .8rem; letter-spacing: .02em; }
@@ -305,6 +317,9 @@ body.view-home .lang-button { top: calc(var(--title-size) * .74 + 1px); }
      of empty space on its left, which text-indent pulls away */
   :root { --title-size: calc((100vw - 3.07rem) / 13.77); }
   .site-title { white-space: nowrap; text-align: left; text-indent: -.07em; }
+  /* on a phone the language button sits right above the two buttons, full width */
+  .lang-desktop { display: none; }
+  .lang-mobile { display: block; flex: 0 0 auto; width: 100%; text-align: center; border-width: 1px 0 0; font-size: .8rem; padding: .05em .5em; line-height: 1; }
   .info { padding: .75rem .65rem 2rem; font-size: 1.1rem; }
 }
 
