@@ -139,15 +139,13 @@ body.view-home { height: 100vh; overflow: hidden; }
    On desktop the language button sits in its right corner, just as high as the bar. */
 .title-bar {
   flex: 0 0 auto;
-  display: flex;
+  position: relative;
   border-bottom: 1px solid #000;
   background: var(--grey);
 }
 /* the name: as high as the capital letters (text-box trims the space above and below; .015em
    covers the round bottoms of O, U, C); same font as the buttons */
 .site-title {
-  flex: 1 1 auto;
-  min-width: 0;
   margin: 0;
   padding: 0 0 .015em;
   color: #000;
@@ -159,13 +157,14 @@ body.view-home { height: 100vh; overflow: hidden; }
   line-height: 1;
   text-box: trim-both cap alphabetic;
 }
-/* never bigger than fits on one line next to the language button (right column is 76.27vw) */
-:root { --title-size: min(clamp(36px, 3.3vw, 64px), calc((76.27vw - 170px) / 14)); }
+/* the title is centred on the whole column as if the language button weren't there, so it
+   must stay clear of the button on both sides (right column is 76.27vw) */
+:root { --title-size: min(clamp(36px, 3.3vw, 64px), calc((76.27vw - 340px) / 14)); }
 
 /* language buttons on the home page: the fixed one is hidden there */
 body.view-home #lang-button { display: none; }
-.lang-button.lang-desktop, .lang-button.lang-mobile { position: static; }
-.lang-desktop { flex: 0 0 auto; border-width: 0 0 0 1px; }
+.lang-button.lang-mobile { position: static; }
+.lang-button.lang-desktop { position: absolute; top: 0; right: 0; bottom: 0; border-width: 0 0 0 1px; }
 .lang-mobile { display: none; }
 
 /* grey top part with the sessions; fixed height, the list scrolls inside */
