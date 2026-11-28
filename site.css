@@ -218,6 +218,8 @@ body.view-home { height: 100vh; overflow: hidden; }
   background: #fff;
   color: #000;
   border: 2px solid #000;
+  border-left: 0;
+  border-right: 0;
 }
 .learn-button:hover, .learn-button:focus-visible { background: #eee; }
 .signup-button:hover, .signup-button:focus-visible,
