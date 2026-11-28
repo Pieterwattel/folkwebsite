@@ -57,6 +57,11 @@ body.view-tunes  #tunes  { display: block; }
 .audio-toggle svg { width: 2rem; height: 2rem; }
 .audio-toggle .audio-slash { display: block; }
 .audio-toggle.is-playing .audio-slash { display: none; }
+/* a bit bigger on desktop */
+@media (min-width: 761px) {
+  .audio-toggle { width: 3.5rem; height: 3.5rem; }
+  .audio-toggle svg { width: 2.5rem; height: 2.5rem; }
+}
 
 .lang-button {
   position: fixed;
