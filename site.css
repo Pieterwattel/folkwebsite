@@ -131,7 +131,7 @@ body.view-home { height: 100vh; overflow: hidden; }
 
 /* bar with the site name, on the same grey as the sessions, with a thin black line under it.
    As high as the capital letters (text-box trims the space above and below; .015em covers the
-   round bottoms of O, U, C); same font as the buttons, twice as big */
+   round bottoms of O, U, C); same font as the buttons */
 .site-title {
   flex: 0 0 auto;
   margin: 0;
@@ -139,14 +139,18 @@ body.view-home { height: 100vh; overflow: hidden; }
   border-bottom: 1px solid #000;
   background: var(--grey);
   color: #000;
-  text-align: center;
+  white-space: nowrap;
+  text-align: left;
+  text-indent: -.07em;   /* the F has .07em of empty space on its left */
   font-weight: 800;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
   font-size: var(--title-size);
   line-height: 1;
   text-box: trim-both cap alphabetic;
 }
-:root { --title-size: clamp(36px, 3.3vw, 64px); }
+/* the title fills the right column (64.4% of the width) exactly: with .08em letter-spacing
+   the letters are 14.43em wide */
+:root { --title-size: calc(64.4vw / 14.47); }
 /* on the home page the language button sits just below the title bar (cap height of Arial ≈ .72em + .015em padding + 1px line) */
 body.view-home .lang-button { top: calc(var(--title-size) * .74 + 1px); }
 
@@ -294,11 +298,10 @@ body.view-home .lang-button { top: calc(var(--title-size) * .74 + 1px); }
   .session-list { padding: .2rem .55rem .4rem .65rem; }
   .session-list li { font-size: .95rem; line-height: 1.3; white-space: normal; }
   .signup-button, .learn-button { font-size: .8rem; letter-spacing: .02em; }
-  /* on a phone the title fills the width of the right column exactly, on one line:
-     the letters (ink, with .04em letter-spacing) are 13.75em wide, and the F has .07em
-     of empty space on its left, which text-indent pulls away */
+  /* on a phone the title also fills the right column exactly, with the narrower
+     .04em letter-spacing: then the letters are 13.75em wide */
   :root { --title-size: calc((100vw - 4.6rem) / 13.77); }
-  .site-title { white-space: nowrap; text-align: left; text-indent: -.07em; }
+  .site-title { letter-spacing: .04em; }
   .info { padding: .75rem .65rem 2rem; font-size: 1.1rem; }
 }
 
