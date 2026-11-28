@@ -213,14 +213,13 @@ body.view-home { height: 100vh; overflow: hidden; }
   line-height: 1.1;
   padding: .2em .4em;
 }
-/* on hover the two buttons swap looks: sign-up turns white with a black border, learn turns maroon */
-.signup-button:hover, .signup-button:focus-visible { background: #fff; color: #000; box-shadow: inset 0 0 0 2px #000; }
+.signup-button:hover, .signup-button:focus-visible { background: var(--maroon-dark); }
 .learn-button {
   background: #fff;
   color: #000;
   border: 2px solid #000;
 }
-.learn-button:hover, .learn-button:focus-visible { background: var(--maroon); color: #fff; border-color: var(--maroon); }
+.learn-button:hover, .learn-button:focus-visible { background: #eee; }
 .signup-button:hover, .signup-button:focus-visible,
 .learn-button:hover, .learn-button:focus-visible { text-decoration: underline; text-underline-offset: .15em; }
 
