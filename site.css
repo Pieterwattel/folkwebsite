@@ -142,18 +142,21 @@ body.view-home { height: 100vh; overflow: hidden; }
   font-size: var(--title-size);
   line-height: 1;
 }
-.site-title::before, .site-title::after { content: ''; flex: 1 1 0; background: #000; }
+.site-title::before, .site-title::after { content: ''; flex: 1 1 0; background: #000; position: relative; z-index: 1; }
 .site-title span {
   flex: 0 1 auto;
-  padding: .07em 0;   /* a little room so round letters (O, U, C, S) are not cut off at the bottom */
-  margin-right: -.04em;   /* cancel the letter-spacing after the last letter, so the black touches the T */
+  position: relative;
+  padding: 0 0 .07em;   /* letters touch the top of the page; a little room below so round letters are not cut off */
+  /* pull the black bars over the empty side space built into the F (.07em) and after the T
+     (.022em + the .04em letter-spacing), so they touch the letters */
+  margin: 0 -.062em 0 -.07em;
   background: var(--grey);
   text-align: center;
   text-box: trim-both cap alphabetic;
 }
 :root { --title-size: clamp(36px, 3.3vw, 64px); }
-/* on the home page the language button sits just below the title bar (cap height of Arial ≈ .72em + .14em padding) */
-body.view-home .lang-button { top: calc(var(--title-size) * .86); }
+/* on the home page the language button sits just below the title bar (cap height of Arial ≈ .72em + .07em padding) */
+body.view-home .lang-button { top: calc(var(--title-size) * .79); }
 
 /* grey top part with the sessions; fixed height, the list scrolls inside */
 .top {
@@ -301,7 +304,7 @@ body.view-home .lang-button { top: calc(var(--title-size) * .86); }
   .signup-button, .learn-button { font-size: .8rem; letter-spacing: .02em; }
   :root { --title-size: 1.6rem; }
   /* the title wraps to two lines on a phone: 2em line minus the trimmed space ≈ 1.75em */
-  body.view-home .lang-button { top: calc(var(--title-size) * 1.89); }
+  body.view-home .lang-button { top: calc(var(--title-size) * 1.82); }
   .info { padding: .75rem .65rem 2rem; font-size: 1.1rem; }
 }
 
