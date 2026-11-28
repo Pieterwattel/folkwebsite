@@ -148,8 +148,8 @@ body.view-home { height: 100vh; overflow: hidden; }
   position: relative;
   padding: 0 0 .015em;   /* bar is exactly as high as the letters; .015em covers the round bottoms of O, U, C */
   /* pull the black bars over the empty side space built into the F (≈.07em, plus a pixel of
-     anti-aliasing) and after the T (.022em + the .04em letter-spacing), so they touch the letters */
-  margin: 0 -.062em 0 -.095em;
+     anti-aliasing) and after the T (.022em + the .04em letter-spacing, plus a pixel), so they touch the letters */
+  margin: 0 -.085em 0 -.095em;
   background: var(--grey);
   text-align: center;
   text-box: trim-both cap alphabetic;
