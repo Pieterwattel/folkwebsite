@@ -89,8 +89,8 @@ body.view-home { height: 100vh; overflow: hidden; }
   overflow: hidden;
 }
 
-/* left: fabric with the violin and the whistle (they tilt as you scroll the text);
-   on desktop both sit in the left half, one above the other */
+/* left: fabric (the violin and whistle images are off the page for now; when back, they
+   tilt as you scroll the text and sit in the left half on desktop) */
 .fabric {
   flex: 0 0 35.6%;
   height: 100vh;

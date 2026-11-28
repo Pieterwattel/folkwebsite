@@ -536,7 +536,8 @@ audio.addEventListener('pause', showAudioState);
   const items = [
     { el: $('violin'),  stride: 66,  offset: 4, arc: [-6, 8, -2, 5, -8, 1, 7, -4, 3, -7] },
     { el: $('whistle'), stride: 81,  offset: 6, arc: [-8, 3, -5, 8, -2, 6, -7, 1, 7, -4] }
-  ];
+  ].filter((item) => item.el);   // instruments are taken off the page for now
+  if (!items.length) return;
   const panel = $('info-body');
   let last = panel.scrollTop;
   let lastTime = performance.now();
