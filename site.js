@@ -120,7 +120,7 @@ const t = (key) => T[lang][key];
 const EN = {
   sessionsTitle: 'Coming sessions',
   loading: 'Loading sessions…',
-  learnButton: 'LEARN THE MUSIC',
+  learnButton: 'LEARN THE MUSIC HERE',
   signupButton: 'SIGN UP',
   invite: 'Do you feel like playing music together with others in a freer way, something other than an orchestra or a band? Come and discover fresh folk music in Utrecht!',
   levels: '<strong>All levels welcome.</strong> But it is advisable to have been playing for at least <strong>1 year</strong>.',

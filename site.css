@@ -83,7 +83,7 @@ body.view-home { height: 100vh; overflow: hidden; }
 
 #home {
   --top-h: 38vh;   /* height of the grey top part */
-  --btn-h: 5.5vh;  /* height of the INSCHRIJVEN button */
+  --btn-h: 5.5vh;  /* minimum height of the button bar */
   height: 100vh;
   width: 100vw;
   overflow: hidden;
@@ -141,7 +141,7 @@ body.view-home { height: 100vh; overflow: hidden; }
 .session-list {
   list-style: none;
   margin: 0;
-  padding: 2.2vh 2.6% calc(var(--btn-h) + 1vh);   /* room to scroll clear of the button */
+  padding: 2.2vh 2.6% 1vh;
   flex: 1;
   min-height: 0;
   overflow: auto;
@@ -190,13 +190,16 @@ body.view-home { height: 100vh; overflow: hidden; }
 .session-list .note { font-size: clamp(16px, 1.3vw, 22px); font-weight: 700; white-space: normal; }
 .session-list .note a { color: var(--maroon); }
 
-/* INSCHRIJVEN: a band along the bottom of the grey part */
+/* band along the bottom of the grey part: MUZIEK LEREN (left) and INSCHRIJVEN (right).
+   At least --btn-h high; grows when a label needs two lines. */
+.button-bar {
+  flex: 0 0 auto;
+  display: flex;
+  min-height: var(--btn-h);
+}
 .signup-button, .learn-button {
-  position: absolute;
-  left: 50%;
-  right: 0;
-  bottom: 0;
-  height: var(--btn-h);
+  flex: 1 1 0;
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -208,14 +211,10 @@ body.view-home { height: 100vh; overflow: hidden; }
   letter-spacing: 0.04em;
   text-align: center;
   line-height: 1.1;
-  padding: 0 .4em;
+  padding: .2em .4em;
 }
 .signup-button:hover, .signup-button:focus-visible { background: var(--maroon-dark); }
-/* left half: white "learn the music" button next to the sign-up button */
 .learn-button {
-  left: 0;
-  right: 50%;
-  box-sizing: border-box;
   background: #fff;
   color: #000;
   border: 2px solid #000;
@@ -256,7 +255,7 @@ body.view-home { height: 100vh; overflow: hidden; }
     padding: 3.2rem 0 .35rem;   /* top: room for the sound button */
   }
   .fabric img { max-width: 90%; max-height: 90%; }
-  .session-list { padding: 2.2rem .55rem calc(var(--btn-h) + .4rem) .65rem; }   /* top: room for the language button */
+  .session-list { padding: 2.2rem .55rem .4rem .65rem; }   /* top: room for the language button */
   .session-list li { font-size: .95rem; line-height: 1.3; white-space: normal; }
   .signup-button, .learn-button { font-size: .8rem; letter-spacing: .02em; }
   .info { padding: .75rem .65rem 2rem; font-size: 1.1rem; }
