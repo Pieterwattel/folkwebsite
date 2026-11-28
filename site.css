@@ -145,14 +145,14 @@ body.view-home { height: 100vh; overflow: hidden; }
 .site-title::before, .site-title::after { content: ''; flex: 1 1 0; background: #000; }
 .site-title span {
   flex: 0 1 auto;
-  padding: 0 .3em;
+  padding: .07em .3em;   /* a little room so round letters (O, U, C, S) are not cut off at the bottom */
   background: var(--grey);
   text-align: center;
   text-box: trim-both cap alphabetic;
 }
 :root { --title-size: clamp(36px, 3.3vw, 64px); }
-/* on the home page the language button sits just below the title bar (cap height of Arial ≈ .72em) */
-body.view-home .lang-button { top: calc(var(--title-size) * .72); }
+/* on the home page the language button sits just below the title bar (cap height of Arial ≈ .72em + .14em padding) */
+body.view-home .lang-button { top: calc(var(--title-size) * .86); }
 
 /* grey top part with the sessions; fixed height, the list scrolls inside */
 .top {
@@ -300,7 +300,7 @@ body.view-home .lang-button { top: calc(var(--title-size) * .72); }
   .signup-button, .learn-button { font-size: .8rem; letter-spacing: .02em; }
   :root { --title-size: 1.6rem; }
   /* the title wraps to two lines on a phone: 2em line minus the trimmed space ≈ 1.75em */
-  body.view-home .lang-button { top: calc(var(--title-size) * 1.75); }
+  body.view-home .lang-button { top: calc(var(--title-size) * 1.89); }
   .info { padding: .75rem .65rem 2rem; font-size: 1.1rem; }
 }
 
