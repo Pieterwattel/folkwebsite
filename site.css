@@ -129,19 +129,25 @@ body.view-home { height: 100vh; overflow: hidden; }
   overflow: hidden;
 }
 
-/* bar with the site name, on the same grey as the sessions. Exactly as high as the
-   capital letters (text-box trims the space above and below); same font as the buttons,
-   twice as big */
+/* bar with the site name: the text on the same grey as the sessions, the empty space
+   left and right of it filled with black. Exactly as high as the capital letters
+   (text-box trims the space above and below); same font as the buttons, twice as big */
 .site-title {
   flex: 0 0 auto;
   margin: 0;
-  background: var(--grey);
+  display: flex;
   color: #000;
-  text-align: center;
   font-weight: 800;
   letter-spacing: 0.04em;
   font-size: var(--title-size);
   line-height: 1;
+}
+.site-title::before, .site-title::after { content: ''; flex: 1 1 0; background: #000; }
+.site-title span {
+  flex: 0 1 auto;
+  padding: 0 .3em;
+  background: var(--grey);
+  text-align: center;
   text-box: trim-both cap alphabetic;
 }
 :root { --title-size: clamp(36px, 3.3vw, 64px); }
