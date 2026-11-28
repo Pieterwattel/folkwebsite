@@ -129,6 +129,24 @@ body.view-home { height: 100vh; overflow: hidden; }
   overflow: hidden;
 }
 
+/* white bar with the site name; exactly as high as the capital letters
+   (text-box trims the space above and below); same font as the buttons, twice as big */
+.site-title {
+  flex: 0 0 auto;
+  margin: 0;
+  background: #fff;
+  color: #000;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  font-size: var(--title-size);
+  line-height: 1;
+  text-box: trim-both cap alphabetic;
+}
+:root { --title-size: clamp(36px, 3.3vw, 64px); }
+/* on the home page the language button sits just below the title bar (cap height of Arial ≈ .72em) */
+body.view-home .lang-button { top: calc(var(--title-size) * .72); }
+
 /* grey top part with the sessions; fixed height, the list scrolls inside */
 .top {
   position: relative;
@@ -273,6 +291,9 @@ body.view-home { height: 100vh; overflow: hidden; }
   .session-list { padding: .2rem .55rem .4rem .65rem; }
   .session-list li { font-size: .95rem; line-height: 1.3; white-space: normal; }
   .signup-button, .learn-button { font-size: .8rem; letter-spacing: .02em; }
+  :root { --title-size: 1.6rem; }
+  /* the title wraps to two lines on a phone: 2em line minus the trimmed space ≈ 1.75em */
+  body.view-home .lang-button { top: calc(var(--title-size) * 1.75); }
   .info { padding: .75rem .65rem 2rem; font-size: 1.1rem; }
 }
 
