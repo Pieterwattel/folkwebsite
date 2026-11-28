@@ -118,7 +118,7 @@ const t = (key) => T[lang][key];
 
 // English versions of the texts marked with data-i18n in index.html.
 const EN = {
-  sessionsTitle: 'Coming sessions',
+  sessionsTitle: 'Upcoming music sessions',
   loading: 'Loading sessions…',
   learnButton: 'LEARN THE MUSIC HERE',
   signupButton: 'SIGN UP',
