@@ -129,34 +129,26 @@ body.view-home { height: 100vh; overflow: hidden; }
   overflow: hidden;
 }
 
-/* bar with the site name: the text on the same grey as the sessions, the empty space
-   left and right of it filled with black. Exactly as high as the capital letters
-   (text-box trims the space above and below); same font as the buttons, twice as big */
+/* bar with the site name, on the same grey as the sessions, with a thin black line under it.
+   As high as the capital letters (text-box trims the space above and below; .015em covers the
+   round bottoms of O, U, C); same font as the buttons, twice as big */
 .site-title {
   flex: 0 0 auto;
   margin: 0;
-  display: flex;
+  padding: 0 0 .015em;
+  border-bottom: 1px solid #000;
+  background: var(--grey);
   color: #000;
+  text-align: center;
   font-weight: 800;
   letter-spacing: 0.04em;
   font-size: var(--title-size);
   line-height: 1;
-}
-.site-title::before, .site-title::after { content: ''; flex: 1 1 0; background: #000; position: relative; z-index: 1; }
-.site-title span {
-  flex: 0 1 auto;
-  position: relative;
-  padding: 0 0 .015em;   /* bar is exactly as high as the letters; .015em covers the round bottoms of O, U, C */
-  /* pull the black bars over the empty side space built into the F (≈.07em, plus a pixel of
-     anti-aliasing) and after the T (.022em + the .04em letter-spacing, plus a pixel), so they touch the letters */
-  margin: 0 -.085em 0 -.095em;
-  background: var(--grey);
-  text-align: center;
   text-box: trim-both cap alphabetic;
 }
 :root { --title-size: clamp(36px, 3.3vw, 64px); }
-/* on the home page the language button sits just below the title bar (cap height of Arial ≈ .72em + .015em padding) */
-body.view-home .lang-button { top: calc(var(--title-size) * .74); }
+/* on the home page the language button sits just below the title bar (cap height of Arial ≈ .72em + .015em padding + 1px line) */
+body.view-home .lang-button { top: calc(var(--title-size) * .74 + 1px); }
 
 /* grey top part with the sessions; fixed height, the list scrolls inside */
 .top {
@@ -304,7 +296,7 @@ body.view-home .lang-button { top: calc(var(--title-size) * .74); }
   .signup-button, .learn-button { font-size: .8rem; letter-spacing: .02em; }
   :root { --title-size: 1.6rem; }
   /* the title wraps to two lines on a phone: 2em line minus the trimmed space ≈ 1.75em */
-  body.view-home .lang-button { top: calc(var(--title-size) * 1.77); }
+  body.view-home .lang-button { top: calc(var(--title-size) * 1.77 + 1px); }
   .info { padding: .75rem .65rem 2rem; font-size: 1.1rem; }
 }
 
