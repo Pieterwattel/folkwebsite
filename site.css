@@ -89,7 +89,8 @@ body.view-home { height: 100vh; overflow: hidden; }
   overflow: hidden;
 }
 
-/* left: fabric with the four instruments (they tilt as you scroll the text) */
+/* left: fabric with the violin and the whistle (they tilt as you scroll the text);
+   on desktop both sit in the left half, one above the other */
 .fabric {
   flex: 0 0 35.6%;
   height: 100vh;
@@ -119,6 +120,8 @@ body.view-home { height: 100vh; overflow: hidden; }
   max-height: 68%;
   object-fit: contain;
 }
+#violin  { grid-area: 1 / 1; }
+#whistle { grid-area: 2 / 1; }
 
 .right {
   flex: 1 1 auto;
@@ -286,7 +289,7 @@ body.view-home .lang-button { top: calc(var(--title-size) * .74 + 1px); }
   .fabric {
     flex-basis: 4.6rem;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);   /* violin and whistle in the top two thirds */
     padding: 3.2rem 0 .35rem;   /* top: room for the sound button */
   }
   .fabric img { max-width: 90%; max-height: 90%; }

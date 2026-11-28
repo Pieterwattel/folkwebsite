@@ -534,9 +534,7 @@ audio.addEventListener('pause', showAudioState);
 (function wobble() {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const items = [
-    { el: $('bodhran'), stride: 102, offset: 0, arc: [8, -7, 2, -5, 7, -1, -8, 4, -3, 6] },
     { el: $('violin'),  stride: 66,  offset: 4, arc: [-6, 8, -2, 5, -8, 1, 7, -4, 3, -7] },
-    { el: $('guitar'),  stride: 123, offset: 2, arc: [5, -8, 7, -3, -7, 8, -1, 4, -6, 2] },
     { el: $('whistle'), stride: 81,  offset: 6, arc: [-8, 3, -5, 8, -2, 6, -7, 1, 7, -4] }
   ];
   const panel = $('info-body');
