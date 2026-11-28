@@ -191,9 +191,9 @@ body.view-home { height: 100vh; overflow: hidden; }
 .session-list .note a { color: var(--maroon); }
 
 /* INSCHRIJVEN: a band along the bottom of the grey part */
-.signup-button {
+.signup-button, .learn-button {
   position: absolute;
-  left: 0;
+  left: 50%;
   right: 0;
   bottom: 0;
   height: var(--btn-h);
@@ -206,8 +206,21 @@ body.view-home { height: 100vh; overflow: hidden; }
   font-size: clamp(18px, 1.65vw, 32px);
   font-weight: 800;
   letter-spacing: 0.04em;
+  text-align: center;
+  line-height: 1.1;
+  padding: 0 .4em;
 }
 .signup-button:hover, .signup-button:focus-visible { background: var(--maroon-dark); }
+/* left half: white "learn the music" button next to the sign-up button */
+.learn-button {
+  left: 0;
+  right: 50%;
+  box-sizing: border-box;
+  background: #fff;
+  color: #000;
+  border: 2px solid #000;
+}
+.learn-button:hover, .learn-button:focus-visible { background: #eee; }
 
 /* white panel with the explanation and about us; scrolls inside */
 .info {
@@ -245,7 +258,7 @@ body.view-home { height: 100vh; overflow: hidden; }
   .fabric img { max-width: 90%; max-height: 90%; }
   .session-list { padding: 2.2rem .55rem calc(var(--btn-h) + .4rem) .65rem; }   /* top: room for the language button */
   .session-list li { font-size: .95rem; line-height: 1.3; white-space: normal; }
-  .signup-button { font-size: .95rem; }
+  .signup-button, .learn-button { font-size: .8rem; letter-spacing: .02em; }
   .info { padding: .75rem .65rem 2rem; font-size: 1.1rem; }
 }
 
