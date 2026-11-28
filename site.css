@@ -145,7 +145,8 @@ body.view-home { height: 100vh; overflow: hidden; }
 .site-title::before, .site-title::after { content: ''; flex: 1 1 0; background: #000; }
 .site-title span {
   flex: 0 1 auto;
-  padding: .07em .3em;   /* a little room so round letters (O, U, C, S) are not cut off at the bottom */
+  padding: .07em 0;   /* a little room so round letters (O, U, C, S) are not cut off at the bottom */
+  margin-right: -.04em;   /* cancel the letter-spacing after the last letter, so the black touches the T */
   background: var(--grey);
   text-align: center;
   text-box: trim-both cap alphabetic;
