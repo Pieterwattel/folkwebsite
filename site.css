@@ -317,6 +317,9 @@ body.view-home #lang-button { display: none; }
   :root { --title-size: calc((100vw - 3.07rem) / 13.77); }
   .site-title { white-space: nowrap; text-align: left; text-indent: -.07em; }
   /* on a phone the language button sits right under the two buttons, full width */
+  /* the music button fills the top of the fabric strip, exactly as wide as the strip */
+  body.view-home .audio-toggle { width: 3.07rem; height: 3.07rem; }
+  body.view-home .audio-toggle svg { width: 2.3rem; height: 2.3rem; }
   .lang-desktop { display: none; }
   .lang-mobile { display: block; flex: 0 0 auto; width: 100%; text-align: center; order: 1; border-width: 0 0 1px; font-size: .8rem; padding: .05em .5em; line-height: 1; }
   .info { padding: .75rem .65rem 2rem; font-size: 1.1rem; }
